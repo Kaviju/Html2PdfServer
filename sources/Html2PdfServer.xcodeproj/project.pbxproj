@@ -1,0 +1,610 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		22360564144601A9001A43BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22360563144601A9001A43BE /* Cocoa.framework */; };
+		2236056E144601A9001A43BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2236056C144601A9001A43BE /* InfoPlist.strings */; };
+		22360571144601A9001A43BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22360570144601A9001A43BE /* main.m */; };
+		22360577144601A9001A43BE /* Html2PdfServerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22360576144601A9001A43BE /* Html2PdfServerAppDelegate.m */; };
+		2236057A144601A9001A43BE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22360578144601A9001A43BE /* MainMenu.xib */; };
+		22360581144601E6001A43BE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22360580144601E6001A43BE /* WebKit.framework */; };
+		2236058D14460215001A43BE /* SimpleHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2236058714460215001A43BE /* SimpleHTTPConnection.m */; };
+		2236058E14460215001A43BE /* SimpleHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2236058914460215001A43BE /* SimpleHTTPServer.m */; };
+		2255B37216C5CEC200283973 /* PagedWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2236058314460215001A43BE /* PagedWebView.m */; };
+		2255B37316C5CECA00283973 /* PdfPrintWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F10A0415E510F70066C621 /* PdfPrintWindow.m */; };
+		2255B37416C5CECF00283973 /* WebHTMLView+PDFPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F109FF15E510DD0066C621 /* WebHTMLView+PDFPrint.m */; };
+		2255B37716C68FB000283973 /* PdfPrintWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F10A0415E510F70066C621 /* PdfPrintWindow.m */; };
+		2255B37816C68FB500283973 /* PagedWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2236058314460215001A43BE /* PagedWebView.m */; };
+		225CCD0816AAEDEC002B7317 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22360563144601A9001A43BE /* Cocoa.framework */; };
+		225CCD0E16AAEDEC002B7317 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 225CCD0C16AAEDEC002B7317 /* InfoPlist.strings */; };
+		225CCD1016AAEDEC002B7317 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 225CCD0F16AAEDEC002B7317 /* main.m */; };
+		225CCD1716AAEDEC002B7317 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 225CCD1616AAEDEC002B7317 /* AppDelegate.m */; };
+		225CCD1A16AAEDEC002B7317 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 225CCD1816AAEDEC002B7317 /* MainMenu.xib */; };
+		225CCD2216AAEE3A002B7317 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 225CCD2116AAEE3A002B7317 /* WebKit.framework */; };
+		225CCD2516B3320D002B7317 /* Html2PdfRenderer.app in Resources */ = {isa = PBXBuildFile; fileRef = 225CCD0616AAEDEC002B7317 /* Html2PdfRenderer.app */; };
+		225CCD2A16B41CF0002B7317 /* RendererPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 225CCD2916B41CF0002B7317 /* RendererPool.m */; };
+		225CCD2D16B41E55002B7317 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 225CCD2C16B41E55002B7317 /* Renderer.m */; };
+		2276E8921AD59856005E16E7 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2276E8901AD59815005E16E7 /* Quartz.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		225CCD2616B3321F002B7317 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 22360556144601A9001A43BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 225CCD0516AAEDEC002B7317;
+			remoteInfo = Renderer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		223605AB144602B2001A43BE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		221FCCE116BD5F6200CCF0CD /* WebFrameView_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebFrameView_Private.h; sourceTree = "<group>"; };
+		2236055F144601A9001A43BE /* Html2PdfServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Html2PdfServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		22360563144601A9001A43BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		22360566144601A9001A43BE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		22360568144601A9001A43BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2236056B144601A9001A43BE /* Html2PdfServer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Html2PdfServer-Info.plist"; sourceTree = "<group>"; };
+		2236056D144601A9001A43BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2236056F144601A9001A43BE /* Html2PdfServer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Html2PdfServer-Prefix.pch"; sourceTree = "<group>"; };
+		22360570144601A9001A43BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		22360575144601A9001A43BE /* Html2PdfServerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Html2PdfServerAppDelegate.h; sourceTree = "<group>"; };
+		22360576144601A9001A43BE /* Html2PdfServerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Html2PdfServerAppDelegate.m; sourceTree = "<group>"; };
+		22360579144601A9001A43BE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		22360580144601E6001A43BE /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		2236058214460215001A43BE /* PagedWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedWebView.h; sourceTree = "<group>"; };
+		2236058314460215001A43BE /* PagedWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagedWebView.m; sourceTree = "<group>"; };
+		2236058414460215001A43BE /* PublicDOMInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicDOMInterfaces.h; sourceTree = "<group>"; };
+		2236058614460215001A43BE /* SimpleHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleHTTPConnection.h; sourceTree = "<group>"; };
+		2236058714460215001A43BE /* SimpleHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleHTTPConnection.m; sourceTree = "<group>"; };
+		2236058814460215001A43BE /* SimpleHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleHTTPServer.h; sourceTree = "<group>"; };
+		2236058914460215001A43BE /* SimpleHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleHTTPServer.m; sourceTree = "<group>"; };
+		2236058A14460215001A43BE /* WebHTMLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebHTMLView.h; sourceTree = "<group>"; };
+		225CCD0616AAEDEC002B7317 /* Html2PdfRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Html2PdfRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		225CCD0B16AAEDEC002B7317 /* Renderer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Renderer-Info.plist"; sourceTree = "<group>"; };
+		225CCD0D16AAEDEC002B7317 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		225CCD0F16AAEDEC002B7317 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		225CCD1116AAEDEC002B7317 /* Renderer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Renderer-Prefix.pch"; sourceTree = "<group>"; };
+		225CCD1516AAEDEC002B7317 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		225CCD1616AAEDEC002B7317 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		225CCD1916AAEDEC002B7317 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		225CCD2116AAEE3A002B7317 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		225CCD2816B41CF0002B7317 /* RendererPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RendererPool.h; sourceTree = "<group>"; };
+		225CCD2916B41CF0002B7317 /* RendererPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RendererPool.m; sourceTree = "<group>"; };
+		225CCD2B16B41E55002B7317 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		225CCD2C16B41E55002B7317 /* Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
+		2276E8901AD59815005E16E7 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		22F109FE15E510DD0066C621 /* WebHTMLView+PDFPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebHTMLView+PDFPrint.h"; sourceTree = "<group>"; };
+		22F109FF15E510DD0066C621 /* WebHTMLView+PDFPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebHTMLView+PDFPrint.m"; sourceTree = "<group>"; };
+		22F10A0315E510F70066C621 /* PdfPrintWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PdfPrintWindow.h; sourceTree = "<group>"; };
+		22F10A0415E510F70066C621 /* PdfPrintWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PdfPrintWindow.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2236055C144601A9001A43BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2276E8921AD59856005E16E7 /* Quartz.framework in Frameworks */,
+				22360564144601A9001A43BE /* Cocoa.framework in Frameworks */,
+				22360581144601E6001A43BE /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		225CCD0316AAEDEC002B7317 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				225CCD2216AAEE3A002B7317 /* WebKit.framework in Frameworks */,
+				225CCD0816AAEDEC002B7317 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		22360554144601A9001A43BE = {
+			isa = PBXGroup;
+			children = (
+				225CCD2116AAEE3A002B7317 /* WebKit.framework */,
+				22360569144601A9001A43BE /* Html2PdfServer */,
+				225CCD0916AAEDEC002B7317 /* Renderer */,
+				22360562144601A9001A43BE /* Frameworks */,
+				22360560144601A9001A43BE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		22360560144601A9001A43BE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2236055F144601A9001A43BE /* Html2PdfServer.app */,
+				225CCD0616AAEDEC002B7317 /* Html2PdfRenderer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		22360562144601A9001A43BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2276E8901AD59815005E16E7 /* Quartz.framework */,
+				22360563144601A9001A43BE /* Cocoa.framework */,
+				22360565144601A9001A43BE /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		22360565144601A9001A43BE /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				22360580144601E6001A43BE /* WebKit.framework */,
+				22360566144601A9001A43BE /* AppKit.framework */,
+				22360568144601A9001A43BE /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		22360569144601A9001A43BE /* Html2PdfServer */ = {
+			isa = PBXGroup;
+			children = (
+				2236058F1446021B001A43BE /* HTTP Server */,
+				22360575144601A9001A43BE /* Html2PdfServerAppDelegate.h */,
+				22360576144601A9001A43BE /* Html2PdfServerAppDelegate.m */,
+				22360578144601A9001A43BE /* MainMenu.xib */,
+				2236056A144601A9001A43BE /* Supporting Files */,
+			);
+			path = Html2PdfServer;
+			sourceTree = "<group>";
+		};
+		2236056A144601A9001A43BE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2236056B144601A9001A43BE /* Html2PdfServer-Info.plist */,
+				2236056C144601A9001A43BE /* InfoPlist.strings */,
+				2236056F144601A9001A43BE /* Html2PdfServer-Prefix.pch */,
+				22360570144601A9001A43BE /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2236058F1446021B001A43BE /* HTTP Server */ = {
+			isa = PBXGroup;
+			children = (
+				2236058614460215001A43BE /* SimpleHTTPConnection.h */,
+				2236058714460215001A43BE /* SimpleHTTPConnection.m */,
+				2236058814460215001A43BE /* SimpleHTTPServer.h */,
+				2236058914460215001A43BE /* SimpleHTTPServer.m */,
+				225CCD2816B41CF0002B7317 /* RendererPool.h */,
+				225CCD2916B41CF0002B7317 /* RendererPool.m */,
+				225CCD2B16B41E55002B7317 /* Renderer.h */,
+				225CCD2C16B41E55002B7317 /* Renderer.m */,
+			);
+			name = "HTTP Server";
+			sourceTree = "<group>";
+		};
+		225CCD0916AAEDEC002B7317 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				2236058214460215001A43BE /* PagedWebView.h */,
+				2236058314460215001A43BE /* PagedWebView.m */,
+				22F10A0315E510F70066C621 /* PdfPrintWindow.h */,
+				22F10A0415E510F70066C621 /* PdfPrintWindow.m */,
+				22F109FE15E510DD0066C621 /* WebHTMLView+PDFPrint.h */,
+				22F109FF15E510DD0066C621 /* WebHTMLView+PDFPrint.m */,
+				225CCD1516AAEDEC002B7317 /* AppDelegate.h */,
+				225CCD1616AAEDEC002B7317 /* AppDelegate.m */,
+				225CCD1816AAEDEC002B7317 /* MainMenu.xib */,
+				225DDE6416F4A200003145AC /* WebKit private headers */,
+				225CCD0A16AAEDEC002B7317 /* Supporting Files */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		225CCD0A16AAEDEC002B7317 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				225CCD0B16AAEDEC002B7317 /* Renderer-Info.plist */,
+				225CCD0C16AAEDEC002B7317 /* InfoPlist.strings */,
+				225CCD0F16AAEDEC002B7317 /* main.m */,
+				225CCD1116AAEDEC002B7317 /* Renderer-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		225DDE6416F4A200003145AC /* WebKit private headers */ = {
+			isa = PBXGroup;
+			children = (
+				2236058414460215001A43BE /* PublicDOMInterfaces.h */,
+				2236058A14460215001A43BE /* WebHTMLView.h */,
+				221FCCE116BD5F6200CCF0CD /* WebFrameView_Private.h */,
+			);
+			name = "WebKit private headers";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2236055E144601A9001A43BE /* Html2PdfServer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2236057D144601A9001A43BE /* Build configuration list for PBXNativeTarget "Html2PdfServer" */;
+			buildPhases = (
+				2236055B144601A9001A43BE /* Sources */,
+				2236055C144601A9001A43BE /* Frameworks */,
+				2236055D144601A9001A43BE /* Resources */,
+				223605AB144602B2001A43BE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				225CCD2716B3321F002B7317 /* PBXTargetDependency */,
+			);
+			name = Html2PdfServer;
+			productName = Html2PdfServer;
+			productReference = 2236055F144601A9001A43BE /* Html2PdfServer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		225CCD0516AAEDEC002B7317 /* Html2PdfRenderer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 225CCD1B16AAEDEC002B7317 /* Build configuration list for PBXNativeTarget "Html2PdfRenderer" */;
+			buildPhases = (
+				225CCD0216AAEDEC002B7317 /* Sources */,
+				225CCD0316AAEDEC002B7317 /* Frameworks */,
+				225CCD0416AAEDEC002B7317 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Html2PdfRenderer;
+			productName = Renderer;
+			productReference = 225CCD0616AAEDEC002B7317 /* Html2PdfRenderer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		22360556144601A9001A43BE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Cyber Cat";
+			};
+			buildConfigurationList = 22360559144601A9001A43BE /* Build configuration list for PBXProject "Html2PdfServer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 22360554144601A9001A43BE;
+			productRefGroup = 22360560144601A9001A43BE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2236055E144601A9001A43BE /* Html2PdfServer */,
+				225CCD0516AAEDEC002B7317 /* Html2PdfRenderer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2236055D144601A9001A43BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				225CCD2516B3320D002B7317 /* Html2PdfRenderer.app in Resources */,
+				2236056E144601A9001A43BE /* InfoPlist.strings in Resources */,
+				2236057A144601A9001A43BE /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		225CCD0416AAEDEC002B7317 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				225CCD0E16AAEDEC002B7317 /* InfoPlist.strings in Resources */,
+				225CCD1A16AAEDEC002B7317 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2236055B144601A9001A43BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22360571144601A9001A43BE /* main.m in Sources */,
+				22360577144601A9001A43BE /* Html2PdfServerAppDelegate.m in Sources */,
+				2236058D14460215001A43BE /* SimpleHTTPConnection.m in Sources */,
+				2236058E14460215001A43BE /* SimpleHTTPServer.m in Sources */,
+				225CCD2A16B41CF0002B7317 /* RendererPool.m in Sources */,
+				225CCD2D16B41E55002B7317 /* Renderer.m in Sources */,
+				2255B37716C68FB000283973 /* PdfPrintWindow.m in Sources */,
+				2255B37816C68FB500283973 /* PagedWebView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		225CCD0216AAEDEC002B7317 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				225CCD1016AAEDEC002B7317 /* main.m in Sources */,
+				225CCD1716AAEDEC002B7317 /* AppDelegate.m in Sources */,
+				2255B37216C5CEC200283973 /* PagedWebView.m in Sources */,
+				2255B37316C5CECA00283973 /* PdfPrintWindow.m in Sources */,
+				2255B37416C5CECF00283973 /* WebHTMLView+PDFPrint.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		225CCD2716B3321F002B7317 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 225CCD0516AAEDEC002B7317 /* Html2PdfRenderer */;
+			targetProxy = 225CCD2616B3321F002B7317 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2236056C144601A9001A43BE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2236056D144601A9001A43BE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		22360578144601A9001A43BE /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				22360579144601A9001A43BE /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		225CCD0C16AAEDEC002B7317 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				225CCD0D16AAEDEC002B7317 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		225CCD1816AAEDEC002B7317 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				225CCD1916AAEDEC002B7317 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2236057B144601A9001A43BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2236057C144601A9001A43BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2236057E144601A9001A43BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Html2PdfServer/Html2PdfServer-Prefix.pch";
+				INFOPLIST_FILE = "Html2PdfServer/Html2PdfServer-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2236057F144601A9001A43BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Html2PdfServer/Html2PdfServer-Prefix.pch";
+				INFOPLIST_FILE = "Html2PdfServer/Html2PdfServer-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		223605B014460314001A43BE /* Release (embedded) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = "Release (embedded)";
+		};
+		223605B114460314001A43BE /* Release (embedded) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Html2PdfServer/Html2PdfServer-Prefix.pch";
+				INFOPLIST_FILE = "Html2PdfServer/Html2PdfServer-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Release (embedded)";
+		};
+		225CCD1C16AAEDEC002B7317 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Renderer/Renderer-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "Renderer/Renderer-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		225CCD1D16AAEDEC002B7317 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Renderer/Renderer-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "Renderer/Renderer-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		225CCD1E16AAEDEC002B7317 /* Release (embedded) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Renderer/Renderer-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "Renderer/Renderer-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Release (embedded)";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		22360559144601A9001A43BE /* Build configuration list for PBXProject "Html2PdfServer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2236057B144601A9001A43BE /* Debug */,
+				2236057C144601A9001A43BE /* Release */,
+				223605B014460314001A43BE /* Release (embedded) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2236057D144601A9001A43BE /* Build configuration list for PBXNativeTarget "Html2PdfServer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2236057E144601A9001A43BE /* Debug */,
+				2236057F144601A9001A43BE /* Release */,
+				223605B114460314001A43BE /* Release (embedded) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		225CCD1B16AAEDEC002B7317 /* Build configuration list for PBXNativeTarget "Html2PdfRenderer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				225CCD1C16AAEDEC002B7317 /* Debug */,
+				225CCD1D16AAEDEC002B7317 /* Release */,
+				225CCD1E16AAEDEC002B7317 /* Release (embedded) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 22360556144601A9001A43BE /* Project object */;
+}

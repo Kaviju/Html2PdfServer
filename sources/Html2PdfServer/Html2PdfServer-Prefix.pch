@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Html2PdfServer' target in the 'Html2PdfServer' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
