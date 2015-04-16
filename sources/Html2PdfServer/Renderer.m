@@ -57,12 +57,11 @@
         NSTask *task = note.object;
         if ( [task terminationReason] == NSTaskTerminationReasonUncaughtSignal) {
             [_parentPool replaceRenderer:self];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
-                if (_completionBlock != nil) {
+            if (_completionBlock != nil) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
                     _completionBlock(nil, nil, messages);
-                    _completionBlock = nil;
-                }
-            });
+                });
+            }
         }
     }];
     
@@ -153,12 +152,13 @@
         NSArray *receivedMessages = [messages copy];
         [messages removeAllObjects];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
-            if (_completionBlock != nil) {
-                _completionBlock(pdfData, infoDict, receivedMessages);
-                _completionBlock = nil;
-            }
-        });
+        if (_completionBlock != nil) {
+            RendererCompletionBlock completionBlock = _completionBlock;
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
+                completionBlock(pdfData, infoDict, receivedMessages);
+            });
+            _completionBlock = nil;
+        }
         [_parentPool makeRendererAvailable:self];
     }
 }
