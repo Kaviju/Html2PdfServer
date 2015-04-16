@@ -68,7 +68,7 @@ float MaxTemplateHeightInWebPixels = 2000;
             [window setReleasedWhenClosed:NO]; //We have a reference, this break ARC.
             window.logFileHandle = [NSFileHandle fileHandleWithStandardError];
             window.infoDict = infoDict;
-            window.firstPageNumber = [[infoDict objectForKey:@"firstPageNumber"] intValue];
+            window.firstPageNumber = [[paramsDict objectForKey:@"firstPageNumber"] intValue];
             
             [window setBackgroundColor:[NSColor blueColor]];
             window.title = [NSString stringWithFormat:@"PDF %@", [NSCalendarDate date]];

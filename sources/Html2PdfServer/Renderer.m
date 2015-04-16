@@ -75,12 +75,12 @@
     [pdfFH readInBackgroundAndNotify];
 }
 
-- (void)processRequest:(NSString *)requestUrl firstPageNumber:(int)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock
+- (void)processRequest:(NSString *)requestUrl firstPageNumber:(NSUInteger)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock
 {
     self.completionBlock = aBlock;
     messages = [NSMutableArray new];
 
-    NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:firstPageNumber], @"firstPageNumber",
+    NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedLong:firstPageNumber], @"firstPageNumber",
                                requestUrl, @"url",
                                nil];
     NSError *error;

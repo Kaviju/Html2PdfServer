@@ -25,8 +25,7 @@
 	{
         fileHandle = fh;
         self.server = aServer;
-        isMessageComplete = YES;
-        message = NULL;
+        currentPageNumber = 1;
         _messages = [NSMutableArray new];
         
         // Get IP address of remote client
@@ -161,6 +160,9 @@
             command = [command substringToIndex:endCommandPosition.location];
         }
         
+        if ([command isEqualToString:@"setCurrentPageNumber"]) {
+            canContinue = [self setCurrentPageNumber:[paramString integerValue]];
+        }
         if ([command isEqualToString:@"insertBlankPage"]) {
             canContinue = [self insertBlankPage];
         }
@@ -176,6 +178,12 @@
     }
 }
 
+- (BOOL)setCurrentPageNumber:(NSUInteger)pageNumber
+{
+    currentPageNumber = pageNumber;
+    return YES;
+}
+
 - (BOOL)insertBlankPage
 {
     PDFPage *blankPage = [[PDFPage alloc] init];
@@ -187,20 +195,21 @@
 {
     Renderer *renderer = [[RendererPool sharedPool] renderer];
     
-    [renderer processRequest:sourceUrl firstPageNumber:1 completionBlock:^(NSData *pdfData, NSMutableDictionary *infoDict, NSArray *messages) {
+    [renderer processRequest:sourceUrl firstPageNumber:currentPageNumber completionBlock:^(NSData *pdfData, NSMutableDictionary *infoDict, NSArray *messages) {
         SimpleHTTPConnection *blocSelf = self;  //Keep a copy of the pointer because self is sometime corrupted after -sendHttpResponse for an unknow reason.
         [blocSelf logMessage:[NSString stringWithFormat:@"infoDict [%@] ", infoDict]];
         if (pdfData != nil) {
+            PDFDocument *newDocument = [[PDFDocument alloc] initWithData:pdfData];
             if (blocSelf.pdfDocument == nil) {
-                blocSelf.pdfDocument = [[PDFDocument alloc] initWithData:pdfData];
+                blocSelf.pdfDocument = newDocument;
             }
             else {
-                PDFDocument *newDocument = [[PDFDocument alloc] initWithData:pdfData];
                 for (NSUInteger i = 0; i < [newDocument pageCount]; i++) {
                     PDFPage *page = [newDocument pageAtIndex:i];
                     [blocSelf.pdfDocument insertPage:page atIndex:[blocSelf.pdfDocument pageCount]];
                 }
             }
+            [blocSelf setCurrentPageNumber:currentPageNumber + [newDocument pageCount]];
         }
         [blocSelf.messages addObjectsFromArray:messages];
         [blocSelf processNextLine];

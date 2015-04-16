@@ -17,11 +17,10 @@
 {
     NSFileHandle *fileHandle;
 
-    CFHTTPMessageRef message;
 	NSURL *url;
-	NSData *requestMessage;
-    BOOL isMessageComplete;
+	NSMutableData *requestMessage;
 	
+    NSUInteger currentPageNumber;
     NSMutableArray *lines;
     NSMutableDictionary *responseDict;
     
