@@ -103,21 +103,44 @@
 
 - (void)readRequest
 {
-    if( message ) CFRelease(message);
-	message = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, TRUE);
-	do
-	{
-		NSData *data = [fileHandle availableData];
-		if ( [data length] == 0 )
-		{
-            @throw ([NSException exceptionWithName:@"Connection closed" reason:@"Remote closed connection" userInfo:nil]);
-		}
-		CFHTTPMessageAppendBytes(message, [data bytes], [data length]);
-	}
-	while ( !CFHTTPMessageIsHeaderComplete(message));
-    
-	url = (__bridge_transfer NSURL *)CFHTTPMessageCopyRequestURL(message);
-	requestMessage = (__bridge_transfer NSData *)CFHTTPMessageCopyBody(message);
+    CFHTTPMessageRef message = NULL;
+    @try {
+        message = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, TRUE);
+        requestMessage = [NSMutableData data];
+        do
+        {
+            NSData *data = [fileHandle availableData];
+            if ( [data length] == 0 )
+            {
+                @throw ([NSException exceptionWithName:@"Connection closed" reason:@"Remote closed connection" userInfo:nil]);
+            }
+            CFHTTPMessageAppendBytes(message, [data bytes], [data length]);
+        }
+        while ( !CFHTTPMessageIsHeaderComplete(message));
+        url = CFBridgingRelease(CFHTTPMessageCopyRequestURL(message));
+        
+        NSString *contentLength = CFBridgingRelease(CFHTTPMessageCopyHeaderFieldValue(message, CFSTR("Content-Length")));
+        NSInteger expectedMessageLength = [contentLength integerValue];
+        
+        [requestMessage appendData:CFBridgingRelease(CFHTTPMessageCopyBody(message))];
+        // Read remaining post data if required
+        while ([requestMessage length] < expectedMessageLength) {
+            NSData *data = [fileHandle availableData];
+            if ( [data length] == 0 )
+            {
+                @throw ([NSException exceptionWithName:@"Connection closed" reason:@"Remote closed connection" userInfo:nil]);
+            }
+            [requestMessage appendData:data];
+        }
+    }
+    @catch (NSException *exception) {
+        [self sendBasicHttpResponse];
+    }
+    @finally {
+        if( message ) CFRelease(message);
+
+    }
+
 }
 
 - (NSMutableDictionary *)decodeQueryString:(NSString *)queryString
@@ -315,7 +338,6 @@
 - (void)dealloc
 {
     [fileHandle closeFile];
-    if( message ) CFRelease(message);
 }
 
 @end
