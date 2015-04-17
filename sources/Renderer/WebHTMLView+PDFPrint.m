@@ -192,6 +192,7 @@
     {
         // For the frame HTML view to layout so it's frame reflect real content size
         DOMHTMLIFrameElement *contentFrameElement = (DOMHTMLIFrameElement *)[printWindow.pageDocument getElementById:@"contentFrame"];
+        [contentFrameElement setScrolling:@"no"]; // We do not want to print scroll bars, hide them !
         
         printWindow.contentScrollView = (NSScrollView*)[[[contentFrameElement contentFrame] frameView] _scrollView];
         printWindow.viewToPaginateFrame = [contentFrameElement boundingBox];
