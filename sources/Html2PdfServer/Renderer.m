@@ -96,6 +96,7 @@
 
 - (void)readMessage:(NSNotification *)aNotification
 {
+    @autoreleasepool { // Leaks if no autorelease pool here 2013-03-15
     NSData *messageData = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
     
     if ([messageData length] == 0) { // FileHandle was closed
@@ -106,6 +107,7 @@
     
     NSFileHandle *fh = [aNotification object];
     [fh readInBackgroundAndNotify];
+    }
 }
 
 - (int)readBlockLength:(NSData *)readData atIndex:(unsigned)offset
