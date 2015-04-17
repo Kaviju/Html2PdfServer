@@ -64,11 +64,15 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-numberOfRequestsPerRenderer 2"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-listenPort 1453"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-listenAddress *"
+            argument = "-listenAddress localhost"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
