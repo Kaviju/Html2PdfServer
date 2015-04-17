@@ -261,6 +261,7 @@
         msgData = CFHTTPMessageCopySerializedMessage(msg);
         [fileHandle writeData:(__bridge NSData *)msgData];
         [fileHandle writeData:pdfData];
+        NSLog(@"messages: %@", self.messages);
     }
     @catch (NSException *exception)
     {
