@@ -220,24 +220,29 @@
     
     [renderer processRequest:sourceUrl firstPageNumber:currentPageNumber completionBlock:^(NSData *pdfData, NSMutableDictionary *infoDict, NSArray *messages) {
         SimpleHTTPConnection *blocSelf = self;  //Keep a copy of the pointer because self is sometime corrupted after -sendHttpResponse for an unknow reason.
-        [blocSelf logMessage:[NSString stringWithFormat:@"infoDict [%@] ", infoDict]];
-        if (pdfData != nil) {
-            PDFDocument *newDocument = [[PDFDocument alloc] initWithData:pdfData];
-            if (blocSelf.pdfDocument == nil) {
-                blocSelf.pdfDocument = newDocument;
-            }
-            else {
-                for (NSUInteger i = 0; i < [newDocument pageCount]; i++) {
-                    PDFPage *page = [newDocument pageAtIndex:i];
-                    [blocSelf.pdfDocument insertPage:page atIndex:[blocSelf.pdfDocument pageCount]];
-                }
-            }
-            [blocSelf setCurrentPageNumber:currentPageNumber + [newDocument pageCount]];
-        }
         [blocSelf.messages addObjectsFromArray:messages];
-        [blocSelf processNextLine];
+        [blocSelf processRenderedPdf:pdfData withInfos:infoDict];
     }];
     return NO;
+}
+
+- (void)processRenderedPdf:(NSData *)pdfData withInfos:(NSMutableDictionary *)infoDict
+{
+    [self logMessage:[NSString stringWithFormat:@"infoDict [%@] ", infoDict]];
+    if (pdfData != nil) {
+        PDFDocument *newDocument = [[PDFDocument alloc] initWithData:pdfData];
+        if (self.pdfDocument == nil) {
+            self.pdfDocument = newDocument;
+        }
+        else {
+            for (NSUInteger i = 0; i < [newDocument pageCount]; i++) {
+                PDFPage *page = [newDocument pageAtIndex:i];
+                [self.pdfDocument insertPage:page atIndex:[self.pdfDocument pageCount]];
+            }
+        }
+        [self setCurrentPageNumber:currentPageNumber + [newDocument pageCount]];
+    }
+    [self processNextLine];
 }
 
 #pragma mark Send response and log
