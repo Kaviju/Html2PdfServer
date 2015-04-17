@@ -27,8 +27,8 @@
 
 @property(assign)WebHTMLView *documentView;
 @property(retain)DOMHTMLDocument *pageDocument;
-@property(retain)NSScrollView *contentScrollView;
-@property(retain)DOMHTMLDocument *contentDocument;
+@property(assign)NSScrollView *contentScrollView;
+@property(assign)DOMHTMLDocument *contentDocument;
 
 @property(retain)NSFileHandle *logFileHandle;
 @property(retain)NSMutableDictionary *infoDict;

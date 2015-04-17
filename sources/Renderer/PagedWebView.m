@@ -44,17 +44,11 @@
     return self;
 }
 
-// Not retained
-- (void)setDelegate:(NSObject<PagedWebViewDelegate>*) aDelegate
-{
-	delegate = aDelegate;
-}
-
 - (void)saveRequest:(NSURLRequest *)request toPath:(NSString*)path
 {
 	pdfPath = path;
 	
-	[delegate logMessage:@"Begin loading."];
+	[_delegate logMessage:@"Begin loading."];
 	[[pageView mainFrame] loadRequest:request];
 }
 
@@ -66,15 +60,15 @@
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {		
     //NSLog(@"==========didFailProvisionalLoadWithError: %@", error);
-	[delegate logMessage:[NSString stringWithFormat:@"Error didFailProvisionalLoadWithError (%@): %@", [error  localizedDescription], [error  userInfo]]];
+	[_delegate logMessage:[NSString stringWithFormat:@"Error didFailProvisionalLoadWithError (%@): %@", [error  localizedDescription], [error  userInfo]]];
 }
 
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
     //NSLog(@"==========didFailLoadWithError: %@", error);
-	[delegate logMessage:[NSString stringWithFormat:@"Error didFailLoadWithError (%@): %@", [error  localizedDescription], [error  userInfo]]];
+	[_delegate logMessage:[NSString stringWithFormat:@"Error didFailLoadWithError (%@): %@", [error  localizedDescription], [error  userInfo]]];
     [[pageView mainFrame] stopLoading];
-	[delegate printingDone];
+	[_delegate printingDone];
 }
 
 - (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource {
@@ -105,7 +99,7 @@
 
 - (void)loadProgress:(NSNotification *)sender
 {
-	[delegate logMessage:[NSString stringWithFormat:@"loadProgress: %f", [pageView estimatedProgress]]];
+	[_delegate logMessage:[NSString stringWithFormat:@"loadProgress: %f", [pageView estimatedProgress]]];
 }
 
 - (void)loadFinished:(NSNotification *)sender
@@ -119,12 +113,12 @@
 - (void)startPrintingIfLoadCompleted {
     if (mainFrameLoaded && [ressourcesLoading count] == 0) {
         if (isPrinting) {
-            [delegate logMessage:[NSString stringWithFormat:@"startPrinting requested but already printing, do nothing"]];
+            [_delegate logMessage:[NSString stringWithFormat:@"startPrinting requested but already printing, do nothing"]];
             return;
         }
         PdfPrintWindow *printWindow = (PdfPrintWindow *)self.window;
         isPrinting = YES;
-        [delegate fetchDone];
+        [_delegate fetchDone];
         
         [pageView setMediaStyle:@"print"];  // Switch the document CSS media to print
         
@@ -267,7 +261,7 @@
         if ([[[[contentFrameElement contentFrame] frameView] documentView] frame].size.height == 0)
         {
             [printWindow logMessage:[NSString stringWithFormat:@"Document view is empty"]];
-            [delegate printingDone];
+            [_delegate printingDone];
             return;
         }
     }
@@ -297,7 +291,7 @@
     // We cannot run printOperation in backgroup because WebView does not work in secondary thread for DOM searching and modifications.
     [op cleanUpOperation];
     
-    [delegate printingDone];
+    [_delegate printingDone];
     [self setDelegate:nil];
     [self releaseResources];
 }
@@ -309,12 +303,14 @@
 
 - (void)releaseResources
 {
+    // Delete the inner iFrame to stop a memory huge leak found when using web kit from in Safari 8.0.5 (10600.5.17) on Yosemite
+    PdfPrintWindow *printWindow = (PdfPrintWindow *)self.window;
+    DOMHTMLIFrameElement *contentFrameElement = (DOMHTMLIFrameElement *)[printWindow.pageDocument getElementById:@"contentFrame"];
+    [[contentFrameElement parentNode]removeChild:contentFrameElement];
+
     [pageView stopLoading:nil]; // Stop loading of resources if any to prevent delegate callback to invalid object
     [pageView setHostWindow:nil]; // Break retain cycle between window and WebView
     pageView = nil;
-    
-	contentDocument = nil;
-	contentScrollView = nil;
 }
 
 - (void)dealloc
