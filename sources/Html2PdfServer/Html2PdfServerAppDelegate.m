@@ -20,6 +20,7 @@
 
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
                                  @"0", @"numberOfRenderers", // will use the number of CPUs
+                                 @"100", @"numberOfRequestsPerRenderer", // Renderer process will be kill after this number of PDF
                                  @"localhost", @"listenAddress", // will listen on localhost only
                                  @"1453", @"listenPort", // will listen port 1453
                                  nil];
@@ -30,6 +31,7 @@
     NSString *listenAddress = [defaults stringForKey:@"listenAddress"];
     
     [RendererPool setNumberOfRenderers:[defaults integerForKey:@"numberOfRenderers"]];
+    [RendererPool setNumberOfRequestsPerRenderer:[defaults integerForKey:@"numberOfRequestsPerRenderer"]];
 
     [RendererPool sharedPool];
     httpServer = [[SimpleHTTPServer alloc] initWithTCPPort:(unsigned)listenPort address:listenAddress];

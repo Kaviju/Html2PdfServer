@@ -16,7 +16,8 @@
     NSMutableSet *_inUseRenderers;
 }
 
-+  (void)setNumberOfRenderers:(NSInteger)number;
++  (void)setNumberOfRenderers:(NSUInteger)number;
++  (void)setNumberOfRequestsPerRenderer:(NSUInteger)number;
 
 + (RendererPool*)sharedPool;
 

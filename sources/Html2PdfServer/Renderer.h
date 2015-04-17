@@ -17,6 +17,7 @@ typedef void (^RendererCompletionBlock)(NSData *, NSMutableDictionary *, NSArray
     NSMutableArray *messages;
 }
 
+@property (readonly)NSUInteger numberOfRequests;
 @property (nonatomic, copy) RendererCompletionBlock completionBlock;
 
 - (id)initWithPool:(RendererPool *)pool;
@@ -24,5 +25,6 @@ typedef void (^RendererCompletionBlock)(NSData *, NSMutableDictionary *, NSArray
 - (void)processRequest:(NSString *)requestUrl firstPageNumber:(NSUInteger)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock;
 
 - (void)startTask;
+- (void)stopTask;
 
 @end

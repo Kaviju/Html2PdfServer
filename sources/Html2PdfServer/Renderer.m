@@ -25,6 +25,7 @@
     if (self)
 	{
         _parentPool = pool;
+        _numberOfRequests = 0;
     }
     return self;
 }
@@ -77,6 +78,7 @@
 
 - (void)processRequest:(NSString *)requestUrl firstPageNumber:(NSUInteger)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock
 {
+    _numberOfRequests++;
     self.completionBlock = aBlock;
     messages = [NSMutableArray new];
 
@@ -164,7 +166,7 @@
 }
 
 
-- (void)dealloc
+- (void)stopTask
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     

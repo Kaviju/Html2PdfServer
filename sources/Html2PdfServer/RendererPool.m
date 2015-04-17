@@ -22,7 +22,8 @@
 @implementation RendererPool
 
 static RendererPool *sharedPool = nil;
-static NSInteger numberOfRenderers = 0;
+static NSUInteger numberOfRenderers = 0;
+static NSUInteger numberOfRequestsPerRenderer = 100;
 
 - (id)initWithNumberOfRenderer:(long) number
 {
@@ -40,9 +41,14 @@ static NSInteger numberOfRenderers = 0;
     return self;
 }
 
-+  (void)setNumberOfRenderers:(NSInteger)number
++  (void)setNumberOfRenderers:(NSUInteger)number
 {
     numberOfRenderers = number;
+}
+
++  (void)setNumberOfRequestsPerRenderer:(NSUInteger)number
+{
+    numberOfRequestsPerRenderer = number;
 }
 
 + (int)numberOfCPUs
@@ -89,11 +95,17 @@ static NSInteger numberOfRenderers = 0;
 
 - (void)makeRendererAvailable:(Renderer *)renderer
 {
-    [condLock lock];
-    [_availableRenderers addObject:renderer];
-    [_inUseRenderers removeObject:renderer];
-    NSLog(@"renderer available %@", renderer);
-    [self unlock];
+    if (renderer.numberOfRequests >= numberOfRequestsPerRenderer) {
+        NSLog(@"renderer has processing %ld requests, stop it %@", renderer.numberOfRequests, renderer);
+        [renderer stopTask];
+    }
+    else {
+        [condLock lock];
+        [_availableRenderers addObject:renderer];
+        [_inUseRenderers removeObject:renderer];
+        NSLog(@"renderer available %@", renderer);
+        [self unlock];
+    }
 }
 
 - (void)replaceRenderer:(Renderer *)renderer
