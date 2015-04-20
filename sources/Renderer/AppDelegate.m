@@ -9,6 +9,8 @@
 #import "PdfPrintWindow.h"
 #import "PagedWebView.h"
 
+#define BlockLengthSize 12
+
 @implementation AppDelegate
 
 // With Maverick and/or latest WebKit when using the header mode, the window size needs to be large enough to completly include the inner iFrame.
@@ -43,10 +45,21 @@ float MaxTemplateHeightInWebPixels = 2000;
         [infoDict removeAllObjects];
         beginTime = [NSCalendarDate timeIntervalSinceReferenceDate];
         endFetch = endPrint = beginTime;
+        
+        NSFileHandle *paramFileHandle = [aNotification object];
         NSData *readData = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
+        int paramDictDataLength = [self readBlockLength:readData atIndex:0];
+        NSMutableData *paramDictData = [NSMutableData dataWithCapacity:paramDictDataLength];
+        
+        unsigned paramDictDataOffset = BlockLengthSize;
+        [paramDictData appendData:[readData subdataWithRange:NSMakeRange(paramDictDataOffset, MIN([readData length]-paramDictDataOffset, paramDictDataLength))]];
+        
+        if ([paramDictData length] < paramDictDataLength) {
+            [paramDictData appendData:[paramFileHandle readDataOfLength:paramDictDataLength - [paramDictData length]]];
+        }
         
         NSError *error;
-        NSMutableDictionary *paramsDict = [NSPropertyListSerialization propertyListWithData:readData options:NSPropertyListMutableContainers format:NULL error:&error];
+        NSMutableDictionary *paramsDict = [NSPropertyListSerialization propertyListWithData:paramDictData options:NSPropertyListMutableContainers format:NULL error:&error];
         if (error != nil) {
             [infoDict setObject:error forKey:@"error"];
             [self sendResponse:nil];
@@ -89,6 +102,15 @@ float MaxTemplateHeightInWebPixels = 2000;
         }
         [[NSFileHandle fileHandleWithStandardInput] readInBackgroundAndNotify];
     }
+}
+
+- (int)readBlockLength:(NSData *)readData atIndex:(unsigned)offset
+{
+    NSData *blockLength = [readData subdataWithRange:NSMakeRange(offset, BlockLengthSize)];
+    NSString *blockLengthAsString = [[NSString alloc] initWithData:blockLength encoding:NSUTF8StringEncoding];
+    blockLengthAsString = [blockLengthAsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    int pdfLength = [blockLengthAsString intValue];
+    return pdfLength;
 }
 
 - (void)fetchDone

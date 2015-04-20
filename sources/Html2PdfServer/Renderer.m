@@ -60,7 +60,7 @@
             [_parentPool replaceRenderer:self];
             if (_completionBlock != nil) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
-                    _completionBlock(nil, nil, messages);
+                    _completionBlock(nil, [NSMutableDictionary new], messages);
                 });
             }
         }
@@ -108,6 +108,8 @@
                                                                       options:NSPropertyListMutableContainers error:&error];
     
     NSFileHandle *requestFH = [_requestPipe fileHandleForWriting];
+    NSString *paramDictDataLength = [NSString stringWithFormat:@"%11ld\n", [paramDictData length]];
+    [requestFH writeData:[paramDictDataLength dataUsingEncoding:NSUTF8StringEncoding]];
     [requestFH writeData:paramDictData];
 }
 
