@@ -340,10 +340,10 @@
             
             if (restrictedBreak.origin.y != 0)
             {
-                nextX = restrictedBreak.origin.x + restrictedBreak.size.width;
+                nextX = MAX(nextX, restrictedBreak.origin.x + restrictedBreak.size.width);
                 if (nextY > restrictedBreak.origin.y && previousY < restrictedBreak.origin.y)
                 {
-                    nextY = restrictedBreak.origin.y;
+                    nextY = restrictedBreak.origin.y + 1;
                     break;
                 }
             }
@@ -358,17 +358,15 @@
                     {
                         if (nextY > lineRect.origin.y)
                         {
-                            nextY = lineRect.origin.y;
-                            nextX = lineRect.origin.x + lineRect.size.width ;
+                            nextY = lineRect.origin.y + 1;
+                            nextX = MAX(nextX, lineRect.origin.x + lineRect.size.width);
                             break;
                         }
                     }
                 }
-                if ([[node childNodes] length] == 1) {  // skip remaining of the node width if no childrens
-                    DOMHTMLElement *childNode = (DOMHTMLElement*)[[node childNodes] item:0];
-                    if ([childNode nodeType] == DOM_TEXT_NODE ) {
-                        nextX = MAX(nextX, nodeRect.origin.x + nodeRect.size.width);
-                    }
+                
+                if ([self nodeHasOnlyTextChilds:node]) {  // skip remaining of the node width if no childrens
+                    nextX = MAX(nextX, nodeRect.origin.x + nodeRect.size.width);
                 }
             }
             x = nextX;
@@ -380,6 +378,24 @@
         nextY = previousY + pageHeight;
     }
     return nextY;
+}
+
+- (BOOL)nodeHasOnlyTextChilds:(DOMHTMLElement *)node
+{
+    BOOL onlyTextChilds = YES;
+    
+    DOMNodeList *nodes = [node childNodes];
+    int nodesLength = [nodes length];
+    int i;
+    for (i=0; i<nodesLength; i++)
+    {
+        DOMHTMLElement *node = (DOMHTMLElement*)[nodes item:i];
+        if ([node nodeType] != DOM_TEXT_NODE ) {
+            onlyTextChilds = NO;
+            break;
+        }
+    }
+    return onlyTextChilds;
 }
 
 - (NSArray *)forcedPagesBreakInDocument:(DOMHTMLDocument *)document
@@ -450,8 +466,9 @@
             
             if ([node isKindOfClass:[DOMHTMLTableCellElement class]]) {
                 NSRect nodeRect = [self checkForRestrictedTRNode:[node parentNode]];
-                if (nodeRect.size.height > 0) {
+                if (nodeRect.size.height > 0 && nodeRect.size.height < pageHeight) {
                     [[self printWindow] logMessage:[NSString stringWithFormat:@"Restricted TR found start: %f to: %f", nodeRect.origin.y, nodeRect.origin.y+nodeRect.size.height]];
+                    node = node.parentNode;
                     
                     if ( nodeRect.size.height < pageHeight && nodeRect.origin.y > previousY && suggestedBreak < nodeRect.origin.y+nodeRect.size.height)
                     {
@@ -466,18 +483,18 @@
     return elemRect;
 }
 
-- (NSRect)checkForRestrictedTRNode:(DOMNode *)node
+- (NSRect)checkForRestrictedTRNode:(DOMNode *)trNode
 {
-    if (![node isKindOfClass:[DOMHTMLTableRowElement class]])
+    if (![trNode isKindOfClass:[DOMHTMLTableRowElement class]])
     {
         return NSMakeRect(0, 0, 0, 0);
     }
     NSRect trRect = NSMakeRect(0, 0, 0, 0);
     
-    DOMCSSStyleDeclaration *elemStyle = [[self _webView] computedStyleForElement:(DOMHTMLElement *)node pseudoElement:nil];
+    DOMCSSStyleDeclaration *elemStyle = [[self _webView] computedStyleForElement:(DOMHTMLElement *)trNode pseudoElement:nil];
     if ([[elemStyle pageBreakInside] isEqual:@"avoid"])
     {
-        DOMNodeList *childs = [node childNodes];
+        DOMNodeList *childs = [trNode childNodes];
         int nbChilds = [childs length];
         int i;
         for (i=0; i<nbChilds; i++)
@@ -490,7 +507,7 @@
             if (trRect.origin.x == 0 || trRect.origin.x > tdRect.origin.x) {
                 trRect.origin.x = tdRect.origin.x;
             }
-            if (trRect.origin.y == 0 || trRect.origin.y < tdRect.origin.y) {
+            if (trRect.origin.y == 0 || trRect.origin.y > tdRect.origin.y) {
                 trRect.origin.y = tdRect.origin.y;
             }
             trRect.size.width += tdRect.size.width;
