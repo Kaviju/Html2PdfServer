@@ -152,7 +152,7 @@ float MaxTemplateHeightInWebPixels = 2000;
 - (void)logMessage:(NSString*)aMessage
 {
     NSFileHandle *stdERR = [NSFileHandle fileHandleWithStandardError];
-    aMessage = [NSString stringWithFormat:@"%@: %@", [NSCalendarDate date], aMessage];
+    aMessage = [NSString stringWithFormat:@"%@: %@\n", [NSCalendarDate date], aMessage];
 	[stdERR writeData:[aMessage dataUsingEncoding:NSUTF8StringEncoding]];
 }
 

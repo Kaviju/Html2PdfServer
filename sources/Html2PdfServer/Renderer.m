@@ -102,8 +102,13 @@
     if ([messageData length] == 0) { // FileHandle was closed
         return;
     }
-    NSString *message = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
-    [messages addObject:message];
+    NSString *stringReceived = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
+    NSArray *receivedMessages = [stringReceived componentsSeparatedByString:@"\n"];
+    for (NSString *message in receivedMessages) {
+        if ([message length] > 0) {
+            [messages addObject:message];
+        }
+    }
     
     NSFileHandle *fh = [aNotification object];
     [fh readInBackgroundAndNotify];
