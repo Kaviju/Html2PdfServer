@@ -58,9 +58,8 @@ float MaxTemplateHeightInWebPixels = 2000;
             NSString *guid = [[[NSProcessInfo processInfo] globallyUniqueString] stringByAppendingPathExtension:@"pdf"];
             pdfPath = [NSTemporaryDirectory() stringByAppendingPathComponent:guid];
             
-            [infoDict setObject:requestURL forKey:@"documentSourceURL"];
-            [self logMessage:[NSString stringWithFormat:@"sourceUrl [%@] ", requestURL]];
-            [self logMessage:[NSString stringWithFormat:@"pdfPath [%@] ", pdfPath]];
+            [self logMessage:[NSString stringWithFormat:@"sourceUrl %@", requestURL]];
+            [self logMessage:[NSString stringWithFormat:@"pdfPath %@", pdfPath]];
             
             window = [[PdfPrintWindow alloc] initWithContentRect:NSMakeRect(-10000, -10000, MaxTemplateWidthInWebPixels, MaxTemplateHeightInWebPixels)
                                                        styleMask:NSTitledWindowMask|NSResizableWindowMask|NSClosableWindowMask
@@ -77,10 +76,16 @@ float MaxTemplateHeightInWebPixels = 2000;
             [mainView setDelegate:self];
             [window setContentView:mainView];
             
-            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]
-                                                        cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                    timeoutInterval:10.0];
-            [mainView saveRequest:urlRequest toPath:pdfPath];
+            if (requestURL != nil) {
+                NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:10.0];
+                [infoDict setObject:requestURL forKey:@"documentSourceURL"];
+                [mainView saveRequest:urlRequest toPath:pdfPath];
+            }
+            else {
+                [mainView saveHtmlSource:[paramsDict objectForKey:@"htmlSource"] toPath:pdfPath];
+            }
         }
         [[NSFileHandle fileHandleWithStandardInput] readInBackgroundAndNotify];
     }

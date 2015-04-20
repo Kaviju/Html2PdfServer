@@ -50,6 +50,7 @@
 - (void)printPages:(NSPrintInfo *)printInfo;
 
 - (void)saveRequest:(NSURLRequest *)request toPath:(NSString*)path;
+- (void)saveHtmlSource:(NSString *)htmlSource toPath:(NSString*)path;
 
 - (void)releaseResources;
 

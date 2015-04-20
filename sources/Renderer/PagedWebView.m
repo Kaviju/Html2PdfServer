@@ -46,10 +46,18 @@
 
 - (void)saveRequest:(NSURLRequest *)request toPath:(NSString*)path
 {
+    pdfPath = path;
+    
+    [_delegate logMessage:@"Begin loading."];
+    [[pageView mainFrame] loadRequest:request];
+}
+
+- (void)saveHtmlSource:(NSString *)htmlSource toPath:(NSString*)path
+{
 	pdfPath = path;
 	
 	[_delegate logMessage:@"Begin loading."];
-	[[pageView mainFrame] loadRequest:request];
+	[[pageView mainFrame] loadHTMLString:htmlSource baseURL:nil];
 }
 
 - (void)print:(id) sender
