@@ -256,6 +256,7 @@
     // Switch behavior of operation to use the paginated iFrame
     if (contentFrameElement != nil)
     {
+        [contentFrameElement setScrolling:@"no"]; // We do not want to print scroll bars, hide them !
         printWindow.hasHeader = YES;
         printWindow.contentDocument = (DOMHTMLDocument *)[contentFrameElement contentDocument];
         if ([[[[contentFrameElement contentFrame] frameView] documentView] frame].size.height == 0)
