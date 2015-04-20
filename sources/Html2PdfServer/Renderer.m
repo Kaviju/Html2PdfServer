@@ -85,11 +85,28 @@
     NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedLong:firstPageNumber], @"firstPageNumber",
                                requestUrl, @"url",
                                nil];
+    [self sendRequest:paramDict completionBlock:aBlock];
+}
+
+- (void)processHtmlSource:(NSString *)html firstPageNumber:(NSUInteger)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock
+{
+    _numberOfRequests++;
+    self.completionBlock = aBlock;
+    messages = [NSMutableArray new];
+    
+    NSDictionary *paramDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedLong:firstPageNumber], @"firstPageNumber",
+                               html, @"htmlSource",
+                               nil];
+    [self sendRequest:paramDict completionBlock:aBlock];
+}
+
+- (void)sendRequest:(NSDictionary *)paramDict completionBlock:(RendererCompletionBlock)aBlock
+{
     NSError *error;
     NSData *paramDictData = [NSPropertyListSerialization dataWithPropertyList:paramDict
-                                                                      format:NSPropertyListXMLFormat_v1_0
-                                                                     options:NSPropertyListMutableContainers error:&error];
-
+                                                                       format:NSPropertyListXMLFormat_v1_0
+                                                                      options:NSPropertyListMutableContainers error:&error];
+    
     NSFileHandle *requestFH = [_requestPipe fileHandleForWriting];
     [requestFH writeData:paramDictData];
 }

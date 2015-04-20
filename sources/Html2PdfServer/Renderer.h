@@ -23,6 +23,7 @@ typedef void (^RendererCompletionBlock)(NSData *, NSMutableDictionary *, NSArray
 - (id)initWithPool:(RendererPool *)pool;
 
 - (void)processRequest:(NSString *)requestUrl firstPageNumber:(NSUInteger)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock;
+- (void)processHtmlSource:(NSString *)html firstPageNumber:(NSUInteger)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock;
 
 - (void)startTask;
 - (void)stopTask;
