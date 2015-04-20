@@ -22,7 +22,7 @@
 	
     NSUInteger currentPageNumber;
     NSMutableArray *lines;
-    NSMutableDictionary *responseDict;
+    NSMutableArray *infoDicts;
     
     NSTimeInterval beginTime;
     NSTimeInterval beginPrint;

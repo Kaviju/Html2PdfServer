@@ -27,6 +27,7 @@
         self.server = aServer;
         currentPageNumber = 1;
         _messages = [NSMutableArray new];
+        infoDicts = [NSMutableArray new];
         
         // Get IP address of remote client
         CFSocketRef socket;
@@ -89,6 +90,11 @@
     
     [self logMessage:[NSString stringWithFormat:@"sourceUrl [%@] ", sourceUrl]];
     lines = [NSMutableArray arrayWithObject:[NSString stringWithFormat:@"renderPdfAtUrl:%@", sourceUrl]];
+    
+    if ([[queryDict objectForKey:@"withRendererInfos"] isEqualToString:@"1"]) {
+        [lines addObject:@"addRendererInfos"];
+    }
+    
     [self processNextLine];
 }
 
@@ -192,6 +198,9 @@
         else if ([command isEqualToString:@"renderPdfAtUrl"]) {
             canContinue = [self renderPdfAtUrl:paramString];
         }
+        else if ([command isEqualToString:@"addRendererInfos"]) {
+            canContinue = [self addRendererInfos];
+        }
         else if ([command isEqualToString:@"sendBasicResponse"]) {
             canContinue = [self sendBasicHttpResponse];
         }
@@ -226,9 +235,22 @@
     return NO;
 }
 
+- (BOOL)addRendererInfos
+{
+    Renderer *renderer = [[RendererPool sharedPool] renderer];
+    
+    NSString *infosHtml = [self createRendererInfosHtml];
+    [renderer processHtmlSource:infosHtml firstPageNumber:currentPageNumber completionBlock:^(NSData *pdfData, NSMutableDictionary *infoDict, NSArray *messages) {
+        SimpleHTTPConnection *blocSelf = self;  //Keep a copy of the pointer because self is sometime corrupted after -sendHttpResponse for an unknow reason.
+        [blocSelf.messages addObjectsFromArray:messages];
+        [blocSelf processRenderedPdf:pdfData withInfos:infoDict];
+    }];
+    return NO;
+}
+
 - (void)processRenderedPdf:(NSData *)pdfData withInfos:(NSMutableDictionary *)infoDict
 {
-    [self logMessage:[NSString stringWithFormat:@"infoDict [%@] ", infoDict]];
+    [infoDicts addObject:infoDict];
     if (pdfData != nil) {
         PDFDocument *newDocument = [[PDFDocument alloc] initWithData:pdfData];
         if (self.pdfDocument == nil) {
@@ -244,6 +266,7 @@
     }
     [self processNextLine];
 }
+
 
 #pragma mark Send response and log
 
@@ -299,6 +322,7 @@
         [fileHandle writeData:[pdfDataLength dataUsingEncoding:NSUTF8StringEncoding]];
         [fileHandle writeData:pdfData];
         
+        NSMutableDictionary *responseDict;
         NSError *error;
         NSData *infoDictData = [NSJSONSerialization dataWithJSONObject:responseDict options:NSJSONWritingPrettyPrinted error:&error];
 
@@ -333,6 +357,24 @@
     CFHTTPMessageSetHeaderFieldValue(msg, (CFStringRef)@"ETag", (__bridge CFStringRef)[url path]);
     CFHTTPMessageSetHeaderFieldValue(msg, (CFStringRef)@"Cache-Control", (CFStringRef)@"public");
     return msg;
+}
+
+- (NSString *)createRendererInfosHtml
+{
+    NSMutableString *html = [NSMutableString new];
+    [html appendString:@"<!DOCTYPE html>\n<html>\n\n<head>\n"];
+    [html appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n"];
+    [html appendString:@"</head>\n<body width=\"100%\">\n"];
+    
+    [html appendString:@"<h3>Infos</h3>\n<pre>"];
+    [html appendString:[infoDicts description]];
+    [html appendString:@"</pre>"];
+    [html appendString:@"<h3>Messages</h3>\n<pre>"];
+    [html appendString:[_messages description]];
+    [html appendString:@"</pre>"];
+    
+    [html appendString:@"</body>\n</html>\n"];
+    return html;
 }
 
 - (void)logMessage:(NSString*)aMessage
