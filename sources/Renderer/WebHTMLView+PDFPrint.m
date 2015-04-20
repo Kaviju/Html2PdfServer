@@ -95,7 +95,6 @@
     for (i=0; i<nodesLength; i++)
     {
         DOMHTMLElement *node = (DOMHTMLElement*)[nodes item:i];
-        //node.style.visibility = nil;
         node.style.display = nil;
     }
 }
@@ -105,7 +104,6 @@
     for (i=0; i<nodesLength; i++)
     {
         DOMHTMLElement *node = (DOMHTMLElement*)[nodes item:i];
-        //node.style.visibility = @"hidden";
         node.style.display = @"none";
     }
 }
@@ -117,7 +115,7 @@
     NSString *pageNumberText = [NSString stringWithFormat:@"%d", printWindow.currentPageNumber];
     unsigned long lastPageNumber = printWindow.firstPageNumber + [printWindow.pagesRects count] - 1;
     
-    NSString *totalPageNumberText = [NSString stringWithFormat:@"%ld", lastPageNumber];
+    NSString *lastPageNumberText = [NSString stringWithFormat:@"%ld", lastPageNumber];
     
     DOMNodeList *nodes = [document getElementsByName:@"pageNumber"];
     int nodesLength = [nodes length];
@@ -128,12 +126,21 @@
         [node setInnerText:pageNumberText];
     }
     
+    nodes = [document getElementsByName:@"lastPageNumber"];
+    nodesLength = [nodes length];
+    for (i=0; i<nodesLength; i++)
+    {
+        DOMHTMLElement *node = (DOMHTMLElement*)[nodes item:i];
+        [node setInnerText:lastPageNumberText];
+    }
+    
+    // totalPageNumber is for backward compatibility support
     nodes = [document getElementsByName:@"totalPageNumber"];
     nodesLength = [nodes length];
     for (i=0; i<nodesLength; i++)
     {
         DOMHTMLElement *node = (DOMHTMLElement*)[nodes item:i];
-        [node setInnerText:totalPageNumberText];
+        [node setInnerText:lastPageNumberText];
     }
 }
 
@@ -161,15 +168,15 @@
     printWindow.viewToPaginateFrame = [printWindow.documentView bounds];
     
     float viewWidth = NSWidth([printWindow.documentView bounds]);
-    float printWidth = [printInfo paperSize].width - [printInfo leftMargin] - [printInfo rightMargin];
-    float printHeight = [printInfo paperSize].height - [printInfo topMargin] - [printInfo bottomMargin];
+    float printableWidth = [printInfo paperSize].width - [printInfo leftMargin] - [printInfo rightMargin];
+    float printableHeight = [printInfo paperSize].height - [printInfo topMargin] - [printInfo bottomMargin];
     
-    printWindow.scaleFactor = printWidth / (viewWidth + 1); // Make sure we include the last pixel, rounding error may put it outside if we do not pad
-    printWindow.htmlWidth = printWidth/printWindow.scaleFactor;
-    printWindow.htmlHeight = printHeight/printWindow.scaleFactor;
+    printWindow.scaleFactor = printableWidth / (viewWidth + 1); // Make sure we include the last pixel, rounding error may put it outside if we do not pad
+    printWindow.htmlWidth = printableWidth/printWindow.scaleFactor;
+    printWindow.htmlHeight = printableHeight/printWindow.scaleFactor;
     
     [printWindow setInfo:[NSString stringWithFormat:@"%f X %f", paperSize.width, paperSize.height] forKey:@"paperSize"];
-    [printWindow setInfo:[NSString stringWithFormat:@"%f X %f", printWidth, printHeight] forKey:@"paperPrintableSize"];
+    [printWindow setInfo:[NSString stringWithFormat:@"%f X %f", printableWidth, printableHeight] forKey:@"paperPrintableSize"];
     
     [printWindow setInfo:[NSString stringWithFormat:@"%f X %f", printViewFrame.size.width, printViewFrame.size.height] forKey:@"mainHtmlSize"];
     [printWindow setInfo:[NSNumber numberWithFloat:printWindow.scaleFactor] forKey:@"printScaleFactor"];
@@ -180,7 +187,7 @@
                              [printInfo topMargin], [printInfo leftMargin],
                              [printInfo bottomMargin], [printInfo rightMargin]]];
     
-    [printWindow logMessage:[NSString stringWithFormat:@"Printed dimensions: %f X %f", printWidth, printHeight]];
+    [printWindow logMessage:[NSString stringWithFormat:@"Printed dimensions: %f X %f", printableWidth, printableHeight]];
     [printWindow logMessage:[NSString stringWithFormat:@"HTML dimensions: %f X %f", printViewFrame.size.width, printViewFrame.size.height]];
     [printWindow logMessage:[NSString stringWithFormat:@"Shrink factor: %f", printWindow.scaleFactor]];
     
@@ -199,10 +206,13 @@
         
         NSRect contentViewFrame = [[printWindow.contentScrollView documentView] frame];
         
-        [printWindow logMessage:[NSString stringWithFormat:@"Paginated Zone dimensions: %d X %d", contentFrameElement.offsetWidth, contentFrameElement.offsetHeight]];
+        [printWindow logMessage:[NSString stringWithFormat:@"Content iframe dimensions: %d X %d", contentFrameElement.offsetWidth, contentFrameElement.offsetHeight]];
+        [printWindow setInfo:[NSString stringWithFormat:@"%d X %d", contentFrameElement.offsetWidth, contentFrameElement.offsetHeight] forKey:@"contentIframeDimensions"];
         
-        int adjustedPrintHeight = printHeight/printWindow.scaleFactor;
-        [printWindow logMessage:[NSString stringWithFormat:@"HTML height available: %d", adjustedPrintHeight-(int)printViewFrame.size.height]];
+        int printableHtmlHeight = printableHeight/printWindow.scaleFactor;
+        int unusedPrintableHtmlHeight = printableHtmlHeight - (int)printViewFrame.size.height;
+        [printWindow logMessage:[NSString stringWithFormat:@"Uused HTML height: %d", unusedPrintableHtmlHeight]];
+        [printWindow setInfo:[NSNumber numberWithInt:unusedPrintableHtmlHeight] forKey:@"unusedPrintableHtmlHeight"];
         
         [printWindow logMessage:[NSString stringWithFormat:@"HTML content dimensions: %f X %f", contentViewFrame.size.width, contentViewFrame.size.height]];
         
