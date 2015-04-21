@@ -24,9 +24,7 @@
     NSMutableArray *lines;
     NSMutableArray *infoDicts;
     
-    NSTimeInterval beginTime;
-    NSTimeInterval beginPrint;
-    NSTimeInterval endPrint;
+    NSTimeInterval requestTime;
 }
 
 @property SimpleHTTPServer *server;

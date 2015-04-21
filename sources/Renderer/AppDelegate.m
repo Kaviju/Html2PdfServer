@@ -116,7 +116,7 @@ float MaxTemplateHeightInWebPixels = 2000;
 - (void)fetchDone
 {
     endFetch = [NSCalendarDate timeIntervalSinceReferenceDate];
-    [infoDict setObject:[NSNumber numberWithDouble:(endFetch-beginTime)] forKey:@"fetchDuration"];
+    [infoDict setObject:[NSNumber numberWithDouble:(endFetch-beginTime)] forKey:@"fetchTime"];
     [self logMessage:[NSString stringWithFormat:@"Fetch done in %f s.", (endFetch-beginTime)]];
 }
 
@@ -152,8 +152,8 @@ float MaxTemplateHeightInWebPixels = 2000;
 {
     @try {
         endPrint = [NSCalendarDate timeIntervalSinceReferenceDate];
-        [infoDict setObject:[NSNumber numberWithDouble:(endPrint-endFetch)] forKey:@"printDuration"];
-        [infoDict setObject:[NSNumber numberWithDouble:(endPrint-beginTime)] forKey:@"totalDuration"];
+        [infoDict setObject:[NSNumber numberWithDouble:(endPrint-endFetch)] forKey:@"printTime"];
+        [infoDict setObject:[NSNumber numberWithDouble:(endPrint-beginTime)] forKey:@"totalTime"];
         [self logMessage:[NSString stringWithFormat:@"Print done in %f s.", (endPrint-endFetch)]];
         [self logMessage:[NSString stringWithFormat:@"Total time %f s.", (endPrint-beginTime)]];
         

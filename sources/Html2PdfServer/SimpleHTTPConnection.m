@@ -55,7 +55,7 @@
 
 - (void)processRequest
 {
-    beginTime = [NSCalendarDate timeIntervalSinceReferenceDate];
+    requestTime = [NSCalendarDate timeIntervalSinceReferenceDate];
 	[self readRequest];
 	if ([[url path] isEqual:@"/favicon.ico"]) return;
     @try
@@ -275,6 +275,7 @@
     CFHTTPMessageRef msg = NULL;
     CFDataRef msgData = NULL;
     NSData *pdfData = [self.pdfDocument dataRepresentation];
+    
     NSLog(@"printing done, %ld messages, pdf size: %ld", [_messages count], [pdfData length]);
     
     @try
@@ -365,6 +366,10 @@
     [html appendString:@"<!DOCTYPE html>\n<html>\n\n<head>\n"];
     [html appendString:@"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\n"];
     [html appendString:@"</head>\n<body width=\"100%\">\n"];
+    NSTimeInterval totalTime = [NSCalendarDate timeIntervalSinceReferenceDate] - requestTime;
+    [html appendFormat:@"<b>Total time:</b> %f seconds<br/>\n", totalTime];
+    [html appendFormat:@"<b>Total number of pages:</b> %lu<br/>\n", (unsigned long)[self.pdfDocument pageCount]];
+    [html appendFormat:@"<b>PDF size:</b> %lu<br/>\n", [[self.pdfDocument dataRepresentation] length]];
     
     [html appendString:@"<h3>Infos</h3>\n<pre>"];
     [html appendString:[infoDicts description]];
