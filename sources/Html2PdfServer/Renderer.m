@@ -134,10 +134,9 @@
     }
 }
 
-- (int)readBlockLength:(NSData *)readData atIndex:(unsigned)offset
+- (int)readBlockLength:(NSData *)blockLengthData
 {
-    NSData *blockLength = [readData subdataWithRange:NSMakeRange(offset, BlockLengthSize)];
-    NSString *blockLengthAsString = [[NSString alloc] initWithData:blockLength encoding:NSUTF8StringEncoding];
+    NSString *blockLengthAsString = [[NSString alloc] initWithData:blockLengthData encoding:NSUTF8StringEncoding];
     blockLengthAsString = [blockLengthAsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     int pdfLength = [blockLengthAsString intValue];
     return pdfLength;
@@ -148,15 +147,22 @@
     @autoreleasepool { // Leaks if no autorelease pool here 2013-03-15
         NSFileHandle *pdfFileHandle = [aNotification object];
         NSData *readData = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
+        NSUInteger readDataCurrentOffset = 0;
         
         if ([readData length] == 0) { // FileHandle was closed
             return;
         }
         
-        int infoDictLength = [self readBlockLength:readData atIndex:0];
+        // Read the info dict
+        NSData *infoDictLengthData = [readData subdataWithRange:NSMakeRange(0, BlockLengthSize)];
+        int infoDictLength = [self readBlockLength:infoDictLengthData];
+        readDataCurrentOffset += BlockLengthSize;
+        
         NSMutableData *infoDictData = [NSMutableData dataWithCapacity:infoDictLength];
-        unsigned infoDictDataOffset = BlockLengthSize;
-        [infoDictData appendData:[readData subdataWithRange:NSMakeRange(infoDictDataOffset, MIN([readData length]-infoDictDataOffset, infoDictLength))]];
+        
+        NSUInteger infoDictDataLengthFromInitialData = MIN([readData length]-readDataCurrentOffset, infoDictLength);
+        [infoDictData appendData:[readData subdataWithRange:NSMakeRange(readDataCurrentOffset, infoDictDataLengthFromInitialData)]];
+        readDataCurrentOffset += infoDictDataLengthFromInitialData;
 
         if ([infoDictData length] < infoDictLength) {
              [infoDictData appendData:[pdfFileHandle readDataOfLength:infoDictLength - [infoDictData length]]];
@@ -164,12 +170,21 @@
         NSError *error;
         NSMutableDictionary *infoDict = [NSPropertyListSerialization propertyListWithData:infoDictData options:NSPropertyListMutableContainers format:NULL error:&error];
 
+        // Now the PDF
+        NSMutableData *pdfLengthData = [NSMutableData dataWithCapacity:BlockLengthSize];
+        if ([readData length] > readDataCurrentOffset) {
+            NSUInteger pdfDataBlockLengthFromInitialData = MIN([readData length]-readDataCurrentOffset, BlockLengthSize);
+            [pdfLengthData appendData:[readData subdataWithRange:NSMakeRange(readDataCurrentOffset, pdfDataBlockLengthFromInitialData)]];
+            readDataCurrentOffset += pdfDataBlockLengthFromInitialData;
+        }
+        if ([pdfLengthData length] < BlockLengthSize) {
+            [pdfLengthData appendData:[pdfFileHandle readDataOfLength:BlockLengthSize - [pdfLengthData length]]];
+        }
         
-        int pdfLength = [self readBlockLength:readData atIndex:infoDictLength + BlockLengthSize];
+        int pdfLength = [self readBlockLength:pdfLengthData];
         NSMutableData *pdfData = [NSMutableData dataWithCapacity:pdfLength];
-        unsigned pdfDataOffset = infoDictLength + BlockLengthSize + BlockLengthSize;
-        if ([readData length] >= pdfDataOffset) {
-            [pdfData appendData:[readData subdataWithRange:NSMakeRange(pdfDataOffset, MIN([readData length]-pdfDataOffset, pdfLength))]];
+        if ([readData length] >= readDataCurrentOffset) {
+            [pdfData appendData:[readData subdataWithRange:NSMakeRange(readDataCurrentOffset, MIN([readData length]-readDataCurrentOffset, pdfLength))]];
         }
         if ([pdfData length] < pdfLength) {
             [pdfData appendData:[pdfFileHandle readDataOfLength:pdfLength - [pdfData length]]];

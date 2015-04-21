@@ -368,8 +368,10 @@
     [html appendString:@"</head>\n<body width=\"100%\">\n"];
     NSTimeInterval totalTime = [NSCalendarDate timeIntervalSinceReferenceDate] - requestTime;
     [html appendFormat:@"<b>Total time:</b> %f seconds<br/>\n", totalTime];
-    [html appendFormat:@"<b>Total number of pages:</b> %lu<br/>\n", (unsigned long)[self.pdfDocument pageCount]];
-    [html appendFormat:@"<b>PDF size:</b> %lu<br/>\n", [[self.pdfDocument dataRepresentation] length]];
+    if (self.pdfDocument != nil) {
+        [html appendFormat:@"<b>Total number of pages:</b> %lu<br/>\n", (unsigned long)[self.pdfDocument pageCount]];
+        [html appendFormat:@"<b>PDF size:</b> %lu<br/>\n", [[self.pdfDocument dataRepresentation] length]];
+    }
     
     [html appendString:@"<h3>Infos</h3>\n<pre>"];
     [html appendString:[infoDicts description]];
