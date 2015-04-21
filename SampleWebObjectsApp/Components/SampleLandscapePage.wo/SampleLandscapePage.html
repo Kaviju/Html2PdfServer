@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body paperSize="Letter" paperOrientation = "Landscape" marginTop="20" marginBottom="30" marginLeft="30" marginRight="30" width="100%">
+
+<wo:if condition = "$isPrinting" negate = "YES">
+	<wo:link pageName = "Main">Back to Main Page</wo:link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<wo:link target = "_blank" action = "$pdfVersionOfCurrentPage">Get a PDF version of this page</wo:link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	These buttons are hidden by a WOConditional on the printed version.
+</wo:if>
+
+<h1>This page is in landscape</h1>
+<h2>A big Apache logo</h2>
+<br/>
+<wo:SvgImage filename = "images/apache_logo.svg" width = "1000"/>
+</body>
+</html>

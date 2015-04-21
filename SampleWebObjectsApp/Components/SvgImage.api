@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wodefinitions>
+    <wo class="SvgImage" wocomponentcontent="false">    <binding name="framework"/>
+        <binding name="filename"/>
+        <validation message="'newBinding' is a required binding.">
+            <unbound name="filename"/>
+        </validation>
+        <binding name="height"/>
+        <binding name="width"/>
+    <binding name="id"/>
+        <binding name="style"/>
+        <binding name="class"/>
+    </wo>
+</wodefinitions>

@@ -1,0 +1,28 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Untitled</title>
+</head>
+<body>
+<h2>Html2PDF Server WebObjects sample app</h2>
+
+<p><wo:link pageName = "PublicSpaceList">Long documents with header-footer and a SVG logo</wo:link></p>
+<p><wo:link pageName = "FontSamplePage">Font embeding</wo:link></p>
+<p><wo:link pageName = "SampleLandscapePage">Landscape page</wo:link></p>
+<p><wo:link action = "$downloadMultipleOrientation">Multiple paper orientation PDF download</wo:link></p>
+<p><wo:link target = "_blank" action = "$viewMultipleOrientation">Multiple paper orientation in new window</wo:link></p>
+
+<p><br/></p>
+
+<p>
+An integration wrapper is provided in this projet. Copy the Html2PDFService class into your project and set these 2 properties to start creating pdfs. 
+</p>
+<ul>
+	<li>html2pdfServers=("http://localhost:1453/")
+<p>Contain a list of server URLs, the code will try then is cascade in case of failure</p>
+	<li>html2pdfReadTimeout=15000
+	<p>The read timeout for the server request. The value is in ms and need to be enought for your larger PDFs</p>
+</ul>
+
+	</body>
+</html>

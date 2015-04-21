@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<script>
+			<!--
+			// Copy the content of the hidden div to the iFrame
+			function copyContent()
+			{
+				var headHtml = document.getElementsByTagName("head")[0].innerHTML;
+				
+				var elemDiv = document.getElementById("contentDiv");
+				var contentHTML = elemDiv.innerHTML;
+				document.getElementById("contentDiv");
+				
+				var elemFrame = document.getElementById("contentFrame");
+				var doc = elemFrame.contentDocument;
+				
+				if (doc == undefined || doc == null){
+					doc = elemFrame.contentWindow.document;
+				}
+				doc.open();
+				doc.write('<!DOCTYPE HTML><html>');
+				doc.write('<head>');
+				doc.write(headHtml);
+				doc.write('</head><body>');
+				doc.write(contentHTML);
+				doc.write('</body></html>');
+				doc.close();
+			}
+			//-->
+		</script>
+	<style>
+	* {
+		box-sizing:border-box;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+		width: 734px;
+		font-size: 11pt;
+	}
+	table.main {
+		margin: 10px;
+		width: 100%;
+	}
+	table.main tr th {
+		text-align: left;
+	}
+	table.main tr th,td {
+		padding: 2px 4px;
+	}
+	@media print {
+		.hide-on-print {
+		    display: none !important;
+		}
+	}
+	</style>
+</head>
+<body onLoad="copyContent();" marginTop="20" marginBottom="30" marginLeft="30" marginRight="30" width="100%">
+<div class = "hide-on-print">
+	<wo:link pageName = "PublicSpaceList">Back to Previous Page</wo:link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<wo:link target = "_blank" action = "$pdfVersionOfCurrentPage">Get a PDF version of this page</wo:link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	These buttons are hidden on the printed version with a CSS rule. The city logo is in SVG
+</div>
+<div style="width: 100%; padding: 10px 10px 0px;">
+	<div style = "display: inline-block; width: 20%;">
+		<wo:SvgImage filename = "images/VDQ_logo.svg" width = "100%"/>
+	</div>
+	<div style = "display: inline-block; width: 79%; padding-left: 20px; vertical-align:top;">
+		<h3>Public spaces of type <wo:string value = "$featureType"/></h3>
+		<p>The city logo is a SVG file dispayed as vector in the PDF. Address are clicable link to open Google map also active in the PDF.</p>
+	</div>
+</div>
+<table class = "main" style = "margin-bottom:0;"><tr>
+	<th width = "300">Name</th>
+	<th width = "100" style = "text-align:center;">Area</th>
+	<th width = "">Address</th>
+</tr></table>
+<div style = "width: 100%">
+	<div style = "width: 100%;height:780px;">
+		<iframe id = "contentFrame" style = "width: 100%;height:100%;border: 0 none;" src = "">
+		</iframe>
+	</div>
+</div>
+<div class="" style="margin-top: 20px;margin-bottom: 0px;width: 100%;text-align:right;">
+	Sample footer... Page <span name="pageNumber"/>
+</div>
+
+<div id = "contentDiv" style = "display:none;">
+	<table class = "main" style = "margin-top:0;">
+	<wo:repeat list = "$features" item = "$feature"><tr>
+		<td width = "300"><wo:string value = "$feature.NOM_TOPOGR"/></td>
+		<td width = "100" style="text-align:right;"><wo:string value = "$featureArea" numberformat = "0"/> m<sup>2</sup></td>
+		<td width = "">
+			<wo:link target = "_blank" href = "$googleMapUrl"><wo:string value = "$featureAddress"/></wo:link>
+		</td>
+	</tr></wo:repeat>
+	</table>
+</div>
+</body>
+</html>

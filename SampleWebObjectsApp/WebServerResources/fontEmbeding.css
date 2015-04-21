@@ -1,0 +1,13 @@
+@font-face {
+	font-family: "Raleway";
+	font-weight: normal;
+	src: url("fonts/Raleway-Regular.otf");
+}
+body {
+	width: 100%;
+	line-height: 1.3;
+	border: 1px solid grey;
+	box-sizing: border-box; 
+	margin:0;
+	padding: 10px;
+}

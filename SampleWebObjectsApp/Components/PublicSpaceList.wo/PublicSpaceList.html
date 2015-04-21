@@ -1,0 +1,25 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Untitled</title>
+</head>
+<body>
+<wo:form><wo:AjaxObserveField>
+<wo:link pageName = "Main">Back to Main Page</wo:link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<label><wo:checkbox checked = "$addRendererInfos"/> Add renderer infos to PDFs</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<wo:link target = "_blank" action = "$printAllLists">PDF of all Lists</wo:link>
+</wo:AjaxObserveField></wo:form>
+<table><tr>
+	<th>Type</th>
+	<th>Number</th>
+</tr>
+<wo:repeat list = "$featureTypes" item = "$featureType"><tr>
+	<td><wo:string value = "$featureType"/></td>
+	<td align = "right"><wo:string value = "$featureTypeCount"/></td>
+	<td><wo:link action = "$printListPreview">PDF List preview</wo:link></td>
+	<td><wo:link target = "_blank" action = "$printList">PDF List</wo:link></td>
+</tr></wo:repeat>
+</table>
+</body>
+</html>

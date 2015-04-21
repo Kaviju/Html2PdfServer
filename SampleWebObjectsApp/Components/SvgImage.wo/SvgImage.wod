@@ -1,0 +1,10 @@
+ObjectTag : WOGenericContainer {
+  elementName = "object";
+  type = "image/svg+xml";
+  data = svgSrc;
+  style = ^style;
+  class = ^class;
+  height = ^height;
+  width = ^width;
+  id = ^id;
+}
