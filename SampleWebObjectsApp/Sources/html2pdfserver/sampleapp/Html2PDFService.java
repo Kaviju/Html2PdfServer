@@ -59,6 +59,21 @@ public class Html2PDFService {
 		urlConn.setConnectTimeout(1000);
 		urlConn.setReadTimeout(ERXProperties.intForKeyWithDefault("html2pdfReadTimeout", 15000));
 		
+		addCommandsToRequest(commands, urlConn);
+		urlConn.connect();
+		
+		InputStream urlStream = urlConn.getInputStream();
+		int contentLength = urlConn.getContentLength();
+		log.debug("Got data size: "+contentLength+".");
+		
+		byte[] readBytes = readBytesFromStream(urlStream);
+		urlStream.close();
+		urlConn.disconnect();
+		return readBytes;
+	}
+
+	private static void addCommandsToRequest(NSArray<String> commands, HttpURLConnection urlConn) 
+			throws UnsupportedEncodingException, ProtocolException, IOException {
 		if (commands != null) {
 			String postString = commands.componentsJoinedByString("\n");
 			byte[] postData = postString.getBytes("UTF-8");
@@ -71,16 +86,6 @@ public class Html2PDFService {
 			postStream.flush();
 			postStream.close();
 		}
-		urlConn.connect();
-		
-		InputStream urlStream = urlConn.getInputStream();
-		int contentLength = urlConn.getContentLength();
-		log.debug("Got data size: "+contentLength+".");
-		
-		byte[] readBytes = readBytesFromStream(urlStream);
-		urlStream.close();
-		urlConn.disconnect();
-		return readBytes;
 	}
 
 	private static byte[] readBytesFromStream(InputStream in) throws java.io.IOException {
@@ -99,17 +104,17 @@ public class Html2PDFService {
 		NSMutableArray<String>commands = new NSMutableArray<String>();
 		private byte[] pdfData;
 
-		public Request setCurrentPageNumber(int pageNumber){
+		public Request setCurrentPageNumber(int pageNumber) {
 			commands.add("setCurrentPageNumber:"+pageNumber);
 			return this;
 		}
 
-		public Request addBlankPage(){
+		public Request addBlankPage() {
 			commands.add("insertBlankPage");
 			return this;
 		}
 
-		public Request addRendererInfos(){
+		public Request addRendererInfos() {
 			commands.add("addRendererInfos");
 			return this;
 		}
@@ -160,7 +165,7 @@ public class Html2PDFService {
 			return this;
 		}
 		
-		public byte[] getpdfData() {
+		public byte[] getPdfData() {
 			return pdfData;
 		}
 		
