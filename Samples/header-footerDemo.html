@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<script>
+			<!--
+			// Copy the content of the hidden div to the iFrame
+			function copyContent()
+			{
+				var headHtml = document.getElementsByTagName("head")[0].innerHTML;
+				
+				var elemDiv = document.getElementById("contentDiv");
+				var contentHTML = elemDiv.innerHTML;
+				document.getElementById("contentDiv");
+				
+				var elemFrame = document.getElementById("contentFrame");
+				var doc = elemFrame.contentDocument;
+				
+				if (doc == undefined || doc == null){
+					doc = elemFrame.contentWindow.document;
+				}
+				doc.open();
+				doc.write('<!DOCTYPE HTML><html>');
+				doc.write('<head>');
+				doc.write(headHtml);
+				doc.write('</head><body>');
+				doc.write(contentHTML);
+				doc.write('</body></html>');
+				doc.close();
+			}
+			//-->
+		</script>
+	<style>
+	* {
+		box-sizing:border-box;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+		width: 734px;
+		font-size: 11pt;
+	}
+	table.main {
+		margin: 10px;
+		width: 100%;
+	}
+	table.main tr th {
+		text-align: left;
+	}
+	table.main tr th,td {
+		padding: 2px 4px;
+	}
+	@media print {
+		.hide-on-print {
+		    display: none !important;
+		}
+	}
+	</style>
+</head>
+<body onLoad="copyContent();" marginTop="20" marginBottom="30" marginLeft="30" marginRight="30" width="100%">
+<div style="width: 100%; padding: 10px 10px 0px;">
+	<div style = "display: inline-block; width: 20%;">
+		<object type="image/svg+xml" width="100%" data="images/VDQ_logo.svg"></object>
+	</div>
+	<div style = "display: inline-block; width: 79%; padding-left: 20px; vertical-align:top;">
+		<h3>Public spaces of type Carrières  et Sablières</h3>
+		<p>The city logo is a SVG file dispayed as vector in the PDF. Address are clicable link to open Google map also active in the PDF.</p>
+	</div>
+</div>
+<table class = "main" style = "margin-bottom:0;"><tr>
+	<th width = "300">Name</th>
+	<th width = "100" style = "text-align:center;">Area</th>
+	<th width = "">Address</th>
+</tr></table>
+<div style = "width: 100%">
+	<div style = "width: 100%;height:817px;">
+		<iframe id = "contentFrame" style = "width: 100%;height:100%;border: 0 none;" src = "">
+		</iframe>
+	</div>
+</div>
+<div class="" style="margin-top: 20px;margin-bottom: 0px;width: 100%;text-align:right;">
+	Sample footer... Page <span name="pageNumber"/>
+</div>
+
+<div id = "contentDiv" style = "display:none;">
+	<table class = "main" style = "margin-top:0;">
+	<tr>
+		<td width = "300">Agrégats Sainte-Foy Inc.</td>
+		<td width = "100" style="text-align:right;">510182 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Avenue+de+la+Montagne+O+%2CQu%C3%A9bec%2CQu%C3%A9bec">Avenue de la Montagne O </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Carrière Union Ltée</td>
+		<td width = "100" style="text-align:right;">713922 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Pierre-Bertrand+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Pierre-Bertrand </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Carrières Québec Inc.</td>
+		<td width = "100" style="text-align:right;">107657 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Jean-Talon+O+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Jean-Talon O </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Carrières Québec Inc.</td>
+		<td width = "100" style="text-align:right;">397957 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Louis-XIV+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Louis-XIV </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Carrières Québec Inc.</td>
+		<td width = "100" style="text-align:right;">378370 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/777+Avenue+Larue+%2CQu%C3%A9bec%2CQu%C3%A9bec">777 Avenue Larue </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Charles-Auguste Fortier Inc.</td>
+		<td width = "100" style="text-align:right;">219718 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+de+la+Colline+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard de la Colline </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">50226 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">43807 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">136547 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">16375 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Rue+du+Gouffre+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue du Gouffre </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">184453 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Avenue+des+Sablonni%C3%A8res+%2CQu%C3%A9bec%2CQu%C3%A9bec">Avenue des Sablonnières </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">565900 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Louis-XIV+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Louis-XIV </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">44093 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Rue+du+Gouffre+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue du Gouffre </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">248943 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">357754 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">84545 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+		</td>
+	</tr><tr>
+		<td width = "300">CSL-LOMA Inc.</td>
+		<td width = "100" style="text-align:right;">62435 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Rue+du+Torrent+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue du Torrent </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Ferme James Gordon Jack Inc</td>
+		<td width = "100" style="text-align:right;">683677 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/17180+Boulevard+Valcartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">17180 Boulevard Valcartier </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Gestion Raymond Denis Inc.</td>
+		<td width = "100" style="text-align:right;">35905 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+de+la+Colline+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard de la Colline </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Gestion Raymond Denis Inc.</td>
+		<td width = "100" style="text-align:right;">86126 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+de+la+Colline+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard de la Colline </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Jean-Claude-Drouin</td>
+		<td width = "100" style="text-align:right;">8656 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Rue+du+Torrent+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue du Torrent </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Les Boulevards du Québec (1976)</td>
+		<td width = "100" style="text-align:right;">912391 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Valcartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Valcartier </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Les Boulevards du Québec (1976)</td>
+		<td width = "100" style="text-align:right;">15385 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Valcartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Valcartier </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Les Boulevards du Québec (1976)</td>
+		<td width = "100" style="text-align:right;">187799 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Valcartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Valcartier </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Les Entreprises P.E.B. Ltée</td>
+		<td width = "100" style="text-align:right;">1656830 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Rue+des+Sabli%C3%A8res+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue des Sablières </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Métro-Excavation Inc.</td>
+		<td width = "100" style="text-align:right;">68701 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Sablière Drapeau (1986) Inc.</td>
+		<td width = "100" style="text-align:right;">276834 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Sablière Drapeau (1986) Inc.</td>
+		<td width = "100" style="text-align:right;">41961 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Sablière Drapeau (1986) Inc.</td>
+		<td width = "100" style="text-align:right;">27749 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Sablière Drapeau (1986) Inc.</td>
+		<td width = "100" style="text-align:right;">28681 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Sablière Drapeau (1986) Inc.</td>
+		<td width = "100" style="text-align:right;">501612 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Rue+Jean-Bardot+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue Jean-Bardot </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Sintra Inc.</td>
+		<td width = "100" style="text-align:right;">331636 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1995+Boulevard+Louis-XIV+%2CQu%C3%A9bec%2CQu%C3%A9bec">1995 Boulevard Louis-XIV </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Unibéton Div. Ciment Québec Inc.</td>
+		<td width = "100" style="text-align:right;">275691 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/3725+Rue+Saint-Henri+%2CQu%C3%A9bec%2CQu%C3%A9bec">3725 Rue Saint-Henri </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Unibéton Div. Ciment Québec Inc.</td>
+		<td width = "100" style="text-align:right;">13253 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/3725+Rue+Saint-Henri+%2CQu%C3%A9bec%2CQu%C3%A9bec">3725 Rue Saint-Henri </a>
+		</td>
+	</tr>
+	</table>
+</div>
+</body>
+</html>
