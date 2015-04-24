@@ -10,11 +10,14 @@ WebKit printing is very basic and this application add many features to it allow
 * [Support of some page break control CSS attributes](https://github.com/Kaviju/Html2PdfServer/wiki/CSS-Page-break-control-attributes)
 * [Vector images from SVG file](https://github.com/Kaviju/Html2PdfServer/wiki/SVG-images)
 * Automatic embedding of custom fonts loaded by CSS
-* Html links are functionnal in the PDF.
+* Html links are functional in the PDF.
 * [Add support for header and footer using a page template](https://github.com/Kaviju/Html2PdfServer/wiki/Page-Template)
 * [Support for many paper sizes and mirror margin for document intended for duplex printing](https://github.com/Kaviju/Html2PdfServer/wiki/Paper,-margins-and-scale)
 * Can create complex document by merging output from multiple html sources using different paper size, orientation or margins.
 
+## Samples
+
+Samples are is the Samples directory of the project. You may access them directly [here from GitHub.](https://rawgit.com/Kaviju/Html2PdfServer/master/Samples/index.html)
 
 ## Download
 
