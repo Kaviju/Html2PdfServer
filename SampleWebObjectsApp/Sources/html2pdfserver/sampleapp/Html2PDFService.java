@@ -199,6 +199,14 @@ public class Html2PDFService {
 			response.setContent(pdfData);
 			return response;
 		}
+		
+		@Override
+		protected void finalize() throws Throwable {
+			if (pdfFetchedFromServer == false) {
+				removeComponentHtmlCaches();
+			}
+			super.finalize();
+		}
 	}
 	
 	Map<String, WOResponse> htmlResponses = Collections.synchronizedMap(new HashMap<String, WOResponse>()); 
