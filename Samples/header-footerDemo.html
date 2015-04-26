@@ -2,34 +2,32 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<script>
-			<!--
-			// Copy the content of the hidden div to the iFrame
-			function copyContent()
-			{
-				var headHtml = document.getElementsByTagName("head")[0].innerHTML;
-				
-				var elemDiv = document.getElementById("contentDiv");
-				var contentHTML = elemDiv.innerHTML;
-				document.getElementById("contentDiv");
-				
-				var elemFrame = document.getElementById("contentFrame");
-				var doc = elemFrame.contentDocument;
-				
-				if (doc == undefined || doc == null){
-					doc = elemFrame.contentWindow.document;
-				}
-				doc.open();
-				doc.write('<!DOCTYPE HTML><html>');
-				doc.write('<head>');
-				doc.write(headHtml);
-				doc.write('</head><body>');
-				doc.write(contentHTML);
-				doc.write('</body></html>');
-				doc.close();
+	<script>
+		// Copy the content of the hidden div to the iFrame
+		function copyContent()
+		{
+			var headHtml = document.getElementsByTagName("head")[0].innerHTML;
+			
+			var elemDiv = document.getElementById("contentDiv");
+			var contentHTML = elemDiv.innerHTML;
+			document.getElementById("contentDiv");
+			
+			var elemFrame = document.getElementById("contentFrame");
+			var doc = elemFrame.contentDocument;
+			
+			if (doc == undefined || doc == null){
+				doc = elemFrame.contentWindow.document;
 			}
-			//-->
-		</script>
+			doc.open();
+			doc.write('<!DOCTYPE HTML><html>');
+			doc.write('<head>');
+			doc.write(headHtml);
+			doc.write('</head><body>');
+			doc.write(contentHTML);
+			doc.write('</body></html>');
+			doc.close();
+		}
+	</script>
 	<style>
 	* {
 		box-sizing:border-box;
@@ -60,10 +58,10 @@
 <body onLoad="copyContent();" marginTop="20" marginBottom="30" marginLeft="30" marginRight="30" width="100%">
 <div style="width: 100%; padding: 10px 10px 0px;">
 	<div style = "display: inline-block; width: 20%;">
-		<object type="image/svg+xml" width="100%" data="images/VDQ_logo.svg"></object>
+		<object width="100%" data="images/VDQ_logo.svg" type="image/svg+xml"></object>
 	</div>
 	<div style = "display: inline-block; width: 79%; padding-left: 20px; vertical-align:top;">
-		<h3>Public spaces of type Carrières  et Sablières</h3>
+		<h3>Public spaces of type Pavillons de services</h3>
 		<p>The city logo is a SVG file dispayed as vector in the PDF. Address are clicable link to open Google map also active in the PDF.</p>
 	</div>
 </div>
@@ -73,9 +71,9 @@
 	<th width = "">Address</th>
 </tr></table>
 <div style = "width: 100%">
-	<div style = "width: 100%;height:817px;">
-		<iframe id = "contentFrame" style = "width: 100%;height:100%;border: 0 none;" src = "">
-		</iframe>
+	<div style = "width: 100%;height:780px;">
+		
+		<iframe id = "contentFrame" style = "width: 100%;height:100%;border: 0 none;" src = ""></iframe>
 	</div>
 </div>
 <div class="" style="margin-top: 20px;margin-bottom: 0px;width: 100%;text-align:right;">
@@ -85,208 +83,682 @@
 <div id = "contentDiv" style = "display:none;">
 	<table class = "main" style = "margin-top:0;">
 	<tr>
-		<td width = "300">Agrégats Sainte-Foy Inc.</td>
-		<td width = "100" style="text-align:right;">510182 m<sup>2</sup></td>
+		<td width = "300">Atelier Vachon</td>
+		<td width = "100" style="text-align:right;">539 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Avenue+de+la+Montagne+O+%2CQu%C3%A9bec%2CQu%C3%A9bec">Avenue de la Montagne O </a>
+			<a target="_blank" href="https://www.google.com/maps/place/55+Rue+Vachon+%2CQu%C3%A9bec%2CQu%C3%A9bec">55 Rue Vachon </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Carrière Union Ltée</td>
-		<td width = "100" style="text-align:right;">713922 m<sup>2</sup></td>
+		<td width = "300">Bureau administratif Fargy</td>
+		<td width = "100" style="text-align:right;">309 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Pierre-Bertrand+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Pierre-Bertrand </a>
+			<a target="_blank" href="https://www.google.com/maps/place/655+Boulevard+des+Chutes+%2CQu%C3%A9bec%2CQu%C3%A9bec">655 Boulevard des Chutes </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Carrières Québec Inc.</td>
-		<td width = "100" style="text-align:right;">107657 m<sup>2</sup></td>
+		<td width = "300">Bureau administratif Hugues-Pommier</td>
+		<td width = "100" style="text-align:right;">157 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Jean-Talon+O+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Jean-Talon O </a>
+			<a target="_blank" href="https://www.google.com/maps/place/20+Rue+Hugues-Pommier+%2CQu%C3%A9bec%2CQu%C3%A9bec">20 Rue Hugues-Pommier </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Carrières Québec Inc.</td>
-		<td width = "100" style="text-align:right;">397957 m<sup>2</sup></td>
+		<td width = "300">Bureau administratif Sociocommunautaire de Beauport</td>
+		<td width = "100" style="text-align:right;">400 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Louis-XIV+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Louis-XIV </a>
+			<a target="_blank" href="https://www.google.com/maps/place/3095+Chemin+Royal+%2CQu%C3%A9bec%2CQu%C3%A9bec">3095 Chemin Royal </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Carrières Québec Inc.</td>
-		<td width = "100" style="text-align:right;">378370 m<sup>2</sup></td>
+		<td width = "300">Centre de loisirs Provancher</td>
+		<td width = "100" style="text-align:right;">231 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/777+Avenue+Larue+%2CQu%C3%A9bec%2CQu%C3%A9bec">777 Avenue Larue </a>
+			<a target="_blank" href="https://www.google.com/maps/place/4170+Rue+Michel-Herv%C3%A9+%2CQu%C3%A9bec%2CQu%C3%A9bec">4170 Rue Michel-Hervé </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Charles-Auguste Fortier Inc.</td>
-		<td width = "100" style="text-align:right;">219718 m<sup>2</sup></td>
+		<td width = "300">Centre de services Claude-Germain</td>
+		<td width = "100" style="text-align:right;">222 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+de+la+Colline+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard de la Colline </a>
+			<a target="_blank" href="https://www.google.com/maps/place/200+Rue+Huot+%2CQu%C3%A9bec%2CQu%C3%A9bec">200 Rue Huot </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">50226 m<sup>2</sup></td>
+		<td width = "300">Centre de services de Bélair</td>
+		<td width = "100" style="text-align:right;">89 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+			<a target="_blank" href="https://www.google.com/maps/place/3110+Avenue+Notre-Dame+%2CQu%C3%A9bec%2CQu%C3%A9bec">3110 Avenue Notre-Dame </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">43807 m<sup>2</sup></td>
+		<td width = "300">Centre de services de Champigny</td>
+		<td width = "100" style="text-align:right;">20 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1836+Avenue+Jules-Verne+%2CQu%C3%A9bec%2CQu%C3%A9bec">1836 Avenue Jules-Verne </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">136547 m<sup>2</sup></td>
+		<td width = "300">Centre de services de l'Anse</td>
+		<td width = "100" style="text-align:right;">32 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+			<a target="_blank" href="https://www.google.com/maps/place/2201+C%C3%B4te+de+Sillery+%2CQu%C3%A9bec%2CQu%C3%A9bec">2201 Côte de Sillery </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">16375 m<sup>2</sup></td>
+		<td width = "300">Centre de services de la Falaise</td>
+		<td width = "100" style="text-align:right;">115 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Rue+du+Gouffre+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue du Gouffre </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1615+C%C3%B4te+%C3%A0+Gignac+%2CQu%C3%A9bec%2CQu%C3%A9bec">1615 Côte à Gignac </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">184453 m<sup>2</sup></td>
+		<td width = "300">Centre de services des Potiers</td>
+		<td width = "100" style="text-align:right;">10 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Avenue+des+Sablonni%C3%A8res+%2CQu%C3%A9bec%2CQu%C3%A9bec">Avenue des Sablonnières </a>
+			<a target="_blank" href="https://www.google.com/maps/place/4333+Rue+B%C3%A9gin+%2CQu%C3%A9bec%2CQu%C3%A9bec">4333 Rue Bégin </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">565900 m<sup>2</sup></td>
+		<td width = "300">Centre de services des Primevères</td>
+		<td width = "100" style="text-align:right;">31 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Louis-XIV+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Louis-XIV </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1465+Rue+F%C3%A9lix-Antoine-Savard+%2CQu%C3%A9bec%2CQu%C3%A9bec">1465 Rue Félix-Antoine-Savard </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">44093 m<sup>2</sup></td>
+		<td width = "300">Centre de services des Sources</td>
+		<td width = "100" style="text-align:right;">186 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Rue+du+Gouffre+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue du Gouffre </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1140+Rue+du+Capitaine-Bernier+%2CQu%C3%A9bec%2CQu%C3%A9bec">1140 Rue du Capitaine-Bernier </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">248943 m<sup>2</sup></td>
+		<td width = "300">Centre de services des Trois-Saisons</td>
+		<td width = "100" style="text-align:right;">324 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1469+Rue+Buffon+%2CQu%C3%A9bec%2CQu%C3%A9bec">1469 Rue Buffon </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">357754 m<sup>2</sup></td>
+		<td width = "300">Centre de services des Écores</td>
+		<td width = "100" style="text-align:right;">82 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+			<a target="_blank" href="https://www.google.com/maps/place/4001+Rue+Charles-A.-Roy+%2CQu%C3%A9bec%2CQu%C3%A9bec">4001 Rue Charles-A.-Roy </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">84545 m<sup>2</sup></td>
+		<td width = "300">Centre de services Du Buisson</td>
+		<td width = "100" style="text-align:right;">206 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+			<a target="_blank" href="https://www.google.com/maps/place/2140+Rue+Marie-Victorin+%2CQu%C3%A9bec%2CQu%C3%A9bec">2140 Rue Marie-Victorin </a>
 		</td>
 	</tr><tr>
-		<td width = "300">CSL-LOMA Inc.</td>
-		<td width = "100" style="text-align:right;">62435 m<sup>2</sup></td>
+		<td width = "300">Centre de services du Plateau</td>
+		<td width = "100" style="text-align:right;">239 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Rue+du+Torrent+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue du Torrent </a>
+			<a target="_blank" href="https://www.google.com/maps/place/4575+Rue+de+la+Promenade-des-Soeurs+%2CQu%C3%A9bec%2CQu%C3%A9bec">4575 Rue de la Promenade-des-Soeurs </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Ferme James Gordon Jack Inc</td>
-		<td width = "100" style="text-align:right;">683677 m<sup>2</sup></td>
+		<td width = "300">Centre de services Fénelon</td>
+		<td width = "100" style="text-align:right;">23 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/17180+Boulevard+Valcartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">17180 Boulevard Valcartier </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1260+Rue+F%C3%A9nelon+%2CQu%C3%A9bec%2CQu%C3%A9bec">1260 Rue Fénelon </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Gestion Raymond Denis Inc.</td>
-		<td width = "100" style="text-align:right;">35905 m<sup>2</sup></td>
+		<td width = "300">Centre de services Kiwanis</td>
+		<td width = "100" style="text-align:right;">189 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+de+la+Colline+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard de la Colline </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1818+Avenue+Jules-Verne+%2CQu%C3%A9bec%2CQu%C3%A9bec">1818 Avenue Jules-Verne </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Gestion Raymond Denis Inc.</td>
-		<td width = "100" style="text-align:right;">86126 m<sup>2</sup></td>
+		<td width = "300">Centre de services Malraux</td>
+		<td width = "100" style="text-align:right;">34 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+de+la+Colline+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard de la Colline </a>
+			<a target="_blank" href="https://www.google.com/maps/place/108+Rue+Malraux+%2CQu%C3%A9bec%2CQu%C3%A9bec">108 Rue Malraux </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Jean-Claude-Drouin</td>
-		<td width = "100" style="text-align:right;">8656 m<sup>2</sup></td>
+		<td width = "300">Centre de services Roland-Beaudin</td>
+		<td width = "100" style="text-align:right;">60 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Rue+du+Torrent+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue du Torrent </a>
+			<a target="_blank" href="https://www.google.com/maps/place/939+Avenue+Roland-Beaudin+%2CQu%C3%A9bec%2CQu%C3%A9bec">939 Avenue Roland-Beaudin </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Les Boulevards du Québec (1976)</td>
-		<td width = "100" style="text-align:right;">912391 m<sup>2</sup></td>
+		<td width = "300">Centre de services Ross</td>
+		<td width = "100" style="text-align:right;">105 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Valcartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Valcartier </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1290+Avenue+Ernest-Lavigne+%2CQu%C3%A9bec%2CQu%C3%A9bec">1290 Avenue Ernest-Lavigne </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Les Boulevards du Québec (1976)</td>
-		<td width = "100" style="text-align:right;">15385 m<sup>2</sup></td>
+		<td width = "300">Centre de services Saint-Benoît</td>
+		<td width = "100" style="text-align:right;">319 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Valcartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Valcartier </a>
+			<a target="_blank" href="https://www.google.com/maps/place/3454+Rue+Rochambeau+%2CQu%C3%A9bec%2CQu%C3%A9bec">3454 Rue Rochambeau </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Les Boulevards du Québec (1976)</td>
-		<td width = "100" style="text-align:right;">187799 m<sup>2</sup></td>
+		<td width = "300">Centre de services Saint-Charles-Garnier</td>
+		<td width = "100" style="text-align:right;">284 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Valcartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Valcartier </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1730+Rue+Sheppard+%2CQu%C3%A9bec%2CQu%C3%A9bec">1730 Rue Sheppard </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Les Entreprises P.E.B. Ltée</td>
-		<td width = "100" style="text-align:right;">1656830 m<sup>2</sup></td>
+		<td width = "300">Centre de services Saint-Denys</td>
+		<td width = "100" style="text-align:right;">199 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Rue+des+Sabli%C3%A8res+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue des Sablières </a>
+			<a target="_blank" href="https://www.google.com/maps/place/2770+Rue+de+la+Picardie+%2CQu%C3%A9bec%2CQu%C3%A9bec">2770 Rue de la Picardie </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Métro-Excavation Inc.</td>
-		<td width = "100" style="text-align:right;">68701 m<sup>2</sup></td>
+		<td width = "300">Centre de services Saint-Louis-de-France</td>
+		<td width = "100" style="text-align:right;">186 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Lloyd-Welch+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Lloyd-Welch </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1591+Rue+du+Sieur-D%27Argenteuil+%2CQu%C3%A9bec%2CQu%C3%A9bec">1591 Rue du Sieur-D'Argenteuil </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Sablière Drapeau (1986) Inc.</td>
-		<td width = "100" style="text-align:right;">276834 m<sup>2</sup></td>
+		<td width = "300">Centre de services Saint-Yves</td>
+		<td width = "100" style="text-align:right;">294 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+			<a target="_blank" href="https://www.google.com/maps/place/2530+Rue+Anthony-Law+%2CQu%C3%A9bec%2CQu%C3%A9bec">2530 Rue Anthony-Law </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Sablière Drapeau (1986) Inc.</td>
-		<td width = "100" style="text-align:right;">41961 m<sup>2</sup></td>
+		<td width = "300">Chalet aux Pignons Verts</td>
+		<td width = "100" style="text-align:right;">236 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+			<a target="_blank" href="https://www.google.com/maps/place/121+Rue+Vachon+%2CQu%C3%A9bec%2CQu%C3%A9bec">121 Rue Vachon </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Sablière Drapeau (1986) Inc.</td>
-		<td width = "100" style="text-align:right;">27749 m<sup>2</sup></td>
+		<td width = "300">Chalet Bon-Pasteur</td>
+		<td width = "100" style="text-align:right;">312 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+			<a target="_blank" href="https://www.google.com/maps/place/395+Rue+du+Bienheureux-Jean-XXIII+%2CQu%C3%A9bec%2CQu%C3%A9bec">395 Rue du Bienheureux-Jean-XXIII </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Sablière Drapeau (1986) Inc.</td>
-		<td width = "100" style="text-align:right;">28681 m<sup>2</sup></td>
+		<td width = "300">Chalet Bourg-Royal</td>
+		<td width = "100" style="text-align:right;">450 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Chemin+du+Silex+%2CQu%C3%A9bec%2CQu%C3%A9bec">Chemin du Silex </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1435+Boulevard+Louis-XIV+%2CQu%C3%A9bec%2CQu%C3%A9bec">1435 Boulevard Louis-XIV </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Sablière Drapeau (1986) Inc.</td>
-		<td width = "100" style="text-align:right;">501612 m<sup>2</sup></td>
+		<td width = "300">Chalet Chabot</td>
+		<td width = "100" style="text-align:right;">122 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/Rue+Jean-Bardot+%2CQu%C3%A9bec%2CQu%C3%A9bec">Rue Jean-Bardot </a>
+			<a target="_blank" href="https://www.google.com/maps/place/1641+Avenue+de+Colmar+%2CQu%C3%A9bec%2CQu%C3%A9bec">1641 Avenue de Colmar </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Sintra Inc.</td>
-		<td width = "100" style="text-align:right;">331636 m<sup>2</sup></td>
+		<td width = "300">Chalet Chevalier</td>
+		<td width = "100" style="text-align:right;">210 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/1995+Boulevard+Louis-XIV+%2CQu%C3%A9bec%2CQu%C3%A9bec">1995 Boulevard Louis-XIV </a>
+			<a target="_blank" href="https://www.google.com/maps/place/491+Rue+du+M%C3%A9andre+%2CQu%C3%A9bec%2CQu%C3%A9bec">491 Rue du Méandre </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Unibéton Div. Ciment Québec Inc.</td>
-		<td width = "100" style="text-align:right;">275691 m<sup>2</sup></td>
+		<td width = "300">Chalet de l'Orme</td>
+		<td width = "100" style="text-align:right;">253 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/3725+Rue+Saint-Henri+%2CQu%C3%A9bec%2CQu%C3%A9bec">3725 Rue Saint-Henri </a>
+			<a target="_blank" href="https://www.google.com/maps/place/45+Rue+de+la+Falaise-Verte+%2CQu%C3%A9bec%2CQu%C3%A9bec">45 Rue de la Falaise-Verte </a>
 		</td>
 	</tr><tr>
-		<td width = "300">Unibéton Div. Ciment Québec Inc.</td>
-		<td width = "100" style="text-align:right;">13253 m<sup>2</sup></td>
+		<td width = "300">Chalet de services de la Piscine</td>
+		<td width = "100" style="text-align:right;">124 m<sup>2</sup></td>
 		<td width = "">
-			<a target="_blank" href="https://www.google.com/maps/place/3725+Rue+Saint-Henri+%2CQu%C3%A9bec%2CQu%C3%A9bec">3725 Rue Saint-Henri </a>
+			<a target="_blank" href="https://www.google.com/maps/place/6106+Rue+de+l%27Accueil+%2CQu%C3%A9bec%2CQu%C3%A9bec">6106 Rue de l'Accueil </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services de la Piscine du parc Maria-Goretti</td>
+		<td width = "100" style="text-align:right;">134 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/7475+Avenue+Paul-Comtois+%2CQu%C3%A9bec%2CQu%C3%A9bec">7475 Avenue Paul-Comtois </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services de la Piscine du parc Maurice-Dorion</td>
+		<td width = "100" style="text-align:right;">325 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/8815+Avenue+Jean-Paquin+%2CQu%C3%A9bec%2CQu%C3%A9bec">8815 Avenue Jean-Paquin </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services de la Piscine du parc Maurice-Lortie</td>
+		<td width = "100" style="text-align:right;">434 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/4840+Stationnement+Parc+Maurice-Lortie+%2CQu%C3%A9bec%2CQu%C3%A9bec">4840 Stationnement Parc Maurice-Lortie </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services de la Piscine Guillaume-Mathieu</td>
+		<td width = "100" style="text-align:right;">300 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/720+Avenue+de+Gironde+%2CQu%C3%A9bec%2CQu%C3%A9bec">720 Avenue de Gironde </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services de la Piscine Saint-Jérôme</td>
+		<td width = "100" style="text-align:right;">61 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/585+Rue+64e+E+%2CQu%C3%A9bec%2CQu%C3%A9bec">585 Rue 64e E </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services de la Piscine Terrasse Bon-Air</td>
+		<td width = "100" style="text-align:right;">381 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1085+Rue+60e+E+%2CQu%C3%A9bec%2CQu%C3%A9bec">1085 Rue 60e E </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services du Parc Saint-Jérôme</td>
+		<td width = "100" style="text-align:right;">61 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/585+Rue+64e+E+%2CQu%C3%A9bec%2CQu%C3%A9bec">585 Rue 64e E </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services du Tennis</td>
+		<td width = "100" style="text-align:right;">22 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/6106+Rue+de+l%27Accueil+%2CQu%C3%A9bec%2CQu%C3%A9bec">6106 Rue de l'Accueil </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de services Restaurant</td>
+		<td width = "100" style="text-align:right;">53 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/560+Rue+Delage+%2CQu%C3%A9bec%2CQu%C3%A9bec">560 Rue Delage </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de tennis  Courville</td>
+		<td width = "100" style="text-align:right;">85 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2271+Avenue+Larue+%2CQu%C3%A9bec%2CQu%C3%A9bec">2271 Avenue Larue </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de tennis  du Parc Maria-Goretti</td>
+		<td width = "100" style="text-align:right;">103 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/7475+Avenue+Paul-Comtois+%2CQu%C3%A9bec%2CQu%C3%A9bec">7475 Avenue Paul-Comtois </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de tennis  Fargy</td>
+		<td width = "100" style="text-align:right;">113 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/655+Boulevard+des+Chutes+%2CQu%C3%A9bec%2CQu%C3%A9bec">655 Boulevard des Chutes </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet de Tir à l'arc</td>
+		<td width = "100" style="text-align:right;">136 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/570+Rue+Delage+%2CQu%C3%A9bec%2CQu%C3%A9bec">570 Rue Delage </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet des Chevaliers de Colomb</td>
+		<td width = "100" style="text-align:right;">351 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1506+Avenue+du+Lac-Saint-Charles+%2CQu%C3%A9bec%2CQu%C3%A9bec">1506 Avenue du Lac-Saint-Charles </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet des Loisirs du Parc Terrasse Bon-Air</td>
+		<td width = "100" style="text-align:right;">380 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1085+Rue+60e+E+%2CQu%C3%A9bec%2CQu%C3%A9bec">1085 Rue 60e E </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet des Sports</td>
+		<td width = "100" style="text-align:right;">140 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/540+Rue+Delage+%2CQu%C3%A9bec%2CQu%C3%A9bec">540 Rue Delage </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet du Parc Henri-Casault</td>
+		<td width = "100" style="text-align:right;">458 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/5395+Avenue+4e+O+%2CQu%C3%A9bec%2CQu%C3%A9bec">5395 Avenue 4e O </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet du Plateau</td>
+		<td width = "100" style="text-align:right;">325 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/8815+Avenue+Jean-Paquin+%2CQu%C3%A9bec%2CQu%C3%A9bec">8815 Avenue Jean-Paquin </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Guillaume-Mathieu</td>
+		<td width = "100" style="text-align:right;">300 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/720+Avenue+de+Gironde+%2CQu%C3%A9bec%2CQu%C3%A9bec">720 Avenue de Gironde </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet l'Amibourg</td>
+		<td width = "100" style="text-align:right;">123 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/617+Avenue+H%C3%A9l%C3%A8ne-Paradis+%2CQu%C3%A9bec%2CQu%C3%A9bec">617 Avenue Hélène-Paradis </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet la Bourrasque</td>
+		<td width = "100" style="text-align:right;">96 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/3320+Avenue+Mallet+%2CQu%C3%A9bec%2CQu%C3%A9bec">3320 Avenue Mallet </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet la Planque</td>
+		<td width = "100" style="text-align:right;">324 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/8805+Avenue+Jean-Paquin+%2CQu%C3%A9bec%2CQu%C3%A9bec">8805 Avenue Jean-Paquin </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Lyonnais</td>
+		<td width = "100" style="text-align:right;">101 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1158+Rue+du+Lyonnais+%2CQu%C3%A9bec%2CQu%C3%A9bec">1158 Rue du Lyonnais </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Maria-Goretti</td>
+		<td width = "100" style="text-align:right;">546 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/7475+Avenue+Paul-Comtois+%2CQu%C3%A9bec%2CQu%C3%A9bec">7475 Avenue Paul-Comtois </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Notre-Dame</td>
+		<td width = "100" style="text-align:right;">226 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/55+Rue+Mo%C3%AFse-Verret+%2CQu%C3%A9bec%2CQu%C3%A9bec">55 Rue Moïse-Verret </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Noël-Langlois</td>
+		<td width = "100" style="text-align:right;">75 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/99+Rue+de+la+Terrasse-Orl%C3%A9ans+%2CQu%C3%A9bec%2CQu%C3%A9bec">99 Rue de la Terrasse-Orléans </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Saint-Ignace</td>
+		<td width = "100" style="text-align:right;">214 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/3300+Chemin+Royal+%2CQu%C3%A9bec%2CQu%C3%A9bec">3300 Chemin Royal </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Saint-Pierre</td>
+		<td width = "100" style="text-align:right;">62 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/5485+Avenue+des+Platanes+%2CQu%C3%A9bec%2CQu%C3%A9bec">5485 Avenue des Platanes </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Savio</td>
+		<td width = "100" style="text-align:right;">212 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/95+Rue+Savio+%2CQu%C3%A9bec%2CQu%C3%A9bec">95 Rue Savio </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chalet Édouard-Laurent</td>
+		<td width = "100" style="text-align:right;">266 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/4720+Stationnement+Parc+Maurice-Lortie+%2CQu%C3%A9bec%2CQu%C3%A9bec">4720 Stationnement Parc Maurice-Lortie </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Chapelle du parc Victoria</td>
+		<td width = "100" style="text-align:right;">75 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/6+Rue+Robert-Rumilly+%2CQu%C3%A9bec%2CQu%C3%A9bec">6 Rue Robert-Rumilly </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Entrepôt Hugues-Pommier</td>
+		<td width = "100" style="text-align:right;">492 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/30+Rue+Hugues-Pommier+%2CQu%C3%A9bec%2CQu%C3%A9bec">30 Rue Hugues-Pommier </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Marina Saint-Roch</td>
+		<td width = "100" style="text-align:right;">3832 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/230+Rue+du+Pont+%2CQu%C3%A9bec%2CQu%C3%A9bec">230 Rue du Pont </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Bardy</td>
+		<td width = "100" style="text-align:right;">231 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2025+Rue+Adjutor-Rivard+%2CQu%C3%A9bec%2CQu%C3%A9bec">2025 Rue Adjutor-Rivard </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de l'Anse-à-Cartier</td>
+		<td width = "100" style="text-align:right;">245 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/45+Rue+Jacques-Cartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">45 Rue Jacques-Cartier </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de la Piscine Notre-Dame-de-la-Garde</td>
+		<td width = "100" style="text-align:right;">299 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/Boulevard+Champlain+%2CQu%C3%A9bec%2CQu%C3%A9bec">Boulevard Champlain </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de Montchâtel</td>
+		<td width = "100" style="text-align:right;">159 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/13550+Rue+Duhamel+%2CQu%C3%A9bec%2CQu%C3%A9bec">13550 Rue Duhamel </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de Repentigny</td>
+		<td width = "100" style="text-align:right;">275 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/95+Rue+de+la+S%C3%A9r%C3%A9nit%C3%A9+%2CQu%C3%A9bec%2CQu%C3%A9bec">95 Rue de la Sérénité </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Beaucage</td>
+		<td width = "100" style="text-align:right;">46 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/380+Rue+Beaucage+%2CQu%C3%A9bec%2CQu%C3%A9bec">380 Rue Beaucage </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Chauveau</td>
+		<td width = "100" style="text-align:right;">108 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/3175+Avenue+Chauveau+%2CQu%C3%A9bec%2CQu%C3%A9bec">3175 Avenue Chauveau </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Claude-Bégin</td>
+		<td width = "100" style="text-align:right;">150 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/570+Rue+Pacifique+%2CQu%C3%A9bec%2CQu%C3%A9bec">570 Rue Pacifique </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service de l'Accueil</td>
+		<td width = "100" style="text-align:right;">63 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1660+Rue+des+Balsamines+%2CQu%C3%A9bec%2CQu%C3%A9bec">1660 Rue des Balsamines </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service de la Centrale des organismes</td>
+		<td width = "100" style="text-align:right;">261 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/510+Rue+Delage+%2CQu%C3%A9bec%2CQu%C3%A9bec">510 Rue Delage </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service de Tennis du parc La Chanterelle</td>
+		<td width = "100" style="text-align:right;">52 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1525+Rue+de+l%27Innovation+%2CQu%C3%A9bec%2CQu%C3%A9bec">1525 Rue de l'Innovation </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service des Brumes</td>
+		<td width = "100" style="text-align:right;">118 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/6920+Rue+des+Brumes+%2CQu%C3%A9bec%2CQu%C3%A9bec">6920 Rue des Brumes </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service du Foulon</td>
+		<td width = "100" style="text-align:right;">67 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2349+Chemin+du+Foulon+%2CQu%C3%A9bec%2CQu%C3%A9bec">2349 Chemin du Foulon </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service du Parc du Grand-Oasis</td>
+		<td width = "100" style="text-align:right;">89 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1920+Rue+des+Tricornes+%2CQu%C3%A9bec%2CQu%C3%A9bec">1920 Rue des Tricornes </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service du Parc Jules-Edmond</td>
+		<td width = "100" style="text-align:right;">227 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1045+Rue+des+Coll%C3%A9giens+%2CQu%C3%A9bec%2CQu%C3%A9bec">1045 Rue des Collégiens </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service du Parc La Chanterelle</td>
+		<td width = "100" style="text-align:right;">133 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1525+Rue+de+l%27Innovation+%2CQu%C3%A9bec%2CQu%C3%A9bec">1525 Rue de l'Innovation </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service du Parc nautique de Cap-Rouge</td>
+		<td width = "100" style="text-align:right;">258 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/4155+Chemin+de+la+Plage-Jacques-Cartier+%2CQu%C3%A9bec%2CQu%C3%A9bec">4155 Chemin de la Plage-Jacques-Cartier </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service du Parc Sainte-Anne</td>
+		<td width = "100" style="text-align:right;">100 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1374+Rue+Grimaldi+%2CQu%C3%A9bec%2CQu%C3%A9bec">1374 Rue Grimaldi </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service du Parc Victoria</td>
+		<td width = "100" style="text-align:right;">125 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/6+Rue+Robert-Rumilly+%2CQu%C3%A9bec%2CQu%C3%A9bec">6 Rue Robert-Rumilly </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service du Petit-Bois</td>
+		<td width = "100" style="text-align:right;">49 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/5385+Avenue+Banville+%2CQu%C3%A9bec%2CQu%C3%A9bec">5385 Avenue Banville </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Iberville</td>
+		<td width = "100" style="text-align:right;">89 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/600+Rue+1re+%2CQu%C3%A9bec%2CQu%C3%A9bec">600 Rue 1re </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Jacques-Berthiaume</td>
+		<td width = "100" style="text-align:right;">227 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/792+Rue+Jacques-Berthiaume+%2CQu%C3%A9bec%2CQu%C3%A9bec">792 Rue Jacques-Berthiaume </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service l'Échouerie</td>
+		<td width = "100" style="text-align:right;">128 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/90+Rue+de+la+Renardi%C3%A8re+%2CQu%C3%A9bec%2CQu%C3%A9bec">90 Rue de la Renardière </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Le May</td>
+		<td width = "100" style="text-align:right;">66 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1455+Rue+Le+May+%2CQu%C3%A9bec%2CQu%C3%A9bec">1455 Rue Le May </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Louis-Latulippe</td>
+		<td width = "100" style="text-align:right;">40 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/620+Avenue+Plante+%2CQu%C3%A9bec%2CQu%C3%A9bec">620 Avenue Plante </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Prévert</td>
+		<td width = "100" style="text-align:right;">446 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1475+Chemin+Saint-Louis+%2CQu%C3%A9bec%2CQu%C3%A9bec">1475 Chemin Saint-Louis </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Père-Frédéric</td>
+		<td width = "100" style="text-align:right;">108 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2655+Rue+Robitaille+%2CQu%C3%A9bec%2CQu%C3%A9bec">2655 Rue Robitaille </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Saint-André</td>
+		<td width = "100" style="text-align:right;">167 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2155+Boulevard+Bastien+%2CQu%C3%A9bec%2CQu%C3%A9bec">2155 Boulevard Bastien </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Saint-Ange</td>
+		<td width = "100" style="text-align:right;">374 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1545+Rang+Saint-Ange+%2CQu%C3%A9bec%2CQu%C3%A9bec">1545 Rang Saint-Ange </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Saint-François-Xavier</td>
+		<td width = "100" style="text-align:right;">163 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2175+Rue+Laurent-Laroche+%2CQu%C3%A9bec%2CQu%C3%A9bec">2175 Rue Laurent-Laroche </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Saint-Sacrement</td>
+		<td width = "100" style="text-align:right;">1288 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/1360+Boulevard+de+l%27Entente+%2CQu%C3%A9bec%2CQu%C3%A9bec">1360 Boulevard de l'Entente </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon de service Sainte-Monique</td>
+		<td width = "100" style="text-align:right;">137 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/3725+Rue+Chevalier+%2CQu%C3%A9bec%2CQu%C3%A9bec">3725 Rue Chevalier </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon des Musiciens</td>
+		<td width = "100" style="text-align:right;">295 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/12085+Boulevard+Saint-Claude+%2CQu%C3%A9bec%2CQu%C3%A9bec">12085 Boulevard Saint-Claude </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon des Piscines du Parc Bardy</td>
+		<td width = "100" style="text-align:right;">279 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2350+Avenue+Bardy+%2CQu%C3%A9bec%2CQu%C3%A9bec">2350 Avenue Bardy </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Dollard</td>
+		<td width = "100" style="text-align:right;">197 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/320+Rue+de+Verdun+%2CQu%C3%A9bec%2CQu%C3%A9bec">320 Rue de Verdun </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Dominique-Savio</td>
+		<td width = "100" style="text-align:right;">97 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2050+Rue+de+la+Trinit%C3%A9+%2CQu%C3%A9bec%2CQu%C3%A9bec">2050 Rue de la Trinité </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon du Jardin</td>
+		<td width = "100" style="text-align:right;">347 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/5295+Rue+des+Violettes+%2CQu%C3%A9bec%2CQu%C3%A9bec">5295 Rue des Violettes </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon du Musée</td>
+		<td width = "100" style="text-align:right;">56 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/255+Grande+All%C3%A9e+O+%2CQu%C3%A9bec%2CQu%C3%A9bec">255 Grande Allée O </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Esplanade</td>
+		<td width = "100" style="text-align:right;">162 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/60+Rue+D%27Auteuil+%2CQu%C3%A9bec%2CQu%C3%A9bec">60 Rue D'Auteuil </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Louis-Germain-Castonguay</td>
+		<td width = "100" style="text-align:right;">49 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/10855+Rue+des+Lauriers+%2CQu%C3%A9bec%2CQu%C3%A9bec">10855 Rue des Lauriers </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon René-Lafond</td>
+		<td width = "100" style="text-align:right;">235 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/6106+Rue+de+l%27Accueil+%2CQu%C3%A9bec%2CQu%C3%A9bec">6106 Rue de l'Accueil </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Roger-Lemelin</td>
+		<td width = "100" style="text-align:right;">49 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/548+Rue+Montmagny+%2CQu%C3%A9bec%2CQu%C3%A9bec">548 Rue Montmagny </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Saint-Martyrs</td>
+		<td width = "100" style="text-align:right;">564 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/860+Rue+P%C3%A8re-Marquette+%2CQu%C3%A9bec%2CQu%C3%A9bec">860 Rue Père-Marquette </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Saint-Paul-Apôtre</td>
+		<td width = "100" style="text-align:right;">49 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/2352+Avenue+8e+%2CQu%C3%A9bec%2CQu%C3%A9bec">2352 Avenue 8e </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Saint-Raphaël</td>
+		<td width = "100" style="text-align:right;">145 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/3535+Rue+de+la+Rivi%C3%A8re-Nelson+%2CQu%C3%A9bec%2CQu%C3%A9bec">3535 Rue de la Rivière-Nelson </a>
+		</td>
+	</tr><tr>
+		<td width = "300">Pavillon Sainte-Odile</td>
+		<td width = "100" style="text-align:right;">295 m<sup>2</sup></td>
+		<td width = "">
+			<a target="_blank" href="https://www.google.com/maps/place/255+Rue+des+Peupliers+O+%2CQu%C3%A9bec%2CQu%C3%A9bec">255 Rue des Peupliers O </a>
 		</td>
 	</tr>
 	</table>
