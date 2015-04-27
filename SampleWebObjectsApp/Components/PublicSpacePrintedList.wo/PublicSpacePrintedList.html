@@ -88,7 +88,7 @@
 <div id = "contentDiv" style = "display:none;">
 	<table class = "main" style = "margin-top:0;">
 	<wo:repeat list = "$features" item = "$feature"><tr>
-		<td width = "300"><wo:string value = "$feature.NOM_TOPOGR"/></td>
+		<td width = "300"><wo:string value = "$feature.NOM_TOPOGR//VALID"/></td>
 		<td width = "100" style="text-align:right;"><wo:string value = "$featureArea" numberformat = "0"/> m<sup>2</sup></td>
 		<td width = "">
 			<wo:link target = "_blank" href = "$googleMapUrl"><wo:string value = "$featureAddress"/></wo:link>

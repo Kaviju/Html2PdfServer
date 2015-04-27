@@ -147,7 +147,7 @@ public class Html2PDFService {
 			long startTime = System.currentTimeMillis();
 			log.info("Trying PDF serveurs for commands: \n"+commands.componentsJoinedByString("\n"));
 			@SuppressWarnings("unchecked")
-			NSArray<String> serverUrls = ERXProperties.arrayForKey("html2pdfServers");
+			NSArray<String> serverUrls = ERXProperties.arrayForKeyWithDefault("html2pdfServers", new NSArray<String>("http://localhost:1453/"));
 			for (String serverUrl : serverUrls) {
 				try {
 					pdfData = readBytesFromUrl(serverUrl, commands);
