@@ -193,6 +193,7 @@ public class Html2PDFService {
 		private ERXResponse createResponse() {
 			fetchPdfFromServer();
 			ERXResponse response = new ERXResponse();
+			ERXAjaxApplication.enableShouldNotStorePage();
 			response.setHeader("private", "cache-control");
 			response.setHeader("application/pdf", "content-type");
 		    response.setHeader(String.valueOf(pdfData.length), "Content-Length");
