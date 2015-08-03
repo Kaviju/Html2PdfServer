@@ -57,7 +57,8 @@ public class Html2PDFService {
 		HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
 		urlConn.setDoInput(true);
 		urlConn.setConnectTimeout(1000);
-		urlConn.setReadTimeout(ERXProperties.intForKeyWithDefault("html2pdfReadTimeout", 15000));
+		int timeout = ERXProperties.intForKeyWithDefault("html2pdfReadTimeout", 15000);
+		urlConn.setReadTimeout(timeout);
 		
 		addCommandsToRequest(commands, urlConn);
 		urlConn.connect();
@@ -166,6 +167,7 @@ public class Html2PDFService {
 		}
 		
 		public byte[] getPdfData() {
+			fetchPdfFromServer();
 			return pdfData;
 		}
 		
@@ -192,8 +194,8 @@ public class Html2PDFService {
 
 		private ERXResponse createResponse() {
 			fetchPdfFromServer();
-			ERXResponse response = new ERXResponse();
 			ERXAjaxApplication.enableShouldNotStorePage();
+			ERXResponse response = new ERXResponse();
 			response.setHeader("private", "cache-control");
 			response.setHeader("application/pdf", "content-type");
 		    response.setHeader(String.valueOf(pdfData.length), "Content-Length");
