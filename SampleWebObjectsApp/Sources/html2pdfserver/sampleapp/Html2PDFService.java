@@ -39,6 +39,7 @@ public class Html2PDFService {
 	// We make sure the component is not using the current context to keep it clean. We need the request to generate valid URLs.
 	private String componentHtmlKeyWithComponent(WOComponent component) {
 		ERXWOContext newContext = new ERXWOContext(component.context().request());
+		newContext._setRequestSessionID(null);
 		component._setContext(newContext);
 		ERXThreadStorage.takeValueForKey(true, isPrintingStorageKey);
 		WOResponse html = component.generateResponse();
@@ -134,10 +135,10 @@ public class Html2PDFService {
 		}
 
 		public Request addDirectAction(String actionName, NSDictionary<String, Object> params) {
-			WOContext context = ERXWOContext.currentContext();
-			context = (WOContext) context.clone();
-			context.generateCompleteURLs();
-			String url = context.directActionURLForActionNamed(actionName, params, false, false);
+			ERXWOContext sessionLessContext = new ERXWOContext(ERXWOContext.currentContext().request());
+			sessionLessContext._setRequestSessionID(null);
+			sessionLessContext.generateCompleteURLs();
+			String url = sessionLessContext.directActionURLForActionNamed(actionName, params, false, false);
 			commands.add("renderPdfAtUrl:"+url);
 			return this;
 		}
