@@ -11,6 +11,7 @@ import com.webobjects.appserver.*;
 import com.webobjects.foundation.*;
 
 import er.extensions.appserver.*;
+import er.extensions.appserver.ajax.ERXAjaxApplication;
 import er.extensions.foundation.*;
 
 public class Html2PDFService {
