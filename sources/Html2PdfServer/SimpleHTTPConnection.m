@@ -198,6 +198,9 @@
         else if ([command isEqualToString:@"renderPdfAtUrl"]) {
             canContinue = [self renderPdfAtUrl:paramString];
         }
+        else if ([command isEqualToString:@"appendPdfAtUrl"]) {
+            canContinue = [self appendPdfAtUrl:paramString];
+        }
         else if ([command isEqualToString:@"addRendererInfos"]) {
             canContinue = [self addRendererInfos];
         }
@@ -235,6 +238,22 @@
     return NO;
 }
 
+- (BOOL)appendPdfAtUrl:(NSString *)sourceUrl
+{
+    [self.messages addObject:[NSString stringWithFormat:@"appending pdf at Url: %@", sourceUrl]];
+
+    NSURL *pdfSourceUrl = [NSURL URLWithString:sourceUrl];
+    NSError *error;
+    NSData *pdfData = [NSData dataWithContentsOfURL:pdfSourceUrl options:nil error:&error];
+    if (pdfData == nil) {
+        [self.messages addObject:[NSString stringWithFormat:@"Url failed with error: %@", error]];
+    }
+    else {
+        [self appendPdf:pdfData];
+    }
+    return YES;
+}
+
 - (BOOL)addRendererInfos
 {
     Renderer *renderer = [[RendererPool sharedPool] renderer];
@@ -251,6 +270,12 @@
 - (void)processRenderedPdf:(NSData *)pdfData withInfos:(NSMutableDictionary *)infoDict
 {
     [infoDicts addObject:infoDict];
+    [self appendPdf:pdfData];
+    [self processNextLine];
+}
+
+- (void)appendPdf:(NSData *)pdfData
+{
     if (pdfData != nil) {
         PDFDocument *newDocument = [[PDFDocument alloc] initWithData:pdfData];
         if (self.pdfDocument == nil) {
@@ -264,7 +289,6 @@
         }
         [self setCurrentPageNumber:currentPageNumber + [newDocument pageCount]];
     }
-    [self processNextLine];
 }
 
 
