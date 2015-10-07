@@ -435,6 +435,9 @@
             }
         }
     }
+    [pagesBreaks sortUsingComparator: ^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
     [[self printWindow] logMessage:[NSString stringWithFormat:@"Forced Breaks: %@", pagesBreaks]];
     return pagesBreaks;
 }
