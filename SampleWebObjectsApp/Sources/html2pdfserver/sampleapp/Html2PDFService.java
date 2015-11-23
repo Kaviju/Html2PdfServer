@@ -1,6 +1,5 @@
 package html2pdfserver.sampleapp;
 
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -112,6 +111,11 @@ public class Html2PDFService {
 			return this;
 		}
 
+		public Request ensureEvenPageCount() {
+			commands.add("ensureEvenPageCount");
+			return this;
+		}
+
 		public Request addBlankPage() {
 			commands.add("insertBlankPage");
 			return this;
@@ -142,7 +146,27 @@ public class Html2PDFService {
 			commands.add("renderPdfAtUrl:"+url);
 			return this;
 		}
+
+		public Request addPdfFromResource(String filename) {
+			addPdfFromResource(filename, "app");
+			return this;
+		}
 		
+		public Request addPdfFromResource(String filename, String framework) {
+			WOContext context = ERXWOContext.currentContext();
+			context = (WOContext) context.clone();
+			context.generateCompleteURLs();
+			String url = context._urlForResourceNamed(filename, framework, true);
+			if (context.request().isUsingWebServer()) {
+				StringBuffer urlBuilder = new StringBuffer(256);
+				context.request()._completeURLPrefix(urlBuilder, false, 0);
+				urlBuilder.append(url);
+				url = urlBuilder.toString();
+			}
+			commands.add("appendPdfAtUrl:"+url);
+			return this;
+		}
+
 		public Request fetchPdfFromServer() {
 			if (pdfFetchedFromServer ) {
 				return this;

@@ -192,6 +192,9 @@
         if ([command isEqualToString:@"setCurrentPageNumber"]) {
             canContinue = [self setCurrentPageNumber:[paramString integerValue]];
         }
+        if ([command isEqualToString:@"ensureEvenPageCount"]) {
+            canContinue = [self ensureEvenPageCount];
+        }
         if ([command isEqualToString:@"insertBlankPage"]) {
             canContinue = [self insertBlankPage];
         }
@@ -219,10 +222,19 @@
     return YES;
 }
 
+- (BOOL)ensureEvenPageCount
+{
+    if ([self.pdfDocument pageCount] % 2 == 1) {
+        [self insertBlankPage];
+    }
+    return YES;
+}
+
 - (BOOL)insertBlankPage
 {
     PDFPage *blankPage = [[PDFPage alloc] init];
     [self.pdfDocument insertPage:blankPage atIndex:[self.pdfDocument pageCount]];
+    currentPageNumber++;
     return YES;
 }
 
