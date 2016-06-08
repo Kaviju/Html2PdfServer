@@ -11,6 +11,7 @@ import com.webobjects.foundation.*;
 
 import er.extensions.appserver.*;
 import er.extensions.appserver.ajax.ERXAjaxApplication;
+import er.extensions.appserver.ajax.ERXAjaxSession;
 import er.extensions.foundation.*;
 
 public class Html2PDFService {
@@ -36,12 +37,15 @@ public class Html2PDFService {
 	static int documentNumber = 0;	
 	
 	// We make sure the component is not using the current context to keep it clean. We need the request to generate valid URLs.
+	// By setting DONT_STORE_PAGE, we do not use a page cache entry in the current session. 
 	private String componentHtmlKeyWithComponent(WOComponent component) {
-		ERXWOContext newContext = new ERXWOContext(component.context().request());
-		newContext._setRequestSessionID(null);
+		ERXWOContext newContext = (ERXWOContext) component.context().clone();
 		component._setContext(newContext);
+		
 		ERXThreadStorage.takeValueForKey(true, isPrintingStorageKey);
+		ERXWOContext.contextDictionary().takeValueForKey(ERXAjaxSession.DONT_STORE_PAGE, ERXAjaxSession.DONT_STORE_PAGE);
 		WOResponse html = component.generateResponse();
+		ERXWOContext.contextDictionary().removeObjectForKey(ERXAjaxSession.DONT_STORE_PAGE);
 		ERXThreadStorage.removeValueForKey(isPrintingStorageKey);
 		
 		String key = "d"+documentNumber++;
