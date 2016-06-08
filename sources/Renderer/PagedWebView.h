@@ -20,11 +20,12 @@
 
 @end
 
-@interface PagedWebView : NSView
+@interface PagedWebView : NSView <WebFrameLoadDelegate, WebResourceLoadDelegate>
 {
 	WebView *pageView;
 	
 	BOOL isPrinting;
+    BOOL startPrintingManually;
     BOOL mainFrameLoaded;
 	BOOL hasHeader;
 	int htmlWidth;

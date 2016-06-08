@@ -18,6 +18,7 @@
         ressourcesLoading = [NSMutableSet set];
         mainFrameLoaded = NO;
         isPrinting = NO;
+        startPrintingManually = NO;
         pageView = [[WebView alloc] initWithFrame:frame frameName:nil groupName:nil];
         [pageView setHostWindow:window];
         [pageView setShouldUpdateWhileOffscreen:YES];
@@ -116,34 +117,102 @@
     [self startPrintingIfLoadCompleted];
 }
 
+- (void)webView:(WebView *)webView didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
+{
+    if ([[pageView mainFrame] isEqual:frame]) {
+        [windowObject setValue:self forKey:@"Html2PdfRenderer"];
+        // Replace requestAnimationFrame by JS version, the native version is not called when the view is offscreen
+        // This prevent some frameworks like d3 to render their contents so we provide a workaround.
+        
+        NSString *script = @"lastRequestAnimationFrameTime = 0;\
+                        window.requestAnimationFrame = function(callback, element) {\
+                            var currTime = new Date().getTime();\
+                            var timeToCall = Math.max(0, 16 - (currTime - lastRequestAnimationFrameTime));\
+                            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);\
+                            lastRequestAnimationFrameTime = currTime + timeToCall;\
+                            return id;\
+                        };\
+                        window.webkitRequestAnimationFrame = window.requestAnimationFrame;\
+                        window.cancelAnimationFrame = function(id) {\
+                            clearTimeout(id);\
+                        };\
+                        window.webkitCancelAnimationFrame = window.cancelAnimationFrame;";
+        [pageView stringByEvaluatingJavaScriptFromString:script];
+    }
+}
+
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
+{
+    if (selector == @selector(startPrintingManually)) {
+        return NO;
+    }
+    if (selector == @selector(startPrint)) {
+        return NO;
+    }
+    if (selector == @selector(logMessage:)) {
+        return NO;
+    }
+    return YES;
+}
+
++ (NSString *)webScriptNameForSelector:(SEL)selector
+{
+    if (selector == @selector(logMessage:)) {
+        return @"logMessage";
+    }
+    return nil;
+}
+
+// Called by Javascript on page to indicate the printing will be started by javascript when the content is ready to print.
+// Usefull for page using dynamic content generation like d3.
+- (void)startPrintingManually
+{
+    startPrintingManually = YES;
+}
+
+- (void)logMessage:(NSString *)aMessage
+{
+    [_delegate logMessage:aMessage];
+}
+
 // Check if the mainframe AND all resources are loaded before printing the HTML.
 // Required with the paginated mode that trigger resource loading when the content is moved into the iFrame.
 - (void)startPrintingIfLoadCompleted {
     if (mainFrameLoaded && [ressourcesLoading count] == 0) {
-        if (isPrinting) {
-            [_delegate logMessage:[NSString stringWithFormat:@"startPrinting requested but already printing, do nothing"]];
-            return;
+        if (startPrintingManually == YES) {
+            [self performSelector:@selector(startPrint) withObject:nil afterDelay:1.0];
         }
-        PdfPrintWindow *printWindow = (PdfPrintWindow *)self.window;
-        isPrinting = YES;
-        [_delegate fetchDone];
-        
-        [pageView setMediaStyle:@"print"];  // Switch the document CSS media to print
-        
-        NSPrintInfo *printInfo = [self createPrintInfo];
-    	        
-        printWindow.documentView = (WebHTMLView *)[[[pageView mainFrame] frameView] documentView];
-        documentFrame = [printWindow.documentView frame];
-        if (documentFrame.size.width == DEFAULT_VIEW_WIDTH) {
-            documentFrame.size.width = [self computeOptimalViewWidthForPaper:printInfo];
+        else { // We give some time for Javascript code to execute...
+            [self performSelector:@selector(startPrint) withObject:nil afterDelay:0.05];
         }
-
-        // Set view frame to display all contents so elementAtPoint will works and we will be able to find the pagebreaks.
-        [self setFrame:documentFrame];
-        [pageView setFrame:documentFrame];
-        
-        [self performSelectorOnMainThread:@selector(printPages:) withObject:printInfo waitUntilDone:NO];
     }
+}
+
+- (void)startPrint
+{
+    if (isPrinting) {
+        [_delegate logMessage:[NSString stringWithFormat:@"startPrinting requested but already printing, do nothing"]];
+        return;
+    }
+    PdfPrintWindow *printWindow = (PdfPrintWindow *)self.window;
+    isPrinting = YES;
+    [_delegate fetchDone];
+    
+    [pageView setMediaStyle:@"print"];  // Switch the document CSS media to print
+    
+    NSPrintInfo *printInfo = [self createPrintInfo];
+    
+    printWindow.documentView = (WebHTMLView *)[[[pageView mainFrame] frameView] documentView];
+    documentFrame = [printWindow.documentView frame];
+    if (documentFrame.size.width == DEFAULT_VIEW_WIDTH) {
+        documentFrame.size.width = [self computeOptimalViewWidthForPaper:printInfo];
+    }
+    
+    // Set view frame to display all contents so elementAtPoint will works and we will be able to find the pagebreaks.
+    [self setFrame:documentFrame];
+    [pageView setFrame:documentFrame];
+    
+    [self performSelectorOnMainThread:@selector(printPages:) withObject:printInfo waitUntilDone:NO];
 }
 
 - (CGFloat)computeOptimalViewWidthForPaper:(NSPrintInfo *)printInfo
