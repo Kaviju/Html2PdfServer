@@ -143,10 +143,10 @@
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
 {
-    if (selector == @selector(startPrintingManually)) {
+    if (selector == @selector(startRenderingManually)) {
         return NO;
     }
-    if (selector == @selector(startPrint)) {
+    if (selector == @selector(startRendering)) {
         return NO;
     }
     if (selector == @selector(logMessage:)) {
@@ -163,9 +163,9 @@
     return nil;
 }
 
-// Called by Javascript on page to indicate the printing will be started by javascript when the content is ready to print.
+// Called by Javascript on page to indicate the rendering will be started by javascript when the content is ready to render.
 // Usefull for page using dynamic content generation like d3.
-- (void)startPrintingManually
+- (void)startRenderingManually
 {
     startPrintingManually = YES;
 }
@@ -186,6 +186,11 @@
             [self performSelector:@selector(startPrint) withObject:nil afterDelay:0.05];
         }
     }
+}
+
+- (void)startRendering
+{
+    [self startPrint];
 }
 
 - (void)startPrint

@@ -14,6 +14,7 @@ WebKit printing is very basic and this application add many features to it allow
 * [Add support for header and footer using a page template](https://github.com/Kaviju/Html2PdfServer/wiki/Page-Template)
 * [Support for many paper sizes and mirror margin for document intended for duplex printing](https://github.com/Kaviju/Html2PdfServer/wiki/Paper,-margins-and-scale)
 * Can create complex document by merging output from multiple html sources or static PDF files using different paper size, orientation or margins.
+* [PDF rendering can be started manually from javascript to give time for client side DOM manipulations like d3 rendering.](https://github.com/Kaviju/Html2PdfServer/wiki/Javascript-renderer-functions)
 
 ## Samples
 
