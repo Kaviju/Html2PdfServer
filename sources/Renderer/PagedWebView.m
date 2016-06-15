@@ -119,26 +119,26 @@
 
 - (void)webView:(WebView *)webView didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
-    if ([[pageView mainFrame] isEqual:frame]) {
-        [windowObject setValue:self forKey:@"Html2PdfRenderer"];
-        // Replace requestAnimationFrame by JS version, the native version is not called when the view is offscreen
-        // This prevent some frameworks like d3 to render their contents so we provide a workaround.
-        
-        NSString *script = @"lastRequestAnimationFrameTime = 0;\
-                        window.requestAnimationFrame = function(callback, element) {\
-                            var currTime = new Date().getTime();\
-                            var timeToCall = Math.max(0, 16 - (currTime - lastRequestAnimationFrameTime));\
-                            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);\
-                            lastRequestAnimationFrameTime = currTime + timeToCall;\
-                            return id;\
-                        };\
-                        window.webkitRequestAnimationFrame = window.requestAnimationFrame;\
-                        window.cancelAnimationFrame = function(id) {\
-                            clearTimeout(id);\
-                        };\
-                        window.webkitCancelAnimationFrame = window.cancelAnimationFrame;";
-        [pageView stringByEvaluatingJavaScriptFromString:script];
-    }
+    [windowObject setValue:self forKey:@"Html2PdfRenderer"];
+    // Replace requestAnimationFrame by JS version, the native version is not called when the view is offscreen
+    // This prevent some frameworks like d3 to render their contents so we provide a workaround.
+    
+    NSString *script = @"\
+    lastRequestAnimationFrameTime = 0;\
+    requestAnimationFrame = function(callback, element) {\
+        var currTime = new Date().getTime();\
+        var timeToCall = Math.max(0, 16 - (currTime - lastRequestAnimationFrameTime));\
+        var id = setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);\
+        lastRequestAnimationFrameTime = currTime + timeToCall;\
+        return id;\
+    };\
+    webkitRequestAnimationFrame = requestAnimationFrame;\
+    cancelAnimationFrame = function(id) {\
+        clearTimeout(id);\
+    };\
+    webkitCancelAnimationFrame = cancelAnimationFrame;";
+    
+    [frame.windowObject evaluateWebScript:script];
 }
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
