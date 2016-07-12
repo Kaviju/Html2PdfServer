@@ -210,7 +210,7 @@
         
         int printableHtmlHeight = printableHeight/printWindow.scaleFactor;
         int unusedPrintableHtmlHeight = printableHtmlHeight - (int)printViewFrame.size.height;
-        [printWindow logMessage:[NSString stringWithFormat:@"Uused HTML height: %d", unusedPrintableHtmlHeight]];
+        [printWindow logMessage:[NSString stringWithFormat:@"Unused HTML height: %d", unusedPrintableHtmlHeight]];
         [printWindow setInfo:[NSNumber numberWithInt:unusedPrintableHtmlHeight] forKey:@"unusedPrintableHtmlHeight"];
         
         [printWindow logMessage:[NSString stringWithFormat:@"HTML content dimensions: %f X %f", contentViewFrame.size.width, contentViewFrame.size.height]];
@@ -400,7 +400,7 @@
 
 - (NSArray *)forcedPagesBreakInDocument:(DOMHTMLDocument *)document
 {
-    NSArray *elementNames = [NSArray arrayWithObjects:@"h1", @"h2", @"h3", @"h4", @"h5", @"br", @"p", @"table", @"tr", NULL];
+    NSArray *elementNames = [NSArray arrayWithObjects:@"h1", @"h2", @"h3", @"h4", @"h5", @"br", @"p", @"table", @"tr", @"div", NULL];
     NSMutableArray *pagesBreaks = [NSMutableArray array];
     
     NSEnumerator *en = [elementNames objectEnumerator];
