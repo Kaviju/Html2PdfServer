@@ -187,6 +187,9 @@
                              [printInfo topMargin], [printInfo leftMargin],
                              [printInfo bottomMargin], [printInfo rightMargin]]];
     
+    [printWindow logMessage:[NSString stringWithFormat:@"Printer used: %@", printInfo.printer]];
+    [printWindow logMessage:[NSString stringWithFormat:@"Printer imageablePageBounds: %@", NSStringFromRect(printInfo.imageablePageBounds)]];
+    
     [printWindow logMessage:[NSString stringWithFormat:@"Printed dimensions: %f X %f", printableWidth, printableHeight]];
     [printWindow logMessage:[NSString stringWithFormat:@"HTML dimensions: %f X %f", printViewFrame.size.width, printViewFrame.size.height]];
     [printWindow logMessage:[NSString stringWithFormat:@"Shrink factor: %f", printWindow.scaleFactor]];

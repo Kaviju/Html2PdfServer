@@ -246,7 +246,7 @@
 	NSMutableDictionary *printInfoDict = [[NSPrintInfo sharedPrintInfo] dictionary];
 	[printInfoDict setObject:[NSURL fileURLWithPath:pdfPath] forKey:NSPrintJobSavingURL];
     
-	NSPrintInfo *printInfo = [[NSPrintInfo alloc] initWithDictionary:(NSMutableDictionary*)printInfoDict]; 
+	NSPrintInfo *printInfo = [[NSPrintInfo alloc] initWithDictionary:(NSMutableDictionary*)printInfoDict];
 	
     NSString *marginOffsetForEvenPages = [bodyElem getAttribute:@"marginOffsetForEvenPages"];
     if ([marginOffsetForEvenPages length] > 0) {
@@ -318,6 +318,13 @@
 	[printInfo setHorizontallyCentered: NO];
 	[printInfo setVerticallyCentered: NO];
 	[printInfo setJobDisposition:NSPrintSaveJob];  // NSPrintPreviewJob to open directly in Preview.app
+    
+    // Select the VipRiser printer if present to have zero margins imposed by the printer.
+    // If not present, left and top margins will be constrained to the default printer limitations.
+    NSPrinter *pdfPrinter = [NSPrinter printerWithType:@"Default VipRiser"];
+    if (pdfPrinter != nil) {
+        printInfo.printer = pdfPrinter;
+    }
 	
     return printInfo;
 }

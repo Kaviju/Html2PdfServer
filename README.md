@@ -16,6 +16,12 @@ WebKit printing is very basic and this application add many features to it allow
 * Can create complex document by merging output from multiple html sources or static PDF files using different paper size, orientation or margins.
 * [PDF rendering can be started manually from javascript to give time for client side DOM manipulations like d3 rendering.](https://github.com/Kaviju/Html2PdfServer/wiki/Javascript-renderer-functions)
 
+### A warning about margins
+
+It is strongly recommended to install the VipRiser virtual printer driver [https://onflapp.wordpress.com/vipriser/](https://onflapp.wordpress.com/vipriser/). If present, the renderer will use this printer that impose no limit on the supported margins. More information in the [wiki](https://github.com/Kaviju/Html2PdfServer/wiki/Paper,-margins-and-scale#a-warning-about-margins).
+
+
+
 ## Samples
 
 Samples are is the Samples directory of the project. You may access them directly [here from GitHub.](https://rawgit.com/Kaviju/Html2PdfServer/master/Samples/index.html)
