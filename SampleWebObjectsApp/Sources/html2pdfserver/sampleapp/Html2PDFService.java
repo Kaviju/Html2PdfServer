@@ -1,18 +1,38 @@
 package html2pdfserver.sampleapp;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.webobjects.appserver.*;
-import com.webobjects.foundation.*;
+import com.webobjects.appserver.WOApplication;
+import com.webobjects.appserver.WOComponent;
+import com.webobjects.appserver.WOContext;
+import com.webobjects.appserver.WOCookie;
+import com.webobjects.appserver.WORequest;
+import com.webobjects.appserver.WORequestHandler;
+import com.webobjects.appserver.WOResponse;
+import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSMutableArray;
 
-import er.extensions.appserver.*;
+import er.extensions.appserver.ERXApplication;
+import er.extensions.appserver.ERXResponse;
+import er.extensions.appserver.ERXSession;
+import er.extensions.appserver.ERXWOContext;
 import er.extensions.appserver.ajax.ERXAjaxApplication;
 import er.extensions.appserver.ajax.ERXAjaxSession;
-import er.extensions.foundation.*;
+import er.extensions.foundation.ERXProperties;
+import er.extensions.foundation.ERXThreadStorage;
+import er.extensions.foundation.ERXValueUtilities;
 
 public class Html2PDFService {
 	public static final Logger log = Logger.getLogger(Html2PDFService.class);
@@ -21,77 +41,9 @@ public class Html2PDFService {
 	static public Request createRequest() {
 		return new Request();
 	}
-	
-	static Html2PDFService instance;
-	static public synchronized Html2PDFService getInstance() {
-		if (instance == null) {
-			instance = new Html2PDFService();
-		}
-		return instance;
-	}
-	
+
 	static public boolean isPrinting() { 
 		return ERXValueUtilities.booleanValue(ERXThreadStorage.valueForKey(isPrintingStorageKey));
-	}
-
-	static int documentNumber = 0;	
-	
-	// We make sure the component is not using the current context to keep it clean. We need the request to generate valid URLs.
-	// By setting DONT_STORE_PAGE, we do not use a page cache entry in the current session. 
-	private String componentHtmlKeyWithComponent(WOComponent component) {
-		ERXWOContext newContext = (ERXWOContext) component.context().clone();
-		component._setContext(newContext);
-		
-		ERXThreadStorage.takeValueForKey(true, isPrintingStorageKey);
-		ERXWOContext.contextDictionary().takeValueForKey(ERXAjaxSession.DONT_STORE_PAGE, ERXAjaxSession.DONT_STORE_PAGE);
-		WOResponse html = component.generateResponse();
-		ERXWOContext.contextDictionary().removeObjectForKey(ERXAjaxSession.DONT_STORE_PAGE);
-		ERXThreadStorage.removeValueForKey(isPrintingStorageKey);
-		
-		String key = "d"+documentNumber++;
-		registerHtmlResponseWithKey(html, key);
-		return key;
-	}
-		
-	private Html2PDFService() {
-	}
-		
-	private static byte[] readBytesFromUrl(String urlString, NSArray<String> commands) throws IOException {
-		URL url = new URL(urlString);
-
-		HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
-		urlConn.setDoInput(true);
-		urlConn.setConnectTimeout(1000);
-		int timeout = ERXProperties.intForKeyWithDefault("html2pdfReadTimeout", 15000);
-		urlConn.setReadTimeout(timeout);
-		
-		addCommandsToRequest(commands, urlConn);
-		urlConn.connect();
-		
-		InputStream urlStream = urlConn.getInputStream();
-		int contentLength = urlConn.getContentLength();
-		log.debug("Got data size: "+contentLength+".");
-		
-		byte[] readBytes = readBytesFromStream(urlStream);
-		urlStream.close();
-		urlConn.disconnect();
-		return readBytes;
-	}
-
-	private static void addCommandsToRequest(NSArray<String> commands, HttpURLConnection urlConn) 
-			throws UnsupportedEncodingException, ProtocolException, IOException {
-		if (commands != null) {
-			String postString = commands.componentsJoinedByString("\n");
-			byte[] postData = postString.getBytes("UTF-8");
-			urlConn.addRequestProperty("Content-Length", String.valueOf(postData.length));
-
-			urlConn.setRequestMethod("POST");
-			urlConn.setDoOutput(true);
-			OutputStream postStream = urlConn.getOutputStream();
-			postStream.write(postData);
-			postStream.flush();
-			postStream.close();
-		}
 	}
 
 	private static byte[] readBytesFromStream(InputStream in) throws java.io.IOException {
@@ -103,10 +55,12 @@ public class Html2PDFService {
 		}
 		return out.toByteArray();
 	}
-	
+
 	public static class Request {
-		private boolean pdfFetchedFromServer = false;;
-		NSMutableArray<String>componentHtmlKeys = new NSMutableArray<String>();
+		private static final String AddRenderedInfosCommand = "addRendererInfos";
+		private boolean addRendererInfos = false;
+		private boolean pdfFetchedFromServer = false;
+		NSMutableArray<ResponseCacheRequest>responseCacheRequests = new NSMutableArray<ResponseCacheRequest>();
 		NSMutableArray<String>commands = new NSMutableArray<String>();
 		private byte[] pdfData;
 
@@ -126,28 +80,15 @@ public class Html2PDFService {
 		}
 
 		public Request addRendererInfos() {
-			commands.add("addRendererInfos");
+			addRendererInfos  = true;
 			return this;
 		}
 
 		public Request addComponent(WOComponent component) {
-			String htmlKey = getInstance().componentHtmlKeyWithComponent(component);
-			componentHtmlKeys.add(htmlKey);
-			
-			String className = Html2Pdf.class.getName();
-			if (className.lastIndexOf('.') > 0) {
-				className = className.substring(className.lastIndexOf('.')+1);
-			}
-			addDirectAction(className+"/getHtml", new NSDictionary<String, Object>(htmlKey, "key"));
-			return this;
-		}
+			ResponseCacheRequest responseCacheRequest = ResponseCacheRequest.requestForComponent(component);
+			responseCacheRequests.add(responseCacheRequest);
 
-		public Request addDirectAction(String actionName, NSDictionary<String, Object> params) {
-			ERXWOContext sessionLessContext = new ERXWOContext(ERXWOContext.currentContext().request());
-			sessionLessContext._setRequestSessionID(null);
-			sessionLessContext.generateCompleteURLs();
-			String url = sessionLessContext.directActionURLForActionNamed(actionName, params, false, false);
-			commands.add("renderPdfAtUrl:"+url);
+			commands.add("renderPdfAtUrl:"+responseCacheRequest.completeUrl());
 			return this;
 		}
 
@@ -155,7 +96,7 @@ public class Html2PDFService {
 			addPdfFromResource(filename, "app");
 			return this;
 		}
-		
+
 		public Request addPdfFromResource(String filename, String framework) {
 			WOContext context = ERXWOContext.currentContext();
 			context = (WOContext) context.clone();
@@ -171,13 +112,34 @@ public class Html2PDFService {
 			return this;
 		}
 
+		private byte[] readBytesFromUrl(String urlString, NSMutableArray<String> commands) throws IOException {
+			URL url = new URL(urlString);
+
+			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+			urlConn.setDoInput(true);
+			urlConn.setConnectTimeout(1000);
+			int timeout = ERXProperties.intForKeyWithDefault("html2pdfReadTimeout", 15000);
+			urlConn.setReadTimeout(timeout);
+
+			addCommandsToRequest(commands, urlConn);
+			urlConn.connect();
+
+			InputStream urlStream = urlConn.getInputStream();
+			int contentLength = urlConn.getContentLength();
+			log.debug("Got data size: "+contentLength+".");
+
+			byte[] readBytes = readBytesFromStream(urlStream);
+			urlStream.close();
+			urlConn.disconnect();
+			return readBytes;
+		}
+
 		public Request fetchPdfFromServer() {
-			if (pdfFetchedFromServer ) {
+			if (pdfFetchedFromServer) {
 				return this;
 			}
 			long startTime = System.currentTimeMillis();
 			log.info("Trying PDF serveurs for commands: \n"+commands.componentsJoinedByString("\n"));
-			@SuppressWarnings("unchecked")
 			NSArray<String> serverUrls = ERXProperties.arrayForKeyWithDefault("html2pdfServers", new NSArray<String>("http://localhost:1453/"));
 			for (String serverUrl : serverUrls) {
 				try {
@@ -185,6 +147,7 @@ public class Html2PDFService {
 					if (pdfData != null) {
 						long fetchTime = System.currentTimeMillis() - startTime;
 						log.info("Got PDF from serveur "+serverUrl+" in "+fetchTime/1000.0+" seconds  size: "+pdfData.length+".");
+						break;
 					}
 				}
 				catch (Exception e) {
@@ -195,12 +158,32 @@ public class Html2PDFService {
 			pdfFetchedFromServer = true;
 			return this;
 		}
-		
+
+		private void addCommandsToRequest(NSMutableArray<String> commands, HttpURLConnection urlConn) 
+				throws UnsupportedEncodingException, ProtocolException, IOException {
+			if (commands != null) {
+				if (addRendererInfos) {
+					commands.addObject(AddRenderedInfosCommand);
+				}
+				
+				String postString = commands.componentsJoinedByString("\n");
+				byte[] postData = postString.getBytes("UTF-8");
+				urlConn.addRequestProperty("Content-Length", String.valueOf(postData.length));
+
+				urlConn.setRequestMethod("POST");
+				urlConn.setDoOutput(true);
+				OutputStream postStream = urlConn.getOutputStream();
+				postStream.write(postData);
+				postStream.flush();
+				postStream.close();
+			}
+		}
+
 		public byte[] getPdfData() {
 			fetchPdfFromServer();
 			return pdfData;
 		}
-		
+
 		public ERXResponse createInlineViewResponse(String fileName) {
 			ERXResponse response = createResponse();
 			response.setHeader("inline; filename=\"" + fileName + "\"", "content-disposition");
@@ -213,12 +196,11 @@ public class Html2PDFService {
 			return response;
 		}
 
-		// Private methods 
-		
+		// Private methods
+
 		private void removeComponentHtmlCaches() {
-			Html2PDFService htmlService = Html2PDFService.getInstance();
-			for (String key : componentHtmlKeys) {
-				htmlService.forgetHtmlResponseWithKey(key);
+			for (ResponseCacheRequest request : responseCacheRequests) {
+				request.forgetResponse();
 			}
 		}
 
@@ -228,11 +210,11 @@ public class Html2PDFService {
 			ERXResponse response = new ERXResponse();
 			response.setHeader("private", "cache-control");
 			response.setHeader("application/pdf", "content-type");
-		    response.setHeader(String.valueOf(pdfData.length), "Content-Length");
+			response.setHeader(String.valueOf(pdfData.length), "Content-Length");
 			response.setContent(pdfData);
 			return response;
 		}
-		
+
 		@Override
 		protected void finalize() throws Throwable {
 			if (pdfFetchedFromServer == false) {
@@ -241,42 +223,115 @@ public class Html2PDFService {
 			super.finalize();
 		}
 	}
+
+	// Auto register the RequestHandler when the class is first used. 
+	static {
+	    WOApplication.application().registerRequestHandler(new ResponseCacheRequestHandler(), ResponseCacheRequestHandler.REQUEST_HANDLER_KEY);
+	}
+
+	// We need a custom request handler that will work when the app refuses new session with no session in cookies and URL.
+	// We cannot use the current session because it is currently locked by the current request and the renderer process will not be able to get the html.
+	public static class ResponseCacheRequestHandler extends WORequestHandler {
+		public static final String REQUEST_HANDLER_KEY = "html2pdf";
+		
+		@Override
+		public WOResponse handleRequest(WORequest request) {
+			WOApplication application = WOApplication.application();
+			application.awake();
+			try {		      
+				final String key = request._uriDecomposed().requestHandlerPath();
+				WOResponse response = ResponseCacheRequest.htmlResponseWithKey(key);
+				return response;
+			}
+			finally {
+				application.sleep();
+			}
+		}
+	}
 	
-	Map<String, WOResponse> htmlResponses = Collections.synchronizedMap(new HashMap<String, WOResponse>()); 
-	private void registerHtmlResponseWithKey(WOResponse html, String key) {
-		cleanResponseCookies(html);
-		htmlResponses.put(key, html);
-	}
-	private void cleanResponseCookies(WOResponse html) {
-		for (WOCookie cookie : html.cookies().immutableClone()) {
-			html.removeCookie(cookie);
-		}
-	}
+	public static class ResponseCacheRequest {
+		static int documentNumber = 0;
+		static Map<String, WOResponse> htmlResponses = Collections.synchronizedMap(new HashMap<String, WOResponse>());
 
-	private void forgetHtmlResponseWithKey(String key) {
-		if ( !ERXApplication.isDevelopmentModeSafe() ) {
-			htmlResponses.remove(key);
-		}
-	}
-
-
-	public WOResponse htmlResponseWithKey(String key) {
-		return htmlResponses.get(key);
-	}
-
-	public static class Html2Pdf extends ERXDirectAction {
-
-		public Html2Pdf(WORequest r) {
-			super(r);
+		static private void registerHtmlResponseWithKey(WOResponse html, String key) {
+			log.info("Register response with code: "+key);
+			cleanResponseCookies(html);
+			htmlResponses.put(key, html);
 		}
 		
-		public WOActionResults getHtmlAction() {
-			String key = request().stringFormValueForKey("key");
-			WOResponse response = Html2PDFService.getInstance().htmlResponseWithKey(key);
-			if (response == null) {
-				response = new ERXResponse("Unable to find html response with code "+key+".");
+		static private void cleanResponseCookies(WOResponse html) {
+			for (WOCookie cookie : html.cookies().immutableClone()) {
+				html.removeCookie(cookie);
 			}
-			return response;
+		}
+
+		static private void forgetHtmlResponseWithKey(String key) {
+			log.info("Forget response with code: "+key);
+			if ( !ERXApplication.isDevelopmentModeSafe() ) {
+				htmlResponses.remove(key);
+			}
+		}
+
+		static public WOResponse htmlResponseWithKey(String key) {
+			log.info("Return response with code: "+key);
+			return htmlResponses.get(key);
+		}
+
+		// We make sure the component is not using the current context to keep it clean. We need the request to generate valid URLs.
+		// By setting DONT_STORE_PAGE, we do not use a page cache entry in the current session. 
+		static public ResponseCacheRequest requestForComponent(WOComponent component) {
+			HashMap<String,Object> threadStorageMap = new HashMap<>(ERXThreadStorage.map());
+			
+			ERXWOContext newContext = (ERXWOContext) component.context().clone();
+			component._setContext(newContext);
+			ERXThreadStorage.map().keySet();   ERXSession.currentSessionID();
+			WOResponse html;
+			
+			ERXThreadStorage.takeValueForKey(true, isPrintingStorageKey);
+			ERXWOContext.contextDictionary().takeValueForKey(ERXAjaxSession.DONT_STORE_PAGE, ERXAjaxSession.DONT_STORE_PAGE);
+			html = component.generateResponse();
+			ERXWOContext.contextDictionary().removeObjectForKey(ERXAjaxSession.DONT_STORE_PAGE);
+			ERXThreadStorage.removeValueForKey(isPrintingStorageKey);
+			ERXThreadStorage.reset();
+			ERXThreadStorage.map().putAll(threadStorageMap);
+			return requestWithResponse(html);
+		}
+
+		static public ResponseCacheRequest requestWithHtml(String html) {
+			ResponseCacheRequest request = new ResponseCacheRequest(new ERXResponse(html));
+			return request;
+		}
+
+		static public ResponseCacheRequest requestWithResponse(WOResponse response) {
+			ResponseCacheRequest request = new ResponseCacheRequest(response);
+			return request;
+		}
+
+		// Instance variables and methods
+		String key;
+
+		private ResponseCacheRequest(WOResponse response) {
+			key = "d"+documentNumber++;
+			registerHtmlResponseWithKey(response, key);
+		}
+
+		public String completeUrl() {			
+			ERXWOContext sessionLessContext = new ERXWOContext(ERXWOContext.currentContext().request());
+			sessionLessContext._setSession(ERXWOContext.currentContext().session());
+			sessionLessContext.generateCompleteURLs();
+			sessionLessContext._url().setApplicationNumber(String.valueOf(sessionLessContext.request().applicationNumber()));
+			String url = sessionLessContext.urlWithRequestHandlerKey(ResponseCacheRequestHandler.REQUEST_HANDLER_KEY, key, null);
+			return url;
+		}
+
+		public void forgetResponse() {
+			forgetHtmlResponseWithKey(key);
+		}
+
+		@Override
+		protected void finalize() throws Throwable {
+			forgetHtmlResponseWithKey(key);
+			super.finalize();
 		}
 	}
 }
