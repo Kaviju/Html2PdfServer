@@ -457,6 +457,9 @@
     if ([node isKindOfClass:[DOMText class]]) {
         node = node.parentNode;
     }
+    if ([node isKindOfClass:[DOMHTMLDocument class]]) {
+        return elemRect;
+    }
     
     if ([node isKindOfClass:[DOMHTMLElement class]])
     {
@@ -489,7 +492,7 @@
             }
         }
         // Check parent node hirarchie for page-break-avoid: avoid style
-        while ( (node = node.parentNode) != NULL);
+        while ( (node = node.parentNode) != NULL && [node isKindOfClass:[DOMHTMLDocument class]] == NO);
     }
     return elemRect;
 }
