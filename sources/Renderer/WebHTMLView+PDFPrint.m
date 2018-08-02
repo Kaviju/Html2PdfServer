@@ -320,6 +320,10 @@
     
     [printWindow logMessage:[NSString stringWithFormat:@"Next break initial: %d", nextY]];
     
+    if (printWindow.contentHeight <= nextY) {
+        return nextY;
+    }
+    
     if (printWindow.hasHeader)
     {
         // ScrollingOffset is use to transform coordinates from from the outer document to the inner document.
