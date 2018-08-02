@@ -33,8 +33,8 @@
         DOMHTMLIFrameElement *contentFrame = (DOMHTMLIFrameElement *)[printWindow.pageDocument getElementById:@"contentFrame"];
         
         // Adjusting iFrame view to the current page dimensions
-        contentFrame.style.height = [NSString stringWithFormat:@"%@px", [pageRect valueForKey:@"pageHeight"]];
-        
+        contentFrame.style.height = [NSString stringWithFormat:@"%dpx", [[pageRect valueForKey:@"pageHeight"] intValue]];
+
         // Scroll the iFrame view to current page offset
         [[printWindow.contentScrollView contentView] scrollToPoint:NSMakePoint(0, [[pageRect valueForKey:@"pageOffset"] intValue])];
         return [printWindow.documentView frame];
@@ -463,8 +463,9 @@
             if ([[elemStyle pageBreakInside] isEqual:@"avoid"])
             {
                 NSRect nodeRect = [node boundingBox];
-                [[self printWindow] logMessage:[NSString stringWithFormat:@"Restricted %@ found start: %f to: %f", [node nodeName], nodeRect.origin.y, nodeRect.origin.y+nodeRect.size.height]];
-                if ( nodeRect.size.height < pageHeight && nodeRect.origin.y > previousY && suggestedBreak < nodeRect.origin.y+nodeRect.size.height)
+                UInt nodeBottom = nodeRect.origin.y+nodeRect.size.height;
+                [[self printWindow] logMessage:[NSString stringWithFormat:@"Restricted %@ found start: %f to: %u", [node nodeName], nodeRect.origin.y, nodeBottom]];
+                if ( nodeRect.size.height < pageHeight && nodeRect.origin.y > previousY && suggestedBreak < nodeBottom)
                 {
                     elemRect = nodeRect;
                 }
