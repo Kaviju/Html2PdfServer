@@ -106,7 +106,10 @@
 - (void)processExtendesRequest
 {
     NSString *requestScript = [[NSString alloc] initWithData:requestMessage encoding:NSUTF8StringEncoding];
-    
+    if ([requestScript rangeOfString:@"%3A"].location != NSNotFound) {
+        requestScript = [requestScript stringByRemovingPercentEncoding];
+    }
+
     lines = [[requestScript componentsSeparatedByString:@"\n"] mutableCopy];
     [self processNextLine];
 }
@@ -346,6 +349,10 @@
         CFHTTPMessageSetHeaderFieldValue(msg,
                                          (CFStringRef)@"Content-Length",
                                          (__bridge CFStringRef)length);
+        CFHTTPMessageSetHeaderFieldValue(msg,
+                                         (CFStringRef)@"Connection",
+                                        (CFStringRef)@"close");
+
         
         msgData = CFHTTPMessageCopySerializedMessage(msg);
         [fileHandle writeData:(__bridge NSData *)msgData];
