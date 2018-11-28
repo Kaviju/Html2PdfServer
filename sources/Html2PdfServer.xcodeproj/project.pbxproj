@@ -29,6 +29,13 @@
 		225CCD2516B3320D002B7317 /* Html2PdfRenderer.app in Resources */ = {isa = PBXBuildFile; fileRef = 225CCD0616AAEDEC002B7317 /* Html2PdfRenderer.app */; };
 		225CCD2A16B41CF0002B7317 /* RendererPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 225CCD2916B41CF0002B7317 /* RendererPool.m */; };
 		225CCD2D16B41E55002B7317 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 225CCD2C16B41E55002B7317 /* Renderer.m */; };
+		22615EE121A2148D00ACFE66 /* 150avg.qfilter in Resources */ = {isa = PBXBuildFile; fileRef = 22615EDA21A2148D00ACFE66 /* 150avg.qfilter */; };
+		22615EE221A2148D00ACFE66 /* 75low.qfilter in Resources */ = {isa = PBXBuildFile; fileRef = 22615EDB21A2148D00ACFE66 /* 75low.qfilter */; };
+		22615EE321A2148D00ACFE66 /* 300low.qfilter in Resources */ = {isa = PBXBuildFile; fileRef = 22615EDC21A2148D00ACFE66 /* 300low.qfilter */; };
+		22615EE421A2148D00ACFE66 /* 75avg.qfilter in Resources */ = {isa = PBXBuildFile; fileRef = 22615EDD21A2148D00ACFE66 /* 75avg.qfilter */; };
+		22615EE521A2148D00ACFE66 /* 150low.qfilter in Resources */ = {isa = PBXBuildFile; fileRef = 22615EDE21A2148D00ACFE66 /* 150low.qfilter */; };
+		22615EE621A2148D00ACFE66 /* 110avg.qfilter in Resources */ = {isa = PBXBuildFile; fileRef = 22615EDF21A2148D00ACFE66 /* 110avg.qfilter */; };
+		22615EE721A2148D00ACFE66 /* 300avg.qfilter in Resources */ = {isa = PBXBuildFile; fileRef = 22615EE021A2148D00ACFE66 /* 300avg.qfilter */; };
 		2276E8921AD59856005E16E7 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2276E8901AD59815005E16E7 /* Quartz.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +96,13 @@
 		225CCD2916B41CF0002B7317 /* RendererPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RendererPool.m; sourceTree = "<group>"; };
 		225CCD2B16B41E55002B7317 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		225CCD2C16B41E55002B7317 /* Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
+		22615EDA21A2148D00ACFE66 /* 150avg.qfilter */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 150avg.qfilter; sourceTree = "<group>"; };
+		22615EDB21A2148D00ACFE66 /* 75low.qfilter */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 75low.qfilter; sourceTree = "<group>"; };
+		22615EDC21A2148D00ACFE66 /* 300low.qfilter */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 300low.qfilter; sourceTree = "<group>"; };
+		22615EDD21A2148D00ACFE66 /* 75avg.qfilter */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 75avg.qfilter; sourceTree = "<group>"; };
+		22615EDE21A2148D00ACFE66 /* 150low.qfilter */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 150low.qfilter; sourceTree = "<group>"; };
+		22615EDF21A2148D00ACFE66 /* 110avg.qfilter */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 110avg.qfilter; sourceTree = "<group>"; };
+		22615EE021A2148D00ACFE66 /* 300avg.qfilter */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 300avg.qfilter; sourceTree = "<group>"; };
 		2276E8901AD59815005E16E7 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		22F109FE15E510DD0066C621 /* WebHTMLView+PDFPrint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebHTMLView+PDFPrint.h"; sourceTree = "<group>"; };
 		22F109FF15E510DD0066C621 /* WebHTMLView+PDFPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebHTMLView+PDFPrint.m"; sourceTree = "<group>"; };
@@ -185,6 +199,7 @@
 		2236058F1446021B001A43BE /* HTTP Server */ = {
 			isa = PBXGroup;
 			children = (
+				22615ED721A1B83400ACFE66 /* Resources */,
 				2236058614460215001A43BE /* SimpleHTTPConnection.h */,
 				2236058714460215001A43BE /* SimpleHTTPConnection.m */,
 				2236058814460215001A43BE /* SimpleHTTPServer.h */,
@@ -234,6 +249,28 @@
 				221FCCE116BD5F6200CCF0CD /* WebFrameView_Private.h */,
 			);
 			name = "WebKit private headers";
+			sourceTree = "<group>";
+		};
+		22615ED721A1B83400ACFE66 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				22615ED921A1B86B00ACFE66 /* Filters */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		22615ED921A1B86B00ACFE66 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				22615EDD21A2148D00ACFE66 /* 75avg.qfilter */,
+				22615EDB21A2148D00ACFE66 /* 75low.qfilter */,
+				22615EDF21A2148D00ACFE66 /* 110avg.qfilter */,
+				22615EDA21A2148D00ACFE66 /* 150avg.qfilter */,
+				22615EDE21A2148D00ACFE66 /* 150low.qfilter */,
+				22615EE021A2148D00ACFE66 /* 300avg.qfilter */,
+				22615EDC21A2148D00ACFE66 /* 300low.qfilter */,
+			);
+			path = Filters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,9 +344,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22615EE721A2148D00ACFE66 /* 300avg.qfilter in Resources */,
+				22615EE421A2148D00ACFE66 /* 75avg.qfilter in Resources */,
 				225CCD2516B3320D002B7317 /* Html2PdfRenderer.app in Resources */,
 				2236056E144601A9001A43BE /* InfoPlist.strings in Resources */,
+				22615EE521A2148D00ACFE66 /* 150low.qfilter in Resources */,
+				22615EE621A2148D00ACFE66 /* 110avg.qfilter in Resources */,
+				22615EE221A2148D00ACFE66 /* 75low.qfilter in Resources */,
 				2236057A144601A9001A43BE /* MainMenu.xib in Resources */,
+				22615EE321A2148D00ACFE66 /* 300low.qfilter in Resources */,
+				22615EE121A2148D00ACFE66 /* 150avg.qfilter in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

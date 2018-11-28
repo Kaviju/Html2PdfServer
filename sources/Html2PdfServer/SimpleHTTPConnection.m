@@ -18,6 +18,9 @@
 #include <dispatch/dispatch.h>
 
 @implementation SimpleHTTPConnection
+{
+    NSMutableDictionary *pdfOptions;
+}
 
 - (id)initWithFileHandle:(NSFileHandle *)fh server:(SimpleHTTPServer *)aServer
 {
@@ -28,6 +31,7 @@
         currentPageNumber = 1;
         _messages = [NSMutableArray new];
         infoDicts = [NSMutableArray new];
+        pdfOptions = [NSMutableDictionary dictionary];
         
         // Get IP address of remote client
         CFSocketRef socket;
@@ -204,6 +208,9 @@
         else if ([command isEqualToString:@"appendPdfAtUrl"]) {
             canContinue = [self appendPdfAtUrl:paramString];
         }
+        else if ([command isEqualToString:@"setOutputFilter"]) {
+            canContinue = [self setOutputFilter:paramString];
+        }
         else if ([command isEqualToString:@"addRendererInfos"]) {
             canContinue = [self addRendererInfos];
         }
@@ -303,6 +310,23 @@
     }
 }
 
+- (BOOL)setOutputFilter:(NSString *)filterName
+{
+    NSURL *filterUrl = [[NSBundle mainBundle] URLForResource:[@"" stringByAppendingString:filterName] withExtension:@"qfilter"];
+    filterName = [filterName stringByAppendingString:@".qfilter"];
+    if ([filterUrl checkResourceIsReachableAndReturnError:NULL] == NO) {
+        filterUrl = [NSURL fileURLWithPath:[@"/Library/Filters/" stringByAppendingString:filterName]];
+    }
+    if ([filterUrl checkResourceIsReachableAndReturnError:NULL] == NO) {
+        filterUrl = [NSURL fileURLWithPath:[@"/System/Library/Filters/" stringByAppendingString:filterName]];
+    }
+    if ([filterUrl checkResourceIsReachableAndReturnError:NULL]) {
+        QuartzFilter *quartzFilter = [QuartzFilter quartzFilterWithURL:filterUrl];
+        [pdfOptions setObject:quartzFilter forKey:@"QuartzFilter"];
+        [self logMessage:[NSString stringWithFormat:@"Quatz output filter %@ added.", filterUrl]];
+    }
+    return YES;
+}
 
 #pragma mark Send response and log
 
@@ -310,7 +334,7 @@
 {
     CFHTTPMessageRef msg = NULL;
     CFDataRef msgData = NULL;
-    NSData *pdfData = [self.pdfDocument dataRepresentation];
+    NSData *pdfData = [self.pdfDocument dataRepresentationWithOptions:pdfOptions];
     
     NSLog(@"printing done, %ld messages, pdf size: %ld", [_messages count], [pdfData length]);
     
@@ -345,7 +369,7 @@
 {
     CFHTTPMessageRef msg = NULL;
     CFDataRef msgData = NULL;
-    NSData *pdfData = [self.pdfDocument dataRepresentation];
+    NSData *pdfData = [self.pdfDocument dataRepresentationWithOptions:pdfOptions];
     NSLog(@"printing done, %ld messages, pdf size: %ld", [_messages count], [pdfData length]);
     
     @try
