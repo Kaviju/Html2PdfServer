@@ -8,6 +8,8 @@
 #import "PagedWebView.h"
 #import "PdfPrintWindow.h"
 
+NSString *AppVersionString = @"v1.3.0.4";
+
 @implementation PagedWebView
 
 - (id)initWithFrame:(NSRect)frame hostWindow:(NSWindow *)window
@@ -334,7 +336,7 @@
     [pageView display];
     [self display];
     PdfPrintWindow *printWindow = (PdfPrintWindow *)self.window;
-    [printWindow logMessage:[NSString stringWithFormat:@"Begin printing."]];
+    [printWindow logMessage:[NSString stringWithFormat:@"Begin printing %@", AppVersionString]];
     
     WebFrame *mainFrame = [pageView mainFrame];
     printWindow.pageDocument = (DOMHTMLDocument*)[mainFrame DOMDocument];
