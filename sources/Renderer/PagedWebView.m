@@ -56,6 +56,7 @@ NSString *AppVersionString = @"v1.3.0.4";
     pdfPath = path;
     
     [_delegate logMessage:@"Begin loading."];
+    [self addStartPrintScriptToWebView];
     [[pageView mainFrame] loadRequest:request];
 }
 
@@ -64,7 +65,29 @@ NSString *AppVersionString = @"v1.3.0.4";
 	pdfPath = path;
 	
 	[_delegate logMessage:@"Begin loading."];
+    [self addStartPrintScriptToWebView];
 	[[pageView mainFrame] loadHTMLString:htmlSource baseURL:nil];
+}
+
+- (void)addStartPrintScriptToWebView
+{
+    NSString *script = @"\
+    window.onload = undefined;\
+    function startPrinting() {\
+        window.Html2PdfRenderer.startPrint();\
+    }\
+    window.addEventListener('load', function() {\
+        var contentFrame = document.getElementById('contentFrame');\
+        if ( contentFrame != null && contentFrame.contentDocument.body.hasChildNodes() == false) {\
+            contentFrame.addEventListener('load', startPrinting);\
+        }\
+        else {\
+            startPrinting();\
+        }\
+    }\
+    );\
+    ";
+    [pageView stringByEvaluatingJavaScriptFromString:script];
 }
 
 - (void)print:(id) sender
@@ -155,6 +178,9 @@ NSString *AppVersionString = @"v1.3.0.4";
     if (selector == @selector(startRendering)) {
         return NO;
     }
+    if (selector == @selector(startPrint)) {
+        return NO;
+    }
     if (selector == @selector(logMessage:)) {
         return NO;
     }
@@ -186,25 +212,34 @@ NSString *AppVersionString = @"v1.3.0.4";
 - (void)startPrintingIfLoadCompleted {
     if (mainFrameLoaded && [ressourcesLoading count] == 0) {
         if (startPrintingManually == YES) {
-            [self performSelector:@selector(startPrint) withObject:nil afterDelay:1.0];
+            [_delegate logMessage:[NSString stringWithFormat:@"Will start printing when requested..."]];
+            [self performSelector:@selector(startRendering) withObject:nil afterDelay:2.0];
         }
-        else { // We give some time for Javascript code to execute...
-            [self performSelector:@selector(startPrint) withObject:nil afterDelay:0.05];
-        }
+        // else printing start when window fully loaded done by injected javascript
     }
 }
 
 - (void)startRendering
 {
+    startPrintingManually = NO;
+    [_delegate logMessage:[NSString stringWithFormat:@"Start printing requested."]];
     [self startPrint];
 }
-
+BOOL printQueued = NO;
 - (void)startPrint
 {
+    if (startPrintingManually) {
+        return;
+    }
     if (isPrinting) {
         [_delegate logMessage:[NSString stringWithFormat:@"startPrinting requested but already printing, do nothing"]];
         return;
     }
+    if (printQueued == NO) {
+        printQueued = YES;
+        [self performSelector:@selector(startPrint) withObject:nil afterDelay:0.05];
+    }
+    
     PdfPrintWindow *printWindow = (PdfPrintWindow *)self.window;
     isPrinting = YES;
     [_delegate fetchDone];
