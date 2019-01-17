@@ -10,7 +10,7 @@
 
 @implementation PdfPrintWindow
 
-- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
+- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
 {
     if ((self = [super initWithContentRect:(NSRect)contentRect 
                                  styleMask:(NSUInteger)windowStyle 
