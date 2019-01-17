@@ -29,14 +29,18 @@ NSString *AppVersionString = @"v1.3.0.4";
         [self addSubview:pageView];
         [pageView setFrameLoadDelegate:self];
         [pageView setResourceLoadDelegate:self];
+        [pageView setMediaStyle:@"print"];  // Switch the document CSS media to print
         
         WebPreferences* prefs = [WebPreferences standardPreferences];
-        [prefs setShouldPrintBackgrounds: YES];
-        [prefs setAllowsAnimatedImages:NO];
-        [prefs setUsesPageCache:NO];
-        [prefs setAutosaves:NO];
-        [prefs setCacheModel:WebCacheModelDocumentViewer];
-        [prefs setJavaScriptCanOpenWindowsAutomatically:NO];
+        prefs.shouldPrintBackgrounds = YES;
+        prefs.allowsAnimatedImages = YES;
+        prefs.usesPageCache = NO;
+        prefs.autosaves = NO;
+        prefs.cacheModel = WebCacheModelDocumentViewer;
+        prefs.javaScriptCanOpenWindowsAutomatically = NO;
+        prefs.suppressesIncrementalRendering = YES;
+        prefs.privateBrowsingEnabled = YES;
+        
         [pageView setPreferences:prefs];
         
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -204,8 +208,6 @@ NSString *AppVersionString = @"v1.3.0.4";
     PdfPrintWindow *printWindow = (PdfPrintWindow *)self.window;
     isPrinting = YES;
     [_delegate fetchDone];
-    
-    [pageView setMediaStyle:@"print"];  // Switch the document CSS media to print
     
     NSPrintInfo *printInfo = [self createPrintInfo];
     
