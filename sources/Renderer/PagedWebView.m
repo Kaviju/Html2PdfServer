@@ -74,7 +74,9 @@ NSString *AppVersionString = @"v1.3.0.4";
     NSString *script = @"\
     window.onload = undefined;\
     function startPrinting() {\
-        window.Html2PdfRenderer.startPrint();\
+        document.fonts.ready.then(function () {\
+            window.Html2PdfRenderer.startPrint();\
+        });\
     }\
     window.addEventListener('load', function() {\
         var contentFrame = document.getElementById('contentFrame');\
