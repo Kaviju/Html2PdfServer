@@ -28,15 +28,19 @@
         [self replacePlaceHoldersInDocument:printWindow.contentDocument];
         [self replacePlaceHoldersInDocument:printWindow.pageDocument];
         
-        NSDictionary *pageRect = [printWindow.pagesRects objectAtIndex:pageNumber-1];
-        
-        DOMHTMLIFrameElement *contentFrame = (DOMHTMLIFrameElement *)[printWindow.pageDocument getElementById:@"contentFrame"];
-        
         // Adjusting iFrame view to the current page dimensions
-        contentFrame.style.height = [NSString stringWithFormat:@"%dpx", [[pageRect valueForKey:@"pageHeight"] intValue]];
-
+        NSDictionary *pageRect = [printWindow.pagesRects objectAtIndex:pageNumber-1];
+        NSRect contentViewFrame = [printWindow.contentScrollView frame];
+        
+        // View uses coordinate starting bottom left, we need to adjust y to keep the content on top of pages.
+        CGFloat contentViewAvailableHeight = contentViewFrame.origin.y + contentViewFrame.size.height;
+        contentViewFrame.size.height = [[pageRect valueForKey:@"pageHeight"] floatValue];
+        contentViewFrame.origin.y = contentViewAvailableHeight - contentViewFrame.size.height;
+        [printWindow.contentScrollView setFrame:contentViewFrame];
+        
         // Scroll the iFrame view to current page offset
         [[printWindow.contentScrollView contentView] scrollToPoint:NSMakePoint(0, [[pageRect valueForKey:@"pageOffset"] intValue])];
+
         return [printWindow.documentView frame];
     }
     else

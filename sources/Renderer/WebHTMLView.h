@@ -66,6 +66,7 @@
 
 - (WebView *)_webView;
 - (void)_web_setPrintingModeRecursiveAndAdjustViewSize;
+- (void)_layoutForPrinting;
 
 - (NSDictionary *)elementAtPoint:(NSPoint)point;
 

@@ -55,7 +55,12 @@ NSString *AppVersionString = @"v1.3.0.4";
 {
     _request = request;
     pdfPath = path;
-    
+
+    ressourcesLoading = [NSMutableSet set];
+    mainFrameLoaded = NO;
+    isPrinting = NO;
+    startPrintingManually = NO;
+
     [_delegate logMessage:@"Begin loading."];
     [self addStartPrintScriptToWebView];
     [[pageView mainFrame] loadRequest:request];
@@ -72,12 +77,25 @@ NSString *AppVersionString = @"v1.3.0.4";
 
 - (void)addStartPrintScriptToWebView
 {
+    // Make sure the document is ready, rendering completed (windows.load event), all fonts loaded
+    // and give some time to complete some image rendering with setTimeout. Without the delay, sometime svg background is white.
     NSString *script = @"\
     window.onload = undefined;\
     function startPrinting() {\
-        document.fonts.ready.then(function () {\
-            window.Html2PdfRenderer.startPrint();\
-        });\
+        if (document.readyState != 'complete') {\
+            document.onreadystatechange = function () {\
+                if (document.readyState === 'complete') {\
+                    startPrinting();\
+                }\
+            }\
+        }\
+        else {\
+            document.fonts.ready.then(function () {\
+                setTimeout(function () {\
+                    window.Html2PdfRenderer.startPrint();\
+                }, 40);\
+            });\
+        }\
     }\
     window.addEventListener('load', function() {\
         var contentFrame = document.getElementById('contentFrame');\
@@ -419,8 +437,9 @@ BOOL printQueued = NO;
     NSPrintOperation *op;
     
     WebHTMLView *documentView = (WebHTMLView *)[[[pageView mainFrame] frameView] documentView];
+//    [documentView _layoutForPrinting];  // This switch temporary to print layout and revert back to normal
     // Switch the HTMLView to print mode so it does not toggle between print and non print mode during the process.
-    [documentView _web_setPrintingModeRecursiveAndAdjustViewSize];
+    [documentView _web_setPrintingModeRecursiveAndAdjustViewSize]; // This switch to print layout and stay in this mode
     
     op = [[[pageView mainFrame] frameView] printOperationWithPrintInfo:printInfo];
     
