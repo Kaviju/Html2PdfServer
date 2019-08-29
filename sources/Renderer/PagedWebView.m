@@ -53,6 +53,7 @@ NSString *AppVersionString = @"v1.3.0.4";
 
 - (void)saveRequest:(NSURLRequest *)request toPath:(NSString*)path
 {
+    _request = request;
     pdfPath = path;
     
     [_delegate logMessage:@"Begin loading."];
@@ -101,14 +102,22 @@ NSString *AppVersionString = @"v1.3.0.4";
 {		
     //NSLog(@"==========didFailProvisionalLoadWithError: %@", error);
 	[_delegate logMessage:[NSString stringWithFormat:@"Error didFailProvisionalLoadWithError (%@): %@", [error  localizedDescription], [error  userInfo]]];
+    [frame stopLoading];
+    NSString *html = [NSString stringWithFormat:@"<html><boby><h3>Error loading request %@</h3>" ,_request];
+    html = [html stringByAppendingFormat:@"Error: %@", [error  localizedDescription]];
+    html = [html stringByAppendingString:@"</body></html>"];
+    [frame loadHTMLString:html baseURL:nil];
 }
 
 - (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
     //NSLog(@"==========didFailLoadWithError: %@", error);
 	[_delegate logMessage:[NSString stringWithFormat:@"Error didFailLoadWithError (%@): %@", [error  localizedDescription], [error  userInfo]]];
-    [[pageView mainFrame] stopLoading];
-	[_delegate printingDone];
+    [frame stopLoading];
+    NSString *html = [NSString stringWithFormat:@"<html><boby><h3>Error loading request %@</h3>" ,_request];
+    html = [html stringByAppendingFormat:@"Error: %@", [error  localizedDescription]];
+    html = [html stringByAppendingString:@"</body></html>"];
+    [frame loadHTMLString:html baseURL:nil];
 }
 
 - (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource {

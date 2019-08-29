@@ -39,6 +39,7 @@
 	
 	NSRect documentFrame;
 		
+    NSURLRequest *_request;
 	NSString *pdfPath;
 	NSMutableArray *pagesRects;
     NSMutableSet *ressourcesLoading;
