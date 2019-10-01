@@ -60,7 +60,7 @@
 {
     PdfPrintWindow *printWindow = [self printWindow];
     DOMNodeList *nodes;
-    
+
     if (printWindow.currentPageNumber == printWindow.firstPageNumber) {
         // handle node with showOnFirstPage class
         nodes = [document getElementsByClassName:@"showOnFirstPage"];
@@ -242,15 +242,18 @@
                 int nextPage = [self nextPageBreakForView:printWindow.documentView startingAt:processedHeight pageHeight:currentFrameHeight];
                 NSNumber *pageOffset = [NSNumber numberWithInt:processedHeight];
                 NSNumber *pageHeight = [NSNumber numberWithInt:nextPage-processedHeight];
-                [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber", nil]];
+                if ([pageHeight intValue] > 0) {
+                    [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber", nil]];
+                }
                 processedHeight = nextPage;
             }
             if (processedHeight < contentHeight)
             {
                 NSNumber *pageOffset = [NSNumber numberWithInt:processedHeight];
                 NSNumber *pageHeight = [NSNumber numberWithInt:nextForcedBreak-processedHeight];
-                [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
-                
+                if ([pageHeight intValue] > 0) {
+                    [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
+                }
                 processedHeight = nextForcedBreak;
             }
         }
@@ -260,7 +263,9 @@
             int nextPage = [self nextPageBreakForView:printWindow.documentView startingAt:processedHeight pageHeight:currentFrameHeight];
             NSNumber *pageOffset = [NSNumber numberWithInt:processedHeight];
             NSNumber *pageHeight = [NSNumber numberWithInt:nextPage-processedHeight];
-            [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
+            if ([pageHeight intValue] > 0) {
+                [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
+            }
             processedHeight = nextPage;
         }
         
@@ -285,15 +290,18 @@
                 int nextPage = [self nextPageBreakForView:printWindow.documentView startingAt:processedHeight pageHeight:printWindow.htmlHeight];
                 NSNumber *pageOffset = [NSNumber numberWithInt:processedHeight];
                 NSNumber *pageHeight = [NSNumber numberWithInt:nextPage-processedHeight];
-                [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
+                if ([pageHeight intValue] > 0) {
+                    [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
+                }
                 processedHeight = nextPage;
             }
             if (processedHeight < contentHeight)
             {
                 NSNumber *pageOffset = [NSNumber numberWithInt:processedHeight];
                 NSNumber *pageHeight = [NSNumber numberWithInt:nextForcedBreak-processedHeight];
-                [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
-                
+                if ([pageHeight intValue] > 0) {
+                    [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
+                }
                 processedHeight = nextForcedBreak;
             }
         }
@@ -303,7 +311,9 @@
             int nextPage = [self nextPageBreakForView:printWindow.documentView startingAt:processedHeight pageHeight:printWindow.htmlHeight];
             NSNumber *pageOffset = [NSNumber numberWithInt:processedHeight];
             NSNumber *pageHeight = [NSNumber numberWithInt:nextPage-processedHeight];
-            [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
+            if ([pageHeight intValue] > 0) {
+                [pagesRects addObject:[NSDictionary dictionaryWithObjectsAndKeys:pageOffset, @"pageOffset", pageHeight, @"pageHeight", [NSNumber numberWithUnsignedInteger:[pagesRects count]+1], @"pageNumber",nil]];
+            }
             processedHeight = nextPage;
         }
         [printWindow logMessage:[NSString stringWithFormat:@"Pages offsets: %@", pagesRects]];

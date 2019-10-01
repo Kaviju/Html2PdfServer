@@ -326,6 +326,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 22360554144601A9001A43BE;
@@ -487,6 +488,7 @@
 				GCC_PREFIX_HEADER = "Html2PdfServer/Html2PdfServer-Prefix.pch";
 				INFOPLIST_FILE = "Html2PdfServer/Html2PdfServer-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kaviju.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -506,6 +508,7 @@
 				GCC_PREFIX_HEADER = "Html2PdfServer/Html2PdfServer-Prefix.pch";
 				INFOPLIST_FILE = "Html2PdfServer/Html2PdfServer-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kaviju.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -539,6 +542,7 @@
 				GCC_PREFIX_HEADER = "Html2PdfServer/Html2PdfServer-Prefix.pch";
 				INFOPLIST_FILE = "Html2PdfServer/Html2PdfServer-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kaviju.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -565,6 +569,7 @@
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "Renderer/Renderer-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kaviju.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = app;
@@ -587,6 +592,7 @@
 				GCC_PREFIX_HEADER = "Renderer/Renderer-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "Renderer/Renderer-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kaviju.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = app;
@@ -609,6 +615,7 @@
 				GCC_PREFIX_HEADER = "Renderer/Renderer-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "Renderer/Renderer-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kaviju.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = app;

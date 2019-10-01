@@ -8,7 +8,7 @@
 #import "PagedWebView.h"
 #import "PdfPrintWindow.h"
 
-NSString *AppVersionString = @"v1.3.0.4";
+NSString *AppVersionString = @"v1.4.1.0";
 
 @implementation PagedWebView
 
