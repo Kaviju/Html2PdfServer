@@ -16,6 +16,7 @@
 @interface SimpleHTTPConnection : NSObject
 {
     NSFileHandle *fileHandle;
+    BOOL applyPdfPostFilter;
 
 	NSURL *url;
 	NSMutableData *requestMessage;

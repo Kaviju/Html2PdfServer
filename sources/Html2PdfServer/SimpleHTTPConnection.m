@@ -17,6 +17,8 @@
 #import <arpa/inet.h>       // for inet_ntoa
 #include <dispatch/dispatch.h>
 
+typedef void (^ReducePdfCompletionBlock)(NSData *);
+
 @implementation SimpleHTTPConnection
 {
     NSMutableDictionary *pdfOptions;
@@ -51,6 +53,10 @@
 		{
             self.address = @"NULL";
         }
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        applyPdfPostFilter = [defaults boolForKey:@"applyPdfPostFilter"];
+        applyPdfPostFilter = applyPdfPostFilter;
     }
     return self;
 }
@@ -152,7 +158,7 @@
         }
     }
     @catch (NSException *exception) {
-        [self sendBasicHttpResponse];
+        [self sendBasicHttpResponse:[NSData data]];
     }
     @finally {
         if( message ) CFRelease(message);
@@ -189,7 +195,11 @@
     while (canContinue) {
         NSString *command = [lines firstObject];
         if (command == nil) {
-            [self sendBasicHttpResponse];
+            NSData *pdfData = [self.pdfDocument dataRepresentationWithOptions:pdfOptions];
+//            [self sendBasicHttpResponse:pdfData];
+            [self reducedPdf:pdfData completionBlock:^(NSData *pdfData) {
+                [self sendBasicHttpResponse:pdfData];
+            }];
             return;
         }
         NSString *paramString;
@@ -219,14 +229,26 @@
         else if ([command isEqualToString:@"setOutputFilter"]) {
             canContinue = [self setOutputFilter:paramString];
         }
+        else if ([command isEqualToString:@"applyPdfPostFilter"]) {
+            applyPdfPostFilter = [paramString boolValue];
+            canContinue = YES;
+        }
         else if ([command isEqualToString:@"addRendererInfos"]) {
             canContinue = [self addRendererInfos];
         }
         else if ([command isEqualToString:@"sendBasicResponse"]) {
-            canContinue = [self sendBasicHttpResponse];
+            NSData *pdfData = [self.pdfDocument dataRepresentationWithOptions:pdfOptions];
+            [self reducedPdf:pdfData completionBlock:^(NSData *pdfData) {
+                [self sendBasicHttpResponse:pdfData];
+            }];
+            canContinue = NO;
         }
         else if ([command isEqualToString:@"sendExtendedResponse"]) {
-            canContinue = [self sendExtendedHttpResponse];
+            NSData *pdfData = [self.pdfDocument dataRepresentationWithOptions:pdfOptions];
+            [self reducedPdf:pdfData completionBlock:^(NSData *pdfData) {
+                [self sendExtendedHttpResponse:pdfData];
+            }];
+            canContinue = NO;
         }
     }
 }
@@ -339,11 +361,10 @@
 
 #pragma mark Send response and log
 
-- (BOOL)sendBasicHttpResponse
+- (BOOL)sendBasicHttpResponse:(NSData *)pdfData
 {
     CFHTTPMessageRef msg = NULL;
     CFDataRef msgData = NULL;
-    NSData *pdfData = [self.pdfDocument dataRepresentationWithOptions:pdfOptions];
     
     NSLog(@"printing done, %ld messages, pdf size: %ld", [_messages count], [pdfData length]);
     
@@ -378,11 +399,10 @@
     return NO;
 }
 
-- (BOOL)sendExtendedHttpResponse
+- (BOOL)sendExtendedHttpResponse:(NSData *)pdfData
 {
     CFHTTPMessageRef msg = NULL;
     CFDataRef msgData = NULL;
-    NSData *pdfData = [self.pdfDocument dataRepresentationWithOptions:pdfOptions];
     NSLog(@"printing done, %ld messages, pdf size: %ld", [_messages count], [pdfData length]);
     
     @try
@@ -415,6 +435,39 @@
     if (msgData) CFRelease(msgData);
     if (msg) CFRelease(msg);
     return NO;
+}
+
+- (void)reducedPdf:(NSData*)pdfData completionBlock:(ReducePdfCompletionBlock)aBlock
+{
+    if (applyPdfPostFilter == false) {
+        aBlock(pdfData);
+        return;
+    }
+    NSString *pdfPostFilterSetting = [[NSUserDefaults standardUserDefaults] stringForKey:@"pdfPostFilter"];
+    NSArray<NSString*> *postFilterArgs = [pdfPostFilterSetting componentsSeparatedByString:@" "];
+    
+    NSTask *task = [[NSTask alloc] init];
+//    [task setLaunchPath:@"/opt/homebrew/bin/ps2pdf"];
+//    NSArray *arguments = [NSArray arrayWithObjects:@"-dPDFSETTINGS=/printer", @"-", @"-", nil];
+    [task setLaunchPath:[postFilterArgs objectAtIndex:0]];
+    NSArray *arguments = [postFilterArgs subarrayWithRange:NSMakeRange(1, postFilterArgs.count-1)];
+    [task setArguments:arguments];
+
+    task.standardInput = [NSPipe pipe];
+    task.standardOutput = [NSPipe pipe];
+    NSMutableData *compressedPdfData = [NSMutableData data];
+    [[task.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *file) {
+        NSData *readData = [file availableData];
+        [compressedPdfData appendData:readData];
+        if (readData.length == 0) { // EOF reached
+            file.readabilityHandler = nil;
+            aBlock(compressedPdfData);
+        }
+    }];
+    [task launch];
+    
+    [[task.standardInput fileHandleForWriting]  writeData:pdfData];
+    [[task.standardInput fileHandleForWriting]  closeFile];
 }
 
 - (CFHTTPMessageRef)newHttpMessage

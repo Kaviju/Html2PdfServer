@@ -17,12 +17,13 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
                                  @"0", @"numberOfRenderers", // will use the number of CPUs
                                  @"100", @"numberOfRequestsPerRenderer", // Renderer process will be kill after this number of PDF
                                  @"localhost", @"listenAddress", // will listen on localhost only
                                  @"1453", @"listenPort", // will listen port 1453
+                                 @"/opt/homebrew/bin/ps2pdf -dPDFSETTINGS=/printer - -", @"pdfPostFilter", // programs and arguments will stream to and from
+                                 @"0", @"applyPdfPostFilter", // Apply post filter by default
                                  nil];
     [defaults registerDefaults:appDefaults];
     
