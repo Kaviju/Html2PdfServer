@@ -105,6 +105,7 @@
 
 - (void)processExtendesRequest
 {
+    @try {
     NSString *requestScript = [[NSString alloc] initWithData:requestMessage encoding:NSUTF8StringEncoding];
     if ([requestScript rangeOfString:@"%3A"].location != NSNotFound) {
         requestScript = [requestScript stringByRemovingPercentEncoding];
@@ -112,6 +113,10 @@
 
     lines = [[requestScript componentsSeparatedByString:@"\n"] mutableCopy];
     [self processNextLine];
+
+    } @catch (NSException *exception) {
+        [_messages addObject:[NSString stringWithFormat:@"Exception during processExtendesRequest:%@ ", exception]];
+    }
 }
 
 - (void)readRequest
@@ -255,6 +260,7 @@
     [renderer processRequest:sourceUrl firstPageNumber:currentPageNumber completionBlock:^(NSData *pdfData, NSMutableDictionary *infoDict, NSArray *messages) {
         SimpleHTTPConnection *blocSelf = self;  //Keep a copy of the pointer because self is sometime corrupted after -sendHttpResponse for an unknow reason.
         [blocSelf.messages addObjectsFromArray:messages];
+        
         [blocSelf processRenderedPdf:pdfData withInfos:infoDict];
     }];
     return NO;

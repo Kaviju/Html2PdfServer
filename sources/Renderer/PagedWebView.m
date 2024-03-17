@@ -8,7 +8,7 @@
 #import "PagedWebView.h"
 #import "PdfPrintWindow.h"
 
-NSString *AppVersionString = @"v1.4.1.0";
+NSString *AppVersionString = @"v1.5.0";
 
 @implementation PagedWebView
 
@@ -37,6 +37,7 @@ NSString *AppVersionString = @"v1.4.1.0";
         prefs.usesPageCache = NO;
         prefs.autosaves = NO;
         prefs.cacheModel = WebCacheModelDocumentViewer;
+        prefs.javaScriptEnabled = YES;
         prefs.javaScriptCanOpenWindowsAutomatically = NO;
         prefs.suppressesIncrementalRendering = YES;
         prefs.privateBrowsingEnabled = YES;
@@ -62,7 +63,6 @@ NSString *AppVersionString = @"v1.4.1.0";
     startPrintingManually = NO;
 
     [_delegate logMessage:@"Begin loading."];
-    [self addStartPrintScriptToWebView];
     [[pageView mainFrame] loadRequest:request];
 }
 
@@ -197,6 +197,7 @@ NSString *AppVersionString = @"v1.4.1.0";
     webkitCancelAnimationFrame = cancelAnimationFrame;";
     
     [frame.windowObject evaluateWebScript:script];
+    [self addStartPrintScriptToWebView];
 }
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
@@ -242,7 +243,8 @@ NSString *AppVersionString = @"v1.4.1.0";
     if (mainFrameLoaded && [ressourcesLoading count] == 0) {
         if (startPrintingManually == YES) {
             [_delegate logMessage:[NSString stringWithFormat:@"Will start printing when requested..."]];
-            [self performSelector:@selector(startRendering) withObject:nil afterDelay:2.0];
+//            [self performSelector:@selector(startRendering) withObject:nil afterDelay:2.0];
+            [self startRendering];
         }
         // else printing start when window fully loaded done by injected javascript
     }

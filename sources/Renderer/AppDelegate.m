@@ -74,9 +74,12 @@ float MaxTemplateHeightInWebPixels = 2000;
             [self logMessage:[NSString stringWithFormat:@"sourceUrl %@", requestURL]];
             [self logMessage:[NSString stringWithFormat:@"pdfPath %@", pdfPath]];
             
-            window = [[PdfPrintWindow alloc] initWithContentRect:NSMakeRect(-10000, -10000, MaxTemplateWidthInWebPixels, MaxTemplateHeightInWebPixels)
+            NSRect windowRect = NSMakeRect(-10000, -10000, MaxTemplateWidthInWebPixels, MaxTemplateHeightInWebPixels);
+            window = [[PdfPrintWindow alloc] initWithContentRect:windowRect
                                                        styleMask:NSTitledWindowMask|NSResizableWindowMask|NSClosableWindowMask
-                                                         backing:NSBackingStoreBuffered defer:NO];
+                                                         backing:NSBackingStoreBuffered
+                                                           defer:YES];
+            // defer:YES fix a rendering problem with mojave where the template view was truncated to the virtual screen height
             [window setReleasedWhenClosed:NO]; //We have a reference, this break ARC.
             window.logFileHandle = [NSFileHandle fileHandleWithStandardError];
             window.infoDict = infoDict;
@@ -131,7 +134,8 @@ float MaxTemplateHeightInWebPixels = 2000;
 - (void)sendResponse:(NSData *)pdfData
 {
     NSFileHandle *stdOUT = [NSFileHandle fileHandleWithStandardOutput];
-    
+    [infoDict setObject:pdfPath forKey:@"pdfPath"];
+
     NSError *error;
     NSData *infoDictData = [NSPropertyListSerialization dataWithPropertyList:infoDict
                                                                       format:NSPropertyListXMLFormat_v1_0
@@ -156,6 +160,8 @@ float MaxTemplateHeightInWebPixels = 2000;
         [infoDict setObject:[NSNumber numberWithDouble:(endPrint-beginTime)] forKey:@"totalTime"];
         [self logMessage:[NSString stringWithFormat:@"Print done in %f s.", (endPrint-endFetch)]];
         [self logMessage:[NSString stringWithFormat:@"Total time %f s.", (endPrint-beginTime)]];
+        [window close];
+        window = nil;
         
         NSData *pdfData = [NSData dataWithContentsOfFile:pdfPath];
         [infoDict setObject:[NSNumber numberWithInteger:[pdfData length]] forKey:@"pdfFileSize"];
