@@ -47,7 +47,7 @@
 
 - (void)logMessage:(NSString*)aMessage
 {
-    NSString *message = [NSString stringWithFormat:@"%@: %@\n", [NSCalendarDate calendarDate], aMessage];
+    NSString *message = [NSString stringWithFormat:@"%@: %@\n", [NSDate date], aMessage];
     [_logFileHandle writeData:[message dataUsingEncoding:NSUTF8StringEncoding]];
 }
 

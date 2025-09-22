@@ -80,6 +80,26 @@ static NSUInteger numberOfRequestsPerRenderer = 100;
     return sharedPool;
 }
 
+- (NSUInteger)numberOfRenderers
+{
+    return numberOfRenderers;
+}
+
+- (NSUInteger)numberOfRequestsPerRenderer
+{
+    return numberOfRequestsPerRenderer;
+}
+
+- (NSUInteger)numberOfAvailableRenderers
+{
+    return [_availableRenderers count];
+}
+
+- (NSSet*)allRenderers
+{
+    return [_availableRenderers setByAddingObjectsFromSet:_inUseRenderers];
+}
+
 
 - (Renderer *)renderer
 {
@@ -115,6 +135,31 @@ static NSUInteger numberOfRequestsPerRenderer = 100;
     [_inUseRenderers removeObject:renderer];
     [self unlock];
     [self addRenderer];
+}
+
+- (void)addRequestDuration:(double)duration
+{
+    numberOfProcessedRequests += 1;
+    totalRequestProcessingDuration += duration;
+    maxRequestProcessingDuration = MAX(maxRequestProcessingDuration, duration);
+}
+
+- (NSUInteger)numberOfProcessedRequests
+{
+    return numberOfProcessedRequests;
+}
+
+- (double)averageRequestDuration
+{
+    if (numberOfProcessedRequests == 0) {
+        return 0.0;
+    }
+    return totalRequestProcessingDuration / numberOfProcessedRequests;
+}
+
+- (double)maxRequestProcessingDuration
+{
+    return maxRequestProcessingDuration;
 }
 
 @end

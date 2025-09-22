@@ -65,9 +65,14 @@ typedef void (^ReducePdfCompletionBlock)(NSData *);
 
 - (void)processRequest
 {
-    requestTime = [NSCalendarDate timeIntervalSinceReferenceDate];
+    requestTime = [NSDate timeIntervalSinceReferenceDate];
 	[self readRequest];
 	if ([[url path] isEqual:@"/favicon.ico"]) return;
+    if ([[url path] isEqual:@"/status"]) {
+        [self sendStatus];
+        return;
+    }
+
     @try
 	{
         NSDictionary *queryDict = [self decodeQueryString:[url query]];
@@ -86,6 +91,51 @@ typedef void (^ReducePdfCompletionBlock)(NSData *);
         [fileHandle closeFile];
         fileHandle = nil;
     }
+}
+
+- (void)sendStatus
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    RendererPool *pool = [RendererPool sharedPool];
+    
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSMutableArray *renderers = [NSMutableArray array];
+     for (Renderer *renderer in [pool allRenderers]) {
+         NSTimeInterval elapsedTime = [[NSDate date] timeIntervalSinceDate:renderer.lastRequestDate];
+         NSMutableDictionary *rendererStatus = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                         [renderer.startedDate description], @"startedDate",
+                                         [NSNumber numberWithUnsignedInteger:renderer.numberOfRequests], @"numberOfProcessedRequests",
+                                      nil];
+         if (renderer.lastRequestDate != nil) {
+             [rendererStatus setObject:[renderer.lastRequestDate description] forKey:@"lastRequestDate"];
+             [rendererStatus setObject:[NSNumber numberWithDouble:renderer.lastRequestDuration] forKey:@"lastRequestDuration"];
+             [rendererStatus setObject:renderer.lastRequest forKey:@"lastRequest"];
+             [rendererStatus setObject:[NSNumber numberWithDouble:elapsedTime] forKey:@"elapsedTimeSinceLastRequest"];
+         }
+         if (renderer.lastResponseDate != nil) {
+             [rendererStatus setObject:[renderer.lastResponseDate description] forKey:@"lastResponseDate"];
+         }
+         
+         [renderers addObject:rendererStatus];
+    }
+    
+    NSDictionary *status = [NSDictionary dictionaryWithObjectsAndKeys:
+                            version, @"version",
+                            [NSNumber numberWithUnsignedLong:pool.numberOfRenderers], @"numberOfRenderers",
+                            [NSNumber numberWithUnsignedLong:[pool numberOfAvailableRenderers]], @"numberOfAvailableRenderers",
+                            [NSNumber numberWithUnsignedLong:pool.numberOfRequestsPerRenderer], @"numberOfRequestsPerRenderer",
+                            [NSNumber numberWithUnsignedLong:pool.numberOfProcessedRequests], @"numberOfProcessedRequests",
+                            [NSNumber numberWithDouble:pool.averageRequestDuration], @"averageRequestDuration",
+                            [NSNumber numberWithDouble:pool.maxRequestProcessingDuration], @"maxRequestProcessingDuration",
+                            [defaults stringForKey:@"listenAddress"], @"listenAddress",
+                            [NSNumber numberWithUnsignedLong:[defaults integerForKey:@"listenPort"]], @"listenPort",
+                            [defaults stringForKey:@"pdfPostFilter"], @"pdfPostFilter",
+                            [NSNumber numberWithBool:[defaults boolForKey:@"applyPdfPostFilter"]], @"applyPdfPostFilter",
+                            renderers, @"renderers",
+                                 nil];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:status options:NSJSONWritingPrettyPrinted error:&error];
+    [self sendBasicHttpResponse:jsonData];
 }
 
 - (void)processSimpleRequest:(NSDictionary *)queryDict

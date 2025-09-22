@@ -43,7 +43,7 @@ float MaxTemplateHeightInWebPixels = 2000;
 {
     @autoreleasepool {
         [infoDict removeAllObjects];
-        beginTime = [NSCalendarDate timeIntervalSinceReferenceDate];
+        beginTime = [NSDate timeIntervalSinceReferenceDate];
         endFetch = endPrint = beginTime;
         
         NSFileHandle *paramFileHandle = [aNotification object];
@@ -76,7 +76,7 @@ float MaxTemplateHeightInWebPixels = 2000;
             
             NSRect windowRect = NSMakeRect(-10000, -10000, MaxTemplateWidthInWebPixels, MaxTemplateHeightInWebPixels);
             window = [[PdfPrintWindow alloc] initWithContentRect:windowRect
-                                                       styleMask:NSTitledWindowMask|NSResizableWindowMask|NSClosableWindowMask
+                                                       styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskResizable|NSWindowStyleMaskClosable
                                                          backing:NSBackingStoreBuffered
                                                            defer:YES];
             // defer:YES fix a rendering problem with mojave where the template view was truncated to the virtual screen height
@@ -86,7 +86,7 @@ float MaxTemplateHeightInWebPixels = 2000;
             window.firstPageNumber = [[paramsDict objectForKey:@"firstPageNumber"] intValue];
             
             [window setBackgroundColor:[NSColor blueColor]];
-            window.title = [NSString stringWithFormat:@"PDF %@", [NSCalendarDate date]];
+            window.title = [NSString stringWithFormat:@"PDF %@", [NSDate date]];
             
             PagedWebView *mainView = [[PagedWebView alloc] initWithFrame:NSMakeRect(0, 0, DEFAULT_VIEW_WIDTH, 200) hostWindow:window];
             [mainView setDelegate:self];
@@ -118,7 +118,7 @@ float MaxTemplateHeightInWebPixels = 2000;
 
 - (void)fetchDone
 {
-    endFetch = [NSCalendarDate timeIntervalSinceReferenceDate];
+    endFetch = [NSDate timeIntervalSinceReferenceDate];
     [infoDict setObject:[NSNumber numberWithDouble:(endFetch-beginTime)] forKey:@"fetchTime"];
     [self logMessage:[NSString stringWithFormat:@"Fetch done in %f s.", (endFetch-beginTime)]];
 }
@@ -155,7 +155,7 @@ float MaxTemplateHeightInWebPixels = 2000;
 - (void)printingDone
 {
     @try {
-        endPrint = [NSCalendarDate timeIntervalSinceReferenceDate];
+        endPrint = [NSDate timeIntervalSinceReferenceDate];
         [infoDict setObject:[NSNumber numberWithDouble:(endPrint-endFetch)] forKey:@"printTime"];
         [infoDict setObject:[NSNumber numberWithDouble:(endPrint-beginTime)] forKey:@"totalTime"];
         [self logMessage:[NSString stringWithFormat:@"Print done in %f s.", (endPrint-endFetch)]];
@@ -180,7 +180,7 @@ float MaxTemplateHeightInWebPixels = 2000;
 - (void)logMessage:(NSString*)aMessage
 {
     NSFileHandle *stdERR = [NSFileHandle fileHandleWithStandardError];
-    aMessage = [NSString stringWithFormat:@"%@: %@\n", [NSCalendarDate date], aMessage];
+    aMessage = [NSString stringWithFormat:@"%@: %@\n", [NSDate date], aMessage];
 	[stdERR writeData:[aMessage dataUsingEncoding:NSUTF8StringEncoding]];
 }
 

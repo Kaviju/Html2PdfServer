@@ -19,6 +19,11 @@ typedef void (^RendererCompletionBlock)(NSData *, NSMutableDictionary *, NSArray
 
 @property (readonly)NSUInteger numberOfRequests;
 @property (nonatomic, copy) RendererCompletionBlock completionBlock;
+@property NSString *lastRequest;
+@property NSDate *startedDate;
+@property NSDate *lastRequestDate;
+@property NSDate *lastResponseDate;
+@property NSTimeInterval lastRequestDuration;
 
 - (id)initWithPool:(RendererPool *)pool;
 

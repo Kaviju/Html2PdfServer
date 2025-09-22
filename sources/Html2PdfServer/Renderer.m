@@ -26,6 +26,7 @@
 	{
         _parentPool = pool;
         _numberOfRequests = 0;
+        self.startedDate = [NSDate date];
     }
     return self;
 }
@@ -79,6 +80,8 @@
 - (void)processRequest:(NSString *)requestUrl firstPageNumber:(NSUInteger)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock
 {
     _numberOfRequests++;
+    self.lastRequest = requestUrl;
+    self.lastRequestDate = [NSDate date];
     self.completionBlock = aBlock;
     messages = [NSMutableArray new];
 
@@ -91,6 +94,8 @@
 - (void)processHtmlSource:(NSString *)html firstPageNumber:(NSUInteger)firstPageNumber completionBlock:(RendererCompletionBlock)aBlock
 {
     _numberOfRequests++;
+    self.lastRequest = html;
+    self.lastRequestDate = [NSDate date];
     self.completionBlock = aBlock;
     messages = [NSMutableArray new];
     
@@ -202,6 +207,9 @@
             });
             _completionBlock = nil;
         }
+        self.lastResponseDate = [NSDate date];
+        self.lastRequestDuration = [self.lastResponseDate timeIntervalSinceDate:self.lastRequestDate];
+        [_parentPool addRequestDuration:self.lastRequestDuration];
         [_parentPool makeRendererAvailable:self];
     }
 }

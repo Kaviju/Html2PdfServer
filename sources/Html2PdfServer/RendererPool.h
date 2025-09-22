@@ -14,16 +14,30 @@
     NSConditionLock *condLock;
     NSMutableSet *_availableRenderers;
     NSMutableSet *_inUseRenderers;
+    NSUInteger numberOfProcessedRequests;
+    double totalRequestProcessingDuration;
+    double maxRequestProcessingDuration;
 }
 
 +  (void)setNumberOfRenderers:(NSUInteger)number;
 +  (void)setNumberOfRequestsPerRenderer:(NSUInteger)number;
+
+- (NSUInteger)numberOfRenderers;
+- (NSUInteger)numberOfRequestsPerRenderer;
+- (NSUInteger)numberOfAvailableRenderers;
+- (NSSet*)allRenderers;
 
 + (RendererPool*)sharedPool;
 
 - (Renderer *)renderer;
 
 - (void)makeRendererAvailable:(Renderer *)renderer;
+
+- (void)addRequestDuration:(double)duration;
+- (NSUInteger)numberOfProcessedRequests;
+- (double)averageRequestDuration;
+- (double)maxRequestProcessingDuration;
+
 
 - (void)replaceRenderer:(Renderer *)renderer;
 
