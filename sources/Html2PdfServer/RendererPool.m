@@ -8,8 +8,8 @@
 #import "RendererPool.h"
 #import "Renderer.h"
 #import <sys/sysctl.h> 
-#define NO_DATA 0
-#define HAS_DATA 1
+#define LOCK_NO_DATA 0
+#define LOCK_HAS_DATA 1
 
 @interface RendererPool (Private)
 
@@ -30,7 +30,7 @@ static NSUInteger numberOfRequestsPerRenderer = 100;
     self = [super init];
     if (self)
 	{
-        condLock = [[NSConditionLock alloc] initWithCondition:NO_DATA];
+        condLock = [[NSConditionLock alloc] initWithCondition:LOCK_NO_DATA];
         _availableRenderers = [NSMutableSet new];
         _inUseRenderers = [NSMutableSet new];
         while (number--)
@@ -104,7 +104,7 @@ static NSUInteger numberOfRequestsPerRenderer = 100;
 - (Renderer *)renderer
 {
     NSLog(@"renderer asked queue size: %ld", (unsigned long)[_availableRenderers count]);
-    [condLock lockWhenCondition:HAS_DATA];
+    [condLock lockWhenCondition:LOCK_HAS_DATA];
     Renderer *renderer = [_availableRenderers anyObject];
     [_availableRenderers removeObject:renderer];
     [_inUseRenderers addObject:renderer];
@@ -178,7 +178,7 @@ static NSUInteger numberOfRequestsPerRenderer = 100;
 
 - (void)unlock
 {
-    [condLock unlockWithCondition:([_availableRenderers count]>0 ? HAS_DATA : NO_DATA)];
+    [condLock unlockWithCondition:([_availableRenderers count]>0 ? LOCK_HAS_DATA : LOCK_NO_DATA)];
 }
 
 @end

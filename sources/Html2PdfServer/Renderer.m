@@ -51,17 +51,17 @@
     
     // When app quit, quit all renderer sub processes.
     [nc addObserverForName:NSApplicationWillTerminateNotification object:nil queue:mainQueue usingBlock:^(NSNotification *note) {
-        [_rendererTask terminate];
+        [self->_rendererTask terminate];
     }];
     
     // If renderer process die, replace it in the pool and notify the client.
     [nc addObserverForName:NSTaskDidTerminateNotification object:_rendererTask queue:mainQueue usingBlock:^(NSNotification *note) {
         NSTask *task = note.object;
         if ( [task terminationReason] == NSTaskTerminationReasonUncaughtSignal) {
-            [_parentPool replaceRenderer:self];
-            if (_completionBlock != nil) {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
-                    _completionBlock(nil, [NSMutableDictionary new], messages);
+            [self->_parentPool replaceRenderer:self];
+            if (self->_completionBlock != nil) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    self->_completionBlock(nil, [NSMutableDictionary new], self->messages);
                 });
             }
         }
@@ -202,7 +202,7 @@
         
         if (_completionBlock != nil) {
             RendererCompletionBlock completionBlock = _completionBlock;
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, NULL), ^{
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 completionBlock(pdfData, infoDict, receivedMessages);
             });
             _completionBlock = nil;

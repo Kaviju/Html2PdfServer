@@ -293,7 +293,7 @@ BOOL printQueued = NO;
 - (CGFloat)computeOptimalViewWidthForPaper:(NSPrintInfo *)printInfo
 {
     CGFloat width;
-    if ([printInfo orientation] == NSPortraitOrientation) {
+    if ([printInfo orientation] == NSPaperOrientationPortrait) {
         width = [printInfo paperSize].width;
     }
     else {
